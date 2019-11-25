@@ -6,20 +6,35 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.hong.fragement.Event.EventPage;
 import com.hong.fragement.Home.HomeFragment;
 import com.hong.fragement.Login.LoginActivity;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    // Access a Cloud Firestore instance from your Activity
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private String TAG = "Read Data from FireStore";
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -46,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
+/*
         if(mFirebaseUser == null) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
@@ -56,6 +72,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
             }
         }
+*/
+        BtnOnClickListener onClickListener = new BtnOnClickListener();
+        Button readBtn = findViewById(R.id.read_btn);
+        readBtn.setOnClickListener(onClickListener);
 
         // 로그인 후 화면에 default fragment 설정
         homeFragment = new HomeFragment();
@@ -73,6 +93,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = findViewById(R.id.navigation_view);    // activity_main NavigationView id
         navigationView.setNavigationItemSelectedListener(this);
     }
+
+    /* 데이터 베이스 불러오기용 코드 */
+    class BtnOnClickListener implements Button.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.read_btn :
+                    ReadData();
+                    break ;
+            }
+        }
+    }
+
+    private void ReadData(){
+        db.collection("Movie")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                            }
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+    }
+    /* 코드 끝 */
 
     // 하단 네비게이션바 버튼 클릭 이벤트
     public BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener
