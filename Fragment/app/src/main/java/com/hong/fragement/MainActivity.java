@@ -1,0 +1,154 @@
+package com.hong.fragement;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentTransaction;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.hong.fragement.Event.EventPage;
+import com.hong.fragement.Home.HomeFragment;
+import com.hong.fragement.Login.LoginActivity;
+
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    private FragmentTransaction fragmentTransaction;
+
+
+    private FirebaseUser mFirebaseUser;
+    private FirebaseAuth mFirebaseAuth;
+    private String mUsername;
+    private String mPhotoUrl;
+
+    // 프래그먼트 클래스
+    private HomeFragment homeFragment;
+    private FreeMovie freeMovie;
+    private EventPage eventPage;
+
+    private BottomNavigationView navigation;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+
+        if(mFirebaseUser == null) {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+            return;
+        } else {
+            mUsername = mFirebaseUser.getDisplayName();
+            if(mFirebaseUser != null) {
+                mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
+            }
+        }
+
+        // 로그인 후 화면에 default fragment 설정
+        homeFragment = new HomeFragment();
+        freeMovie = new FreeMovie(); // homefragment 미완성 --> 임시로 default fragment를 freeMovie로 지정
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame, freeMovie).commit();
+
+        // 하단 네비게이션
+        navigation = findViewById(R.id.navigation);     // activity_main BottomNavigationView id
+        navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
+        navigation.setSelectedItemId(R.id.navigation_home); // fragment default
+
+        // 오른쪽 네비게이션
+        drawerLayout = findViewById(R.id.drawer_layout);    // activity_main DrawerLayout id
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED); // 잠금 : 손가락으로 밀어도 안열림
+        navigationView = findViewById(R.id.navigation_view);    // activity_main NavigationView id
+        navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    // 하단 네비게이션바 버튼 클릭 이벤트
+    public BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+            fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+            // 하단바 아이템에 따른 프래그먼트
+            switch (menuItem.getItemId()) {
+                case R.id.navigation_freemovie:
+                    freeMovie = new FreeMovie();
+                    fragmentTransaction.replace(R.id.frame,freeMovie);
+                    break;
+                case R.id.navigation_eventpage:
+                    eventPage = new EventPage();
+                    fragmentTransaction.replace(R.id.frame,eventPage);
+                    break;
+                case R.id.navigation_mypage:
+                    drawerLayout.openDrawer(navigationView);    // 네이게이션 오픈
+                    drawerLayout.addDrawerListener(listener);
+                    return true;
+            }
+
+            fragmentTransaction.addToBackStack(null); // 백스택에 저장 x → 백키 눌러도 안나타남
+            fragmentTransaction.commit();
+            return true;
+        }
+    };
+
+    DrawerLayout.DrawerListener listener = new DrawerLayout.DrawerListener() {
+        @Override
+        public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+        }
+
+        @Override
+        public void onDrawerOpened(@NonNull View drawerView) {
+        }
+
+        @Override
+        public void onDrawerClosed(@NonNull View drawerView) {
+        }
+
+        @Override
+        public void onDrawerStateChanged(int newState) {
+        }
+    };
+
+        // 우측 네비게이션 아이템 이벤트핸들러
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        switch (menuItem.getItemId()) {
+            case R.id.nav_logout:
+                mFirebaseAuth.signOut();
+                startActivity(new Intent(this,LoginActivity.class));
+                finish();
+        }
+
+        transaction.addToBackStack(null);
+        transaction.commit();
+        return true;
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+}
+
+

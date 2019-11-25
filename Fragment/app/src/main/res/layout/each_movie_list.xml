@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<LinearLayout
+    android:layout_margin="30dp"
+    android:weightSum="100"
+    android:layout_height="200dp"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 포스터이미지파일은 추후에 DB에서 일단 예시로-->
+    <ImageView
+        android:id="@+id/poster_each_movie_list"
+        android:layout_height="match_parent"
+        android:layout_width="20dp"
+        android:baseline="200dp"
+        android:src="@drawable/poster_money"
+        android:layout_weight="60">
+
+    </ImageView>
+
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_width="40dp"
+        android:orientation="vertical"
+        android:layout_weight="40"
+        android:gravity="right">
+
+
+        <!-- 제목은 추후에 DB에서 일단 예시로-->
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/title_each_movie_list"
+            android:layout_gravity="top"
+            android:textSize="20dp"
+            android:text="돈">
+
+        </TextView>
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_weight="25"
+                android:id="@+id/priceLow_each_movie_list"
+                android:layout_gravity="top"
+                android:textSize="20dp"
+                android:text="최저가 ">
+
+            </TextView>
+
+            <!-- 가격은 추후에 DB에서 일단 예시로-->
+            <TextView
+                android:id="@+id/price_each_movie_list"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_weight="25"
+                android:layout_gravity="top"
+                android:textSize="20dp"
+                android:text="5,500">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/priceWon_each_movie_list"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_weight="15"
+                android:layout_gravity="top"
+                android:textSize="20dp"
+                android:text="~원 ">
+
+            </TextView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:weightSum="100"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/genre1_each_movie_list"
+                android:layout_height="30dp"
+                android:layout_width="30dp"
+                android:layout_weight="30"
+                android:textSize="10dp"
+                android:text="장르1">
+
+            </Button>
+
+            <Button
+                android:id="@+id/genre2_each_movie_list"
+                android:layout_height="30dp"
+                android:layout_width="30dp"
+                android:layout_weight="30"
+                android:textSize="10dp"
+                android:text="장르2">
+
+            </Button>
+
+            <Button
+                android:id="@+id/genre3_each_movie_list"
+                android:layout_height="30dp"
+                android:layout_width="30dp"
+                android:layout_weight="30"
+                android:text="장르3"
+                android:textSize="10dp" >
+
+            </Button>
+
+        </LinearLayout>
+
+        <!-- 영화내용은 추후에 DB에서 일단 예시로-->
+        <TextView
+            android:layout_height="100dp"
+            android:layout_width="match_parent"
+            android:id="@+id/story_each_movie_list"
+            android:text="@string/story_ex"
+            android:textSize="6dp">
+
+        </TextView>
+
+    </LinearLayout>
+
+</LinearLayout>
