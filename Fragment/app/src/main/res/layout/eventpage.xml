@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent" >
+
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text_eventpage"
+            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            android:paddingLeft="10dp"
+            android:layout_margin="5dp"
+            android:gravity="center|left"
+            android:textSize="20dp"
+            android:text="이벤트">
+
+        </TextView>
+
+        <ListView
+            android:id="@+id/list_eventpage"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+
+        </ListView>
+
+    </LinearLayout>
+
+</FrameLayout>

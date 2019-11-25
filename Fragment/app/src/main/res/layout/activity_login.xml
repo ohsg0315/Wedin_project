@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Login.LoginActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/wedin_logo"
+            android:layout_gravity="center_horizontal"
+            android:paddingTop="30dp" />
+
+        <EditText
+            android:id="@+id/user_id"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:background="#FFFFFF"
+            android:layout_marginTop="16dp"
+            android:hint="Email or ID"
+            android:textColorHint="#222222"
+            android:textAlignment="center"
+            android:maxLength="30"
+            android:maxLines="1"
+            android:textColor="#222222"
+            android:textSize="30dp" />
+
+        <EditText
+            android:id="@+id/user_password"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:background="#FFFFFF"
+            android:layout_marginTop="16dp"
+            android:hint="Password"
+            android:textColorHint="#222222"
+            android:textAlignment="center"
+            android:maxLength="30"
+            android:maxLines="1"
+            android:textColor="#222222"
+            android:textSize="30dp" />
+
+        <Button
+            android:id="@+id/sign_in_btn"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:text="로그인"
+            android:textSize="30dp"
+            android:textColor="#FFFFFF"
+            android:background="#1e90ff"
+            android:layout_marginTop="16dp"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+
+            <Button
+                android:id="@+id/Sign_up_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="30dp"
+                android:text="회원가입"/>
+
+            <Button
+                android:id="@+id/id_find_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="ID찾기"/>
+
+            <Button
+                android:id="@+id/password_find_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginRight="30dp"
+                android:text="패스워드찾기"/>
+
+        </LinearLayout>
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/google_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+
+
+    </LinearLayout>
+</FrameLayout>
