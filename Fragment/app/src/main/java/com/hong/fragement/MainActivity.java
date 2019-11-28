@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Movie;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -18,11 +19,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -30,11 +34,14 @@ import com.hong.fragement.Event.EventPage;
 import com.hong.fragement.Home.HomeFragment;
 import com.hong.fragement.Login.LoginActivity;
 
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     // Access a Cloud Firestore instance from your Activity
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String TAG = "Read Data from FireStore";
+    private Map<String, Object> uriLink;
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -107,21 +114,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void ReadData(){
-        db.collection("Movie")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                            }
-                        } else {
-                            Log.w(TAG, "Error getting documents.", task.getException());
-                        }
-                    }
-                });
+        DocumentReference docRef = db.collection("Movie").document("조커");
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                MovieObj movieObj = documentSnapshot.toObject(MovieObj.class);
+
+                String movieTitle = movieObj.getTitle();
+                String movieSummary = movieObj.getSummary();
+                String movieImageUri = movieObj.getImageUri();
+                Map<String, Integer> moviePrice = movieObj.getPrice();
+                int naverPrice = moviePrice.get("네이버");
+                int wavePrice = moviePrice.get("웨이브");
+
+                Log.d(TAG, movieTitle);
+                Log.d(TAG, movieSummary);
+                Log.d(TAG, movieImageUri);
+                Log.d(TAG, "네이버 = " + moviePrice.get("네이버") + ", 웨이브 = " + moviePrice.get("웨이브"));
+            }
+        });
+
     }
+
     /* 코드 끝 */
 
     // 하단 네비게이션바 버튼 클릭 이벤트
@@ -198,7 +212,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
-
 }
+
 
 
