@@ -57,9 +57,10 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    public void readImageUri() {
+    private void readImageUri() {
 
         data = new MovieObj();
+
 
         db.collection("Movie").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -68,8 +69,6 @@ public class HomeFragment extends Fragment {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 dto = new MovieInfo();
-
-
                                 data = document.toObject(MovieObj.class);
                                 String imageUri = data.getImageUri();
                                 Log.d(TAG, imageUri+"이미지입니다.");

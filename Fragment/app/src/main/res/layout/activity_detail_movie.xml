@@ -187,6 +187,7 @@
                     android:orientation="horizontal"
                     >
 
+                    <!--
                     <ImageView
                         android:id="@+id/icon_naverserieson_detail_movie"
                         android:layout_width="26dp"
@@ -196,6 +197,7 @@
 
 
                     </ImageView>
+                    -->
 
                     <TextView
 
@@ -245,6 +247,7 @@
                     android:orientation="horizontal"
                     >
 
+                    <!--
                     <ImageView
                         android:id="@+id/icon_kakaopage_detail_movie"
                         android:layout_width="26dp"
@@ -254,6 +257,7 @@
 
 
                     </ImageView>
+-->
 
                     <TextView
 
@@ -302,6 +306,7 @@
                     android:orientation="horizontal"
                     >
 
+                    <!--
                     <ImageView
                         android:id="@+id/icon_googleplaymovie_detail_movie"
                         android:layout_width="26dp"
@@ -311,6 +316,7 @@
 
 
                     </ImageView>
+                    -->
 
                     <TextView
 
@@ -359,6 +365,7 @@
                     android:orientation="horizontal"
                     >
 
+                    <!--
                     <ImageView
                         android:id="@+id/icon_wavve_detail_movie"
                         android:layout_width="26dp"
@@ -368,7 +375,7 @@
 
 
                     </ImageView>
-
+-->
                     <TextView
 
                         android:layout_width="wrap_content"

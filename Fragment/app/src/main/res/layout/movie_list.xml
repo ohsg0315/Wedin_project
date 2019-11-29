@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardElevation="5dp"
-    app:cardCornerRadius="5dp"
-    android:layout_marginBottom="1dp"
-    android:layout_marginLeft="2dp"
-    android:layout_marginRight="2dp"
-    android:layout_marginStart="2dp"
-    android:layout_marginEnd="2dp">
+    android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/poster"
-            android:layout_width="130dp"
-            android:layout_height="150dp"
-            android:scaleType="fitXY"
-            android:layout_margin="10dp"
-            android:background="@drawable/round_corner"/>
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cardElevation="5dp"
+        app:cardCornerRadius="5dp"
+        android:padding="10dp"
+        android:layout_margin="10dp">
 
-</androidx.cardview.widget.CardView>
+
+            <ImageView
+                android:id="@+id/poster"
+                android:layout_width="130dp"
+                android:layout_height="150dp"
+                android:scaleType="fitXY" />
+
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

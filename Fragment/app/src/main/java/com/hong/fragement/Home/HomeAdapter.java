@@ -1,6 +1,7 @@
 package com.hong.fragement.Home;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,9 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.hong.fragement.MovieInfo;
 import com.hong.fragement.R;
 
@@ -48,7 +52,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MovieViewHolde
 
         Glide.with(holder.itemView.getContext())
                 .load(movieData.get(position).getPoster())
-                .error(R.drawable.icon)
+                .error(R.drawable.common_full_open_on_phone)
                 .into(holder.poster);
 
     }
