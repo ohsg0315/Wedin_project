@@ -3,7 +3,6 @@ package com.hong.fragement;
 
 // 영화검색, 무료영화관, TOP100 등 리스트뷰로 띄울 영화정보 객체를 위한 클래스
 public class MovieInfo {
-    private String id; // user 아이디
     private String title; //영화제목
     private String poster; //영화포스터
     private String story; //영화줄거리

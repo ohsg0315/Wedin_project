@@ -1,105 +1,90 @@
 package com.hong.fragement.Home;
 
+import android.graphics.Movie;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.hong.fragement.MovieInfo;
+import com.hong.fragement.MovieObj;
 import com.hong.fragement.R;
 
 import java.util.ArrayList;
 
-public class HomeFragment extends Fragment implements View.OnClickListener{
+public class HomeFragment extends Fragment {
 
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    private DatabaseReference mFirebaseDatabaseReference;
-
-    private SearchView searchView;
     private Button btn1,bt2,btn3,btn4;
 
-    private RecyclerView mRecyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private String TAG = "Read Data from FireStore";
+    private RecyclerView recyclerView;
     private HomeAdapter mAdapter;
-
     private ArrayList<MovieInfo> moiveData;
     private MovieInfo dto;
+    private MovieObj data;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        mRecyclerView = v.findViewById(R.id.recyclerview1);
-        mRecyclerView.setHasFixedSize(true); // 리사이클러뷰 안의 아이템 크기를 일정하게 고정
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.scrollToPosition(0);
+        moiveData = new ArrayList<MovieInfo>();
 
-        moiveData = new ArrayList<>();
-        dto = new MovieInfo();
+        recyclerView = view.findViewById(R.id.recyclerview);
+        recyclerView.setHasFixedSize(true); // 리사이클러뷰 안의 아이템 크기를 일정하게 고정
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL,false));
+        readImageUri();
 
-        searchView = (SearchView) v.findViewById(R.id.searchForm);
 
-        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
 
-        mFirebaseDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    String poster = data.child("image").getValue().toString();
-                    dto.setPoster(poster);
-                    moiveData.add(dto);
-                }
-
-                mAdapter = new HomeAdapter(moiveData, getActivity());
-                mRecyclerView.setAdapter(mAdapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        return v;
+        return view;
     }
 
+    public void readImageUri() {
+
+        data = new MovieObj();
+
+        db.collection("Movie").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                dto = new MovieInfo();
 
 
-    @Override
-    public void onClick(View view) {
+                                data = document.toObject(MovieObj.class);
+                                String imageUri = data.getImageUri();
+                                Log.d(TAG, imageUri+"이미지입니다.");
+                                dto.setPoster(imageUri);
+                                moiveData.add(dto);
+                                Log.d(TAG, moiveData.size()+"임다");
+                            }
 
-        if(view == searchView) {
-            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String query) {
+                            mAdapter = new HomeAdapter(moiveData, getActivity());
+                            recyclerView.setAdapter(mAdapter);
+                        }
+                    }
+                });
 
-                    return true;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    return false;
-                }
-            });
-        }
     }
-
-
 
 
 }

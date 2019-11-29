@@ -31,7 +31,7 @@ dependencies {
     // 카카오 로그인 sdk를 사용하기 위해 필요.
 
 
-    implementation 'com.squareup.picasso:picasso:2.71828' // 피카소
+    implementation 'com.github.bumptech.glide:glide:4.9.0' // 글라이드
     implementation 'androidx.recyclerview:recyclerview:1.0.0' // 리사이클러뷰
     implementation 'com.google.android.gms:play-services-auth:17.0.0' // 구글 인증을 위한 라이브러리
     implementation 'com.google.firebase:firebase-database:19.1.0' // 파이어베이스

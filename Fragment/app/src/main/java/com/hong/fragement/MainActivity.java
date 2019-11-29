@@ -86,8 +86,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // 로그인 후 화면에 default fragment 설정
         homeFragment = new HomeFragment();
-        freeMovie = new FreeMovie(); // homefragment 미완성 --> 임시로 default fragment를 freeMovie로 지정
-        getSupportFragmentManager().beginTransaction().replace(R.id.frame, freeMovie).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame, homeFragment).commit();
 
         // 하단 네비게이션
         navigation = findViewById(R.id.navigation);     // activity_main BottomNavigationView id
@@ -147,13 +146,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             // 하단바 아이템에 따른 프래그먼트
             switch (menuItem.getItemId()) {
+                case R.id.navigation_home:
+                    homeFragment = new HomeFragment();
+                    fragmentTransaction.replace(R.id.frame,homeFragment);
+                    break;
                 case R.id.navigation_freemovie:
                     freeMovie = new FreeMovie();
                     fragmentTransaction.replace(R.id.frame,freeMovie);
                     break;
                 case R.id.navigation_eventpage:
-                    eventPage = new EventPage();
-                    fragmentTransaction.replace(R.id.frame,eventPage);
+                    //eventPage = new EventPage();
+                    //fragmentTransaction.replace(R.id.frame,eventPage);
                     break;
                 case R.id.navigation_mypage:
                     drawerLayout.openDrawer(navigationView);    // 네이게이션 오픈
@@ -194,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (menuItem.getItemId()) {
             case R.id.nav_logout:
                 mFirebaseAuth.signOut();
-                startActivity(new Intent(this,LoginActivity.class));
+                // startActivity(new Intent(this,LoginActivity.class));
                 finish();
         }
 

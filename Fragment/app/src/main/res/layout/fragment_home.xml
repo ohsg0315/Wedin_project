@@ -17,52 +17,34 @@
             android:layout_gravity="center"
             android:src="@drawable/wedin_logo" />
 
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/searchForm"
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="40dp"
+            android:background="#000000"
+            android:text="맞춤장르추천"
+            android:textSize="32dp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#DEDEDE"
-        android:text="맞춤장르추천"
-        android:textSize="24dp"
-        android:textStyle="bold"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scrollbars="horizontal" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview1"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scrollbars="horizontal"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#000000"
+            android:text="맞춤장르추천"
+            android:textSize="32dp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#DEDEDE"
-        android:text="TOP100"
-        android:textSize="24dp"
-        android:textStyle="bold"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview2"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scrollbars="horizontal"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#DEDEDE"
-        android:text="맞춤장르추천"
-        android:textSize="24dp"
-        android:textStyle="bold"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview3"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scrollbars="horizontal"/>
+
 
     </LinearLayout>
 
