@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -36,6 +38,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText userPassowrd;
 
     private Button login;
+    private Button signUpBtn;
     private Button idFind;
     private Button passwordFind;
     private SignInButton googleBtn;
@@ -59,13 +62,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         login = findViewById(R.id.sign_in_btn);
         idFind = findViewById(R.id.id_find_btn);
         passwordFind = findViewById(R.id.password_find_btn);
+        signUpBtn = findViewById(R.id.sign_up_btn);
         googleBtn = findViewById(R.id.google_btn);
 
         //passwordFind.setOnClickListener(this);
         // idFind.setOnClickListener(this);
         userId.setOnClickListener(this);
         userPassowrd.setOnClickListener(this);
+        signUpBtn.setOnClickListener(this);
+        login.setOnClickListener(this);
         googleBtn.setOnClickListener(this);
+
 
         // 로그아웃을 하지 않았다면, 자동 로그인
         if(mAuth.getCurrentUser() != null) {
@@ -74,11 +81,38 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
+    private void signInByOriginal(String email, String password){
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
+                            Toast.makeText(getApplicationContext(), "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            updateUI(null);
+                            Toast.makeText(getApplicationContext(), "로그인에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                        }
+
+                        // ...
+                    }
+                });
+    }
+
     @Override
     public void onClick(View view) {
         if (view == googleBtn) signIn();
+        else if(view == signUpBtn) signUp();
+        else if(view == login) signInByOriginal(userId.getText().toString(), userPassowrd.getText().toString());
     }
 
+    private void signUp(){
+        Intent signUpIntent = new Intent(LoginActivity.this, SignUp.class);
+        startActivity(signUpIntent);
+    }
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -117,7 +151,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 });
     }
 
-    // ㄷ
+    // 인증 성공시 Intent
     public void updateUI(FirebaseUser user) {
         if (user != null) {
             startActivity(new Intent(this, MainActivity.class));
