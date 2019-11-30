@@ -18,6 +18,10 @@ public class MovieObj {
         this.price = price;
     }
 
+    public void setImageUri(String imageUri) {
+        this.imageUri = imageUri;
+    }
+
     public String getTitle(){
         return title;
     }
