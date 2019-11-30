@@ -22,12 +22,15 @@
 
         </TextView>
 
-        <ListView
-            android:id="@+id/list_eventpage"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_eventpage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            >
 
-        </ListView>
+        </androidx.recyclerview.widget.RecyclerView>
+
 
     </LinearLayout>
 

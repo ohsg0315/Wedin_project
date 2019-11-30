@@ -6,21 +6,13 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Movie;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,11 +20,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.hong.fragement.Event.EventPage;
 import com.hong.fragement.Home.HomeFragment;
-import com.hong.fragement.Login.LoginActivity;
 
 import java.util.Map;
 
@@ -155,8 +144,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     fragmentTransaction.replace(R.id.frame,freeMovie);
                     break;
                 case R.id.navigation_eventpage:
-                    //eventPage = new EventPage();
-                    //fragmentTransaction.replace(R.id.frame,eventPage);
+                    eventPage = new EventPage();
+                    fragmentTransaction.replace(R.id.frame,eventPage);
                     break;
                 case R.id.navigation_mypage:
                     drawerLayout.openDrawer(navigationView);    // 네이게이션 오픈

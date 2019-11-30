@@ -18,10 +18,14 @@
             android:layout_margin="5dp"
             android:paddingLeft="10dp" />
 
-        <ListView
-            android:id="@+id/list_freemovie"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_eventpage"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            >
+
+        </androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
 </FrameLayout>
