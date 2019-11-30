@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (menuItem.getItemId()) {
             case R.id.nav_logout:
                 mFirebaseAuth.signOut();
-                // startActivity(new Intent(this,LoginActivity.class));
+                startActivity(new Intent(this,LoginActivity.class));
                 finish();
         }
 

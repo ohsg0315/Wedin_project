@@ -36,6 +36,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText userPassowrd;
 
     private Button login;
+    private Button signUpBtn;
     private Button idFind;
     private Button passwordFind;
     private SignInButton googleBtn;
@@ -59,13 +60,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         login = findViewById(R.id.sign_in_btn);
         idFind = findViewById(R.id.id_find_btn);
         passwordFind = findViewById(R.id.password_find_btn);
+        signUpBtn = findViewById(R.id.sign_up_btn);
         googleBtn = findViewById(R.id.google_btn);
 
         //passwordFind.setOnClickListener(this);
         // idFind.setOnClickListener(this);
         userId.setOnClickListener(this);
         userPassowrd.setOnClickListener(this);
+        signUpBtn.setOnClickListener(this);
         googleBtn.setOnClickListener(this);
+
 
         // 로그아웃을 하지 않았다면, 자동 로그인
         if(mAuth.getCurrentUser() != null) {
@@ -77,8 +81,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         if (view == googleBtn) signIn();
+        else if(view == signUpBtn) signUp();
     }
 
+    private void signUp(){
+        Intent signUpIntent = new Intent(LoginActivity.this, SignUp.class);
+        startActivity(signUpIntent);
+    }
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
