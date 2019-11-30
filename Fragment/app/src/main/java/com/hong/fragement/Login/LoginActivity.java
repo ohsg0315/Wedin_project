@@ -151,7 +151,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 });
     }
 
-    // ㄷ
+    // 인증 성공시 Intent
     public void updateUI(FirebaseUser user) {
         if (user != null) {
             startActivity(new Intent(this, MainActivity.class));

@@ -1,43 +1,34 @@
 package com.hong.fragement.Home;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.core.graphics.drawable.RoundedBitmapDrawable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
-import com.hong.fragement.MovieInfo;
+import com.hong.fragement.MovieObj;
 import com.hong.fragement.R;
 
 import java.util.ArrayList;
 
-
-
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MovieViewHolder> {
     public String TAG = "=======================";
-    private ArrayList<MovieInfo> movieData;
+    private ArrayList<MovieObj> movieData;
     Context context;
 
-    public HomeAdapter(ArrayList<MovieInfo> movieData, Context context) {
+    public HomeAdapter(ArrayList<MovieObj> movieData, Context context) {
         this.movieData = movieData;
         this.context = context;
     }
 
-    // View Holder 생성, movie_list.xml와 holder를 연결
+    // View Holder 생성시, movie_list.xml와 holder를 연결
     @NonNull
     @Override
     public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.d(TAG, "홀더생성중.");
 
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.movie_list,parent,false);
@@ -47,22 +38,22 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MovieViewHolde
 
     }
 
+    // holder item과 movieData에서 얻은 ImageUri를 바인드
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
 
         Glide.with(holder.itemView.getContext())
-                .load(movieData.get(position).getPoster())
+                .load(movieData.get(position).getImageUri())
                 .error(R.drawable.common_full_open_on_phone)
                 .into(holder.poster);
-
     }
 
     @Override
     public int getItemCount() {
-        Log.d(TAG, movieData.size()+"입니다");
         return movieData.size();
     }
 
+    // MovieViewHolder 생성
     public class MovieViewHolder extends RecyclerView.ViewHolder {
         ImageView poster;
 
