@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -68,6 +70,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         userId.setOnClickListener(this);
         userPassowrd.setOnClickListener(this);
         signUpBtn.setOnClickListener(this);
+        login.setOnClickListener(this);
         googleBtn.setOnClickListener(this);
 
 
@@ -78,10 +81,32 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
+    private void signInByOriginal(String email, String password){
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
+                            Toast.makeText(getApplicationContext(), "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            updateUI(null);
+                            Toast.makeText(getApplicationContext(), "로그인에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                        }
+
+                        // ...
+                    }
+                });
+    }
+
     @Override
     public void onClick(View view) {
         if (view == googleBtn) signIn();
         else if(view == signUpBtn) signUp();
+        else if(view == login) signInByOriginal(userId.getText().toString(), userPassowrd.getText().toString());
     }
 
     private void signUp(){

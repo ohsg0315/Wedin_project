@@ -23,21 +23,21 @@
             android:layout_width="300dp"
             android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
-            android:background="#FFFFFF"
+            android:background="@drawable/round_coner"
             android:layout_marginTop="16dp"
             android:hint="Email or ID"
             android:textAlignment="center"
             android:maxLength="30"
             android:maxLines="1"
             android:textColor="#222222"
-            android:textSize="30dp" />
+            android:textSize="20dp" />
 
         <EditText
             android:id="@+id/user_password"
             android:layout_width="300dp"
             android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
-            android:background="#FFFFFF"
+            android:background="@drawable/round_coner"
             android:layout_marginTop="16dp"
             android:hint="Password"
             android:password="true"
@@ -45,7 +45,7 @@
             android:maxLength="30"
             android:maxLines="1"
             android:textColor="#222222"
-            android:textSize="30dp" />
+            android:textSize="20dp" />
 
         <Button
             android:id="@+id/sign_in_btn"
