@@ -18,6 +18,18 @@ public class MovieObj {
         this.price = price;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+    public void setPrice(Map<String, Integer> price) {
+        this.price = price;
+    }
+
     public void setImageUri(String imageUri) {
         this.imageUri = imageUri;
     }

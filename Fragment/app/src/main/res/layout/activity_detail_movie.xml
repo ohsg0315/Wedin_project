@@ -1,107 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="100">
+    android:layout_height="match_parent">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <VideoView
         android:id="@+id/video"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="40"
-        >
-
-    </VideoView>
-
-
+        android:layout_height="250dp" />
 
     <LinearLayout
-        android:layout_margin="30dp"
-        android:weightSum="100"
-        android:layout_height="0dp"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:layout_weight="60">
+        android:layout_marginTop="30dp">
 
-        <!-- 포스터이미지파일은 추후에 DB에서 일단 예시로-->
         <ImageView
             android:id="@+id/poster_detail_movie"
-            android:layout_height="wrap_content"
             android:layout_width="0dp"
-            android:baseline="200dp"
-            android:src="@drawable/poster_money"
-            android:layout_weight="55"
-            android:scaleType="fitXY"
-            >
-
-
-        </ImageView>
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:scaleType="fitXY" />
 
         <LinearLayout
-            android:layout_height="match_parent"
             android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_weight="45"
-            android:gravity="right">
+            android:layout_weight="5"
+            android:paddingLeft="20dp">
 
-
-            <!-- 제목은 추후에 DB에서 일단 예시로-->
             <TextView
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
                 android:id="@+id/title_detail_movie"
-                android:layout_gravity="top"
-                android:textSize="20dp"
-                android:text="돈">
-
-            </TextView>
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textSize="30dp"
+                android:textColor="#000000" />
 
             <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_width="match_parent">
+                android:orientation="horizontal" >
 
                 <TextView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:layout_weight="25"
-                    android:id="@+id/priceLow_detail_movie"
-                    android:layout_gravity="top"
+                    android:layout_weight="1"
+                    android:text="네이버"
                     android:textSize="20dp"
-                    android:text="최저가 ">
-
-                </TextView>
-
-                <!-- 가격은 추후에 DB에서 일단 예시로-->
-                <TextView
-                    android:id="@+id/price_detail_movie"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:layout_weight="25"
-                    android:layout_gravity="top"
-                    android:textSize="20dp"
-                    android:text="5,500">
-
-                </TextView>
+                    android:paddingLeft="3dp"/>
 
                 <TextView
-                    android:id="@+id/priceWon_detail_movie"
+                    android:id="@+id/movie_low_price"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:layout_weight="15"
-                    android:layout_gravity="top"
+                    android:layout_weight="1"
                     android:textSize="20dp"
-                    android:text="~원 ">
-
-                </TextView>
+                    android:gravity="center" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:weightSum="100"
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="웨이브"
+                    android:textSize="20dp"
+                    android:paddingLeft="3dp"/>
+
+                <TextView
+                    android:id="@+id/movie_high_price"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="20dp"
+                    android:gravity="center" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="100"
                 android:orientation="horizontal">
 
                 <Button
@@ -110,9 +98,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="30"
                     android:textSize="10dp"
-                    android:text="장르1">
-
-                </Button>
+                    android:text="장르1" />
 
                 <Button
                     android:id="@+id/genre2_detail_movie"
@@ -120,9 +106,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="30"
                     android:textSize="10dp"
-                    android:text="장르2">
-
-                </Button>
+                    android:text="장르2" />
 
                 <Button
                     android:id="@+id/genre3_detail_movie"
@@ -130,9 +114,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="30"
                     android:text="장르3"
-                    android:textSize="10dp" >
-
-                </Button>
+                    android:textSize="10dp" />
 
             </LinearLayout>
 
@@ -156,268 +138,20 @@
                     android:id="@+id/rating_detail_movie"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="4.2"
-                    >
-
-                </TextView>
-
-
+                    android:text="4.2" />
 
             </LinearLayout>
 
-
-            <!-- 영화내용은 추후에 DB에서 일단 예시로-->
             <TextView
+                android:id="@+id/summary_detail_movie"
+                android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:layout_width="match_parent"
-                android:id="@+id/story_detail_movie"
-                android:text="@string/story_ex"
-                android:textSize="6dp">
-
-            </TextView>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    >
-
-                    <!--
-                    <ImageView
-                        android:id="@+id/icon_naverserieson_detail_movie"
-                        android:layout_width="26dp"
-                        android:layout_height="30dp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/icon_naverserieson">
-
-
-                    </ImageView>
-                    -->
-
-                    <TextView
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_margin="5dp"
-                        android:text="네이버 시리즈 온"
-                        android:textSize="9dp">
-
-                    </TextView>
-
-                    <TextView
-                        android:id="@+id/price_naver_detail_movie"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_margin="5dp"
-                        android:text="3000"
-                        android:textSize="9dp">
-
-                    </TextView>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginTop="5dp"
-                        android:text="원"
-                        android:textSize="9dp"
-                        >
-
-                    </TextView>
-
-
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    >
-
-                    <!--
-                    <ImageView
-                        android:id="@+id/icon_kakaopage_detail_movie"
-                        android:layout_width="26dp"
-                        android:layout_height="30dp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/icon_kakaopage">
-
-
-                    </ImageView>
--->
-
-                    <TextView
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_margin="5dp"
-                        android:text="카카오 페이지"
-                        android:textSize="9dp">
-
-                    </TextView>
-
-                    <TextView
-                        android:id="@+id/price_kakao_detail_movie"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_margin="5dp"
-                        android:text="3300"
-                        android:textSize="9dp">
-
-                    </TextView>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginTop="5dp"
-                        android:text="원"
-                        android:textSize="9dp"
-                        >
-
-                    </TextView>
-
-
-                </LinearLayout>
-
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    >
-
-                    <!--
-                    <ImageView
-                        android:id="@+id/icon_googleplaymovie_detail_movie"
-                        android:layout_width="26dp"
-                        android:layout_height="30dp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/icon_googleplaymovie">
-
-
-                    </ImageView>
-                    -->
-
-                    <TextView
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_margin="5dp"
-                        android:text="구글 플레이 무비"
-                        android:textSize="9dp">
-
-                    </TextView>
-
-                    <TextView
-                        android:id="@+id/price_google_detail_movie"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_margin="5dp"
-                        android:text="3300"
-                        android:textSize="9dp">
-
-                    </TextView>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginTop="5dp"
-                        android:text="원"
-                        android:textSize="9dp"
-                        >
-
-                    </TextView>
-
-
-                </LinearLayout>
-
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    >
-
-                    <!--
-                    <ImageView
-                        android:id="@+id/icon_wavve_detail_movie"
-                        android:layout_width="26dp"
-                        android:layout_height="30dp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/icon_wavve">
-
-
-                    </ImageView>
--->
-                    <TextView
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_margin="5dp"
-                        android:text="wavve"
-                        android:textSize="9dp">
-
-                    </TextView>
-
-                    <TextView
-                        android:id="@+id/price_wavve_detail_movie"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_margin="5dp"
-                        android:text="4000"
-                        android:textSize="9dp">
-
-                    </TextView>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginTop="5dp"
-                        android:text="원"
-                        android:textSize="9dp"
-                        >
-
-                    </TextView>
-
-
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-
+                android:textSize="10dp" />
 
         </LinearLayout>
 
     </LinearLayout>
 
-
 </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
