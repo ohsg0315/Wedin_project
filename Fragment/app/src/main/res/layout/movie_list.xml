@@ -17,7 +17,8 @@
                 android:id="@+id/poster"
                 android:layout_width="130dp"
                 android:layout_height="150dp"
-                android:scaleType="fitXY" />
+                android:scaleType="fitXY"
+                android:clickable="true" />
 
     </androidx.cardview.widget.CardView>
 </RelativeLayout>
