@@ -59,18 +59,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
-/*
+
         if(mFirebaseUser == null) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
             return;
-        } else {
+        } /*else {
             mUsername = mFirebaseUser.getDisplayName();
             if(mFirebaseUser != null) {
                 mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
             }
-        }
-*/
+        }*/
+
         BtnOnClickListener onClickListener = new BtnOnClickListener();
         Button readBtn = findViewById(R.id.read_btn);
         readBtn.setOnClickListener(onClickListener);
