@@ -7,16 +7,21 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.hong.fragement.R;
 
-public class FindInfo extends FragmentActivity implements View.OnClickListener{
+public class FindInfo extends FragmentActivity implements View.OnClickListener, FindPassword.OnInputListener{
 
-    private Button FindIdBtn, FindPasswordBtn;
+    private static final String TAG = "infoActivity";
+
+    private Button FindIdBtn, FindPasswordBtn, confirmBtn;
     private FragmentTransaction transaction;
     private Fragment newFragment;
+
+    private String pName, pEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +33,6 @@ public class FindInfo extends FragmentActivity implements View.OnClickListener{
 
         FindIdBtn.setOnClickListener(this);
         FindPasswordBtn.setOnClickListener(this);
-
 
         // 프래그먼트 초기화
         newFragment = new FindId();
@@ -53,5 +57,11 @@ public class FindInfo extends FragmentActivity implements View.OnClickListener{
         }
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    @Override
+    public void sendInput(String name, String email){
+        pName = name; pEmail = email;
+        Log.d(TAG, "asvnlkdlsdnvlksd" + pName + pEmail);
     }
 }

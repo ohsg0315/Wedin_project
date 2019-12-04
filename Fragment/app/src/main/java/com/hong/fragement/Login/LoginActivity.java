@@ -35,11 +35,8 @@ import com.hong.fragement.R;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
     private FirebaseAuth auth; // 파이어 베이스 인증 객체
-    private GoogleSignInOptions gso;
     private GoogleApiClient googleApiClient;  // 구글 API 클라이언트 객체
-    private GoogleSignInClient mGoogleSignInClient;
     private static final int REQ_SIGN_GOOGLE = 100; // 구글 로그인 결과 코드
-    private static final int RC_SIGN_IN = 1000;
 
     private EditText userId;
     private EditText userPassowrd;
@@ -62,7 +59,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 .requestEmail()
                 .build();
 
-        googleApiClient = new GoogleApiClient.Builder(this)
+        googleApiClient = new GoogleApiClient.Builder(getApplicationContext())
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
                 .build();
@@ -139,7 +136,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     // 구글 로그인 인증 요청 후 되돌려 받는 곳
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
@@ -151,14 +148,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 GoogleSignInAccount account = result.getSignInAccount();  // 구글 로그인 정보 저장 (닉네임, 프로필 사진, 이메일 주소)
                 resultLogin(account);
             }
-            /*Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                // Google Sign In was successful, authenticate with Firebase
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthWithGoogle(account);
-            } catch (ApiException e) {
-            }
-        }*/
         }
     }
 
@@ -171,7 +160,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         // 로그인 성공
                         if(task.isSuccessful()){
-                            Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             intent.putExtra("nickName", account.getDisplayName());
                             intent.putExtra("photoUrl", String.valueOf(account.getPhotoUrl()));  // String.valueOf 특정 자료형을 String 형태로
@@ -179,25 +168,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         }
                         // 로그인 실패
                         else{
-                            Toast.makeText(LoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    }
-
-
-    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-
-        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-        auth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = auth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            updateUI(null);
+                            Toast.makeText(getApplicationContext(), "로그인 실패", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

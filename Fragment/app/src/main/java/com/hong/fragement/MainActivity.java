@@ -61,8 +61,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
         Intent intent = getIntent();
-        String nickName = intent.getStringExtra("nickName"); // 닉네임
-        String photoUrl = intent.getStringExtra("photoUrl"); // 프로필 url 전달
+    //    String nickName = intent.getStringExtra("nickName"); // 닉네임
+     //   String photoUrl = intent.getStringExtra("photoUrl"); // 프로필 url 전달
 
 
         /*
