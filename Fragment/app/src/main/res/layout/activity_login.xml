@@ -14,21 +14,21 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/wedin_logo"
             android:layout_gravity="center_horizontal"
-            android:paddingTop="30dp" />
+            android:paddingTop="30dp"
+            android:src="@drawable/wedin_logo" />
 
         <EditText
             android:id="@+id/user_id"
             android:layout_width="300dp"
             android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/round_coner"
             android:layout_marginTop="16dp"
+            android:background="@drawable/round_coner"
             android:hint="Email or ID"
-            android:textAlignment="center"
             android:maxLength="30"
             android:maxLines="1"
+            android:textAlignment="center"
             android:textColor="#222222"
             android:textSize="20dp" />
 
@@ -37,13 +37,13 @@
             android:layout_width="300dp"
             android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/round_coner"
             android:layout_marginTop="16dp"
+            android:background="@drawable/round_coner"
             android:hint="Password"
-            android:password="true"
-            android:textAlignment="center"
             android:maxLength="30"
             android:maxLines="1"
+            android:password="true"
+            android:textAlignment="center"
             android:textColor="#222222"
             android:textSize="20dp" />
 
@@ -52,40 +52,38 @@
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
-            android:text="로그인"
-            android:textSize="30dp"
-            android:textColor="#FFFFFF"
+            android:layout_marginTop="16dp"
             android:background="#1e90ff"
-            android:layout_marginTop="16dp"/>
+            android:text="로그인"
+            android:textColor="#FFFFFF"
+            android:textSize="30dp" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp">
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginRight="55dp"
+            android:layout_marginLeft="55dp">
 
             <Button
                 android:id="@+id/sign_up_btn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginLeft="30dp"
-                android:text="회원가입"/>
+                android:background="@drawable/round_coner"
+                android:text="회원가입" />
 
             <Button
                 android:id="@+id/id_find_btn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="ID찾기"/>
+                android:layout_marginLeft="30dp"
+                android:layout_weight="2"
+                android:background="@drawable/round_coner"
+                android:text="아이디 \u0026 비밀번호 찾기" />
 
-            <Button
-                android:id="@+id/password_find_btn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginRight="30dp"
-                android:text="패스워드찾기"/>
 
         </LinearLayout>
 
@@ -94,7 +92,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
-
 
 
     </LinearLayout>

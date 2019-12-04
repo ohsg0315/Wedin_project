@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.icu.text.IDNA;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -40,7 +41,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button login;
     private Button signUpBtn;
     private Button idFind;
-    private Button passwordFind;
     private SignInButton googleBtn;
 
     @Override
@@ -61,13 +61,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         login = findViewById(R.id.sign_in_btn);
         idFind = findViewById(R.id.id_find_btn);
-        passwordFind = findViewById(R.id.password_find_btn);
         signUpBtn = findViewById(R.id.sign_up_btn);
         googleBtn = findViewById(R.id.google_btn);
 
         //passwordFind.setOnClickListener(this);
         // idFind.setOnClickListener(this);
         userId.setOnClickListener(this);
+        idFind.setOnClickListener(this);
         userPassowrd.setOnClickListener(this);
         signUpBtn.setOnClickListener(this);
         login.setOnClickListener(this);
@@ -107,8 +107,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (view == googleBtn) signIn();
         else if(view == signUpBtn) signUp();
         else if(view == login) signInByOriginal(userId.getText().toString(), userPassowrd.getText().toString());
+        else if(view == idFind) startIdFind();
     }
 
+    private void startIdFind(){
+        Intent idFindIntent = new Intent(LoginActivity.this, FindInfo.class);
+        startActivity(idFindIntent);
+    }
     private void signUp(){
         Intent signUpIntent = new Intent(LoginActivity.this, SignUp.class);
         startActivity(signUpIntent);
