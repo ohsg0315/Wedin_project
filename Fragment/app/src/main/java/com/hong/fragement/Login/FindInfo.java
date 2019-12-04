@@ -15,9 +15,8 @@ import com.hong.fragement.R;
 public class FindInfo extends FragmentActivity implements View.OnClickListener{
 
     private Button FindIdBtn, FindPasswordBtn;
-
-    private FindId findId;
-    private FindPassword findPassword;
+    private FragmentTransaction transaction;
+    private Fragment newFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,31 +29,29 @@ public class FindInfo extends FragmentActivity implements View.OnClickListener{
         FindIdBtn.setOnClickListener(this);
         FindPasswordBtn.setOnClickListener(this);
 
-        initFragment();
-    }
 
-    private void initFragment(){
-        Fragment newFragment = new FindId();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_findid, newFragment);
-        transaction.addToBackStack(null);
+        // 프래그먼트 초기화
+        newFragment = new FindId();
+        transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.fragment_findid, newFragment);
         transaction.commit();
     }
+
     @Override
     public void onClick(View v) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.popBackStack();;
+        transaction = fragmentManager.beginTransaction();
+
         if(v == FindIdBtn) {
-            Fragment newFragment = new FindId();
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            newFragment = new FindId();
             transaction.replace(R.id.fragment_findid, newFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
         }
         else if(v == FindPasswordBtn){
-            Fragment newFragment = new FindPassword();
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            newFragment = new FindPassword();
             transaction.replace(R.id.fragment_findid, newFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-        };
+        }
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

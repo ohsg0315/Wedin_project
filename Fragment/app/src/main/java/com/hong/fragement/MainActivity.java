@@ -60,21 +60,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
+        Intent intent = getIntent();
+        String nickName = intent.getStringExtra("nickName"); // 닉네임
+        String photoUrl = intent.getStringExtra("photoUrl"); // 프로필 url 전달
 
+
+        /*
         if(mFirebaseUser == null) {
+
             startActivity(new Intent(this, LoginActivity.class));
             finish();
             return;
-        } /*else {
+        } else {
             mUsername = mFirebaseUser.getDisplayName();
             if(mFirebaseUser != null) {
                 mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
             }
         }*/
-
-        BtnOnClickListener onClickListener = new BtnOnClickListener();
-        Button readBtn = findViewById(R.id.read_btn);
-        readBtn.setOnClickListener(onClickListener);
 
         // 로그인 후 화면에 default fragment 설정
         homeFragment = new HomeFragment();
@@ -92,18 +94,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    /* 데이터 베이스 불러오기용 코드 */
-    class BtnOnClickListener implements Button.OnClickListener {
-        @Override
-        public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.read_btn :
-                    ReadData();
-                    break ;
-            }
-        }
-    }
-
+    /* 영화 데이터 베이스 불러오기용 코드 */
     private void ReadData(){
         DocumentReference docRef = db.collection("Movie").document("조커");
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
