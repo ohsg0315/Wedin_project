@@ -11,9 +11,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;;
+import android.view.View;
+import android.widget.Toast;;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,7 +29,9 @@ import com.hong.fragement.Event.EventPage;
 import com.hong.fragement.Home.HomeFragment;
 import com.hong.fragement.Login.LoginActivity;
 import com.hong.fragement.MyPage.MemberInfo;
+import com.hong.fragement.MyPage.MemberObj;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -44,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FirebaseAuth mFirebaseAuth;
     private String mUsername;
     private String mPhotoUrl;
+
+    private MemberObj memberObj;
 
     // 프래그먼트 클래스
     private HomeFragment homeFragment;
@@ -76,7 +83,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = findViewById(R.id.navigation_view);    // activity_main NavigationView id
         navigationView.setNavigationItemSelectedListener(this);
 
+        // 로그인 상태일 경우 회원 정보를 받아온다.
+        if(mFirebaseUser != null){
+            ReadUserData();
+        }
+    }
 
+
+    private void ReadUserData(){
+        DocumentReference docRef = db.collection("Users").document(mFirebaseUser.getUid());
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+               memberObj = documentSnapshot.toObject(MemberObj.class);
+            }
+        });
     }
 
     /* 영화 데이터 베이스 불러오기용 코드 */

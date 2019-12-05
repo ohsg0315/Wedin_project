@@ -1,16 +1,17 @@
 package com.hong.fragement.MyPage;
 
-import android.util.ArraySet;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class MemberObj implements Serializable {
+public class MemberObj {
     private String name;
     private String year;
     private String month;
     private String day;
-    private ArrayList<String> genre = new ArrayList<>();
+    private ArrayList<String> genre;
+
+    public MemberObj() {
+    }
 
     public MemberObj(String name, String year, String month, String day, ArrayList<String> genre) {
         this.name = name;
