@@ -1,11 +1,14 @@
 package com.hong.fragement;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -84,18 +87,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         // 로그인 상태일 경우 회원 정보를 받아온다.
-        if(mFirebaseUser != null){
+        if (mFirebaseUser != null) {
             ReadUserData();
         }
     }
 
 
-    private void ReadUserData(){
+    private void ReadUserData() {
         DocumentReference docRef = db.collection("Users").document(mFirebaseUser.getUid());
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-               memberObj = documentSnapshot.toObject(MemberObj.class);
+                memberObj = documentSnapshot.toObject(MemberObj.class);
             }
         });
     }
@@ -187,39 +190,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (menuItem.getItemId()) {
             case R.id.nav_loginout:
                 if (navLogInOut.getTitle().equals("로그아웃")) {
-                    mFirebaseAuth.signOut();
-
-                   Intent intent = getIntent();
-                   finish();
-                   startActivity(intent);
+                    LogoutAlertDialog();
                 } else {
                     startActivity(new Intent(this, LoginActivity.class));
                     finish();
                 }
                 break;
             case R.id.navigation_right_mypage:
-                if (mFirebaseUser == null) {
-                    startActivity(new Intent(this, LoginActivity.class));
-                    finish();
-                    break;
-                } else {
-                    if (mFirebaseUser != null) {
-                        for (UserInfo profile : mFirebaseUser.getProviderData()) {
-                            // Id of the provider (ex: google.com)
-                            //String providerId = profile.getProviderId();
+                if (mFirebaseUser != null) {
+                    for (UserInfo profile : mFirebaseUser.getProviderData()) {
+                        // Id of the provider (ex: google.com)
+                        //String providerId = profile.getProviderId();
 
-                            // UID specific to the provider
-                            //String uid = profile.getUid();
+                        // UID specific to the provider
+                        //String uid = profile.getUid();
 
-                            // Name, email address, and profile photo Url
-                            String name = profile.getDisplayName();
+                        // Name, email address, and profile photo Url
+                        String name = profile.getDisplayName();
 
-                            //내 정보로 들어감.
-                            myStartActivity(MemberInfo.class);
+                        //내 정보로 들어감.
+                        myStartActivity(MemberInfo.class);
 
-                            //String email = profile.getEmail();
-                            //Uri photoUrl = profile.getPhotoUrl();
-                        }
+                        //String email = profile.getEmail();
+                        //Uri photoUrl = profile.getPhotoUrl();
                     }
                 }
                 break;
@@ -257,7 +250,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else navLogInOut.setTitle("로그아웃");
     }
 
+    // 로그아웃 다이얼로그
+    private void LogoutAlertDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("로그아웃").setMessage("로그아웃 하시겠습니까?")
+                .setPositiveButton("로그아웃", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mFirebaseAuth.signOut();
 
+                        Intent intent = getIntent();
+                        finish();
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .show();
+    }
 }
 
 
