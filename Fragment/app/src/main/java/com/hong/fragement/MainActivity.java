@@ -145,13 +145,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         @Override
-        public void onDrawerOpened(@NonNull View drawerView) {}
+        public void onDrawerOpened(@NonNull View drawerView) {
+        }
 
         @Override
-        public void onDrawerClosed(@NonNull View drawerView) {}
+        public void onDrawerClosed(@NonNull View drawerView) {
+        }
 
         @Override
-        public void onDrawerStateChanged(int newState) {}
+        public void onDrawerStateChanged(int newState) {
+        }
     };
 
     // 우측 네비게이션 아이템 이벤트핸들러
@@ -162,11 +165,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (menuItem.getItemId()) {
             case R.id.nav_loginout:
-                if(navLogInOut.getTitle().equals("로그아웃")) {
+                if (navLogInOut.getTitle().equals("로그아웃")) {
                     mFirebaseAuth.signOut();
+
+                   Intent intent = getIntent();
+                   finish();
+                   startActivity(intent);
+                } else {
                     startActivity(new Intent(this, LoginActivity.class));
-                } else startActivity(new Intent(this, LoginActivity.class));
-                finish();
+                    finish();
+                }
                 break;
             case R.id.navigation_right_mypage:
                 if (mFirebaseUser == null) {
@@ -221,7 +229,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Menu nav_menu = navigationView.getMenu();
         navLogInOut = nav_menu.findItem(R.id.nav_loginout);
 
-        if(mFirebaseUser != null) {
+        if (mFirebaseUser == null) {
             navLogInOut.setTitle("로그인"); // default : 로그아웃
             nav_menu.findItem(R.id.nav_reservation_information).setVisible(false);
             nav_menu.findItem(R.id.navigation_right_mypage).setVisible(false);
