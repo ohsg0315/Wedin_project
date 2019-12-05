@@ -91,7 +91,9 @@ public class FindPassword extends Fragment {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(getContext(), "해당 이메일로 전송되었습니다.", Toast.LENGTH_SHORT).show();
-
+                             getActivity().finish();
+                        }else{
+                            Toast.makeText(getContext(), "해당 이메일이 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
