@@ -3,27 +3,40 @@ package com.hong.fragement.MyPage;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.hong.fragement.MainActivity;
 import com.hong.fragement.R;
+
+import java.lang.reflect.Member;
+import java.util.ArrayList;
 
 public class MemberInfo extends AppCompatActivity implements View.OnClickListener {
 
     private Button updateConfirmBtn, confirmBtn;
     private EditText passwordEdit, repasswordEdit, nameEdit, yearEdit, monthEdit, dayEdit;
     private ImageView setImage;
+    private MemberObj memberObj;
+    private Spinner[] genre = new Spinner[3];
+    private ArrayAdapter arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,38 +55,100 @@ public class MemberInfo extends AppCompatActivity implements View.OnClickListene
 
         updateConfirmBtn.setOnClickListener(this);
         confirmBtn.setOnClickListener(this);
+
+        setViewSpinner();
+
+        Intent intent = getIntent();
+        memberObj = (MemberObj) intent.getSerializableExtra("member");
+
+        initProfile();
     }
 
-    private void profileUpdate() {
+    // 읽어온 객체를 입력
+    private void initProfile() {
+        nameEdit.setText(memberObj.getName());
+        yearEdit.setText(memberObj.getYear());
+        monthEdit.setText(memberObj.getMonth());
+        dayEdit.setText(memberObj.getDay());
+        setSpinnerData(memberObj.getGenre());
+    }
+
+
+    private void profileUpdate() {}
+    /*
         String name = nameEdit.getText().toString();
+        String year = yearEdit.getText().toString();
+        String month = monthEdit.getText().toString();
+        String day = dayEdit.getText().toString();
+        ArrayList<String> pGenre = new ArrayList<String>();
+        for (int i = 0; i < 3; i++) {
+            pGenre.set(i, genre[i].getSelectedItem().toString());
+        }
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        if (name.length() > 0) {
-            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                    .setDisplayName(name)
-                    .build();
+        MemberObj newMemberObj = new MemberObj(name, year, month, day, pGenre);
 
-            if (user != null) {
-                user.updateProfile(profileUpdates)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(getApplicationContext(), "회원정보 수정을 성공했습니다.", Toast.LENGTH_SHORT).show();
-                                    finish();
-                                }
-                            }
-                        });
-            }
-        } else {
-            Toast.makeText(getApplicationContext(), "회원정보 수정을 실패했습니다.", Toast.LENGTH_SHORT).show();
+        if (user != null) {
+            db.collection("User").document(user.getUid()).set(newMemberObj)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(getApplicationContext(), "업데이트를 성공했습니다.", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getApplicationContext(), "업데이트를 실패했습니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
         }
     }
-
+     */
     @Override
     public void onClick(View v) {
         if (v == updateConfirmBtn) profileUpdate();
-        else if (v == confirmBtn) finish();
+        else if (v == confirmBtn) myStartActivity(MainActivity.class);
+    }
+
+    private void myStartActivity(Class c) {
+        Intent intent = new Intent(this, c);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
+    // 스피너 세팅
+    private void setViewSpinner() {
+        genre[0] = (Spinner) findViewById(R.id.member_preference_genre1);
+        genre[1] = (Spinner) findViewById(R.id.member_preference_genre2);
+        genre[2] = (Spinner) findViewById(R.id.member_preference_genre3);
+
+        arrayAdapter = ArrayAdapter.createFromResource(this, R.array.movie_genre, android.R.layout.simple_spinner_dropdown_item);
+
+        for (int i = 0; i < 3; i++)
+            genre[i].setAdapter(arrayAdapter);
+    }
+
+
+    // 읽어온 객체로부터 스피너값 설정
+    private void setSpinnerData(ArrayList<String> arrayList) {
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.movie_genre, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        for (int i = 0; i < 3; i++) {
+            genre[i].setAdapter(adapter);
+
+            if (arrayList.get(i) != null) {
+                int spinnerPosition = adapter.getPosition(arrayList.get(i));
+                genre[i].setSelection(spinnerPosition);
+            }
+        }
+
+        for (int i = 0; i < 3; i++) {
+            ArrayAdapter myAdap = (ArrayAdapter) genre[i].getAdapter();
+        }
     }
 }

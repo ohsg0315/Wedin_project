@@ -43,7 +43,6 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
     private String TAG = "SignUpActivity";
 
-
     private Button signUpConfirmBtn;
     private EditText emailEdit, passwordEdit, repasswordEdit, nameEdit, yearEdit, monthEdit, dayEdit;
     private ImageView setImage;
@@ -127,7 +126,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                                 updateUI(user);
                             } else {
                                 // If sign in fails, display a message to the user.
-                                if(task.getException() != null)
+                                if (task.getException() != null)
                                     Toast.makeText(getApplicationContext(), task.getException().toString(), Toast.LENGTH_SHORT).show();
                                 //Toast.makeText(EmailPasswordActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                                 updateUI(null);
@@ -161,6 +160,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         for (int i = 0; i < 3; i++)
             preferenceGenre[i].setAdapter(arrayAdapter);
     }
+
     public void updateUI(FirebaseUser user) {
         if (user != null) {
             startActivity(new Intent(this, MainActivity.class));

@@ -3,7 +3,7 @@ package com.hong.fragement.MyPage;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class MemberObj {
+public class MemberObj implements Serializable{
     private String name;
     private String year;
     private String month;

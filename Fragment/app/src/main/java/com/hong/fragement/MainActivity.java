@@ -198,22 +198,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.navigation_right_mypage:
                 if (mFirebaseUser != null) {
-                    for (UserInfo profile : mFirebaseUser.getProviderData()) {
-                        // Id of the provider (ex: google.com)
-                        //String providerId = profile.getProviderId();
 
-                        // UID specific to the provider
-                        //String uid = profile.getUid();
+                    //내 정보를 객체로 전달하여 MemberInfo로 들어감.
+                    Intent intent = new Intent(getApplicationContext(), MemberInfo.class);
+                    intent.putExtra("member", memberObj);
+                    myStartActivity(MemberInfo.class);
+                    startActivity(intent);
 
-                        // Name, email address, and profile photo Url
-                        String name = profile.getDisplayName();
+                    //String email = profile.getEmail();
+                    //Uri photoUrl = profile.getPhotoUrl();
 
-                        //내 정보로 들어감.
-                        myStartActivity(MemberInfo.class);
-
-                        //String email = profile.getEmail();
-                        //Uri photoUrl = profile.getPhotoUrl();
-                    }
                 }
                 break;
         }
