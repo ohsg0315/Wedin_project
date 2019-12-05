@@ -6,15 +6,12 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
+import android.view.View;;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -29,7 +26,6 @@ import com.hong.fragement.Event.EventPage;
 import com.hong.fragement.Home.HomeFragment;
 import com.hong.fragement.Login.LoginActivity;
 import com.hong.fragement.MyPage.MemberInfo;
-import com.hong.fragement.MyPage.MyPage;
 
 import java.util.Map;
 
@@ -44,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView navigationView;
     private FragmentTransaction fragmentTransaction;
 
-
     private FirebaseUser mFirebaseUser;
     private FirebaseAuth mFirebaseAuth;
     private String mUsername;
@@ -56,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private EventPage eventPage;
 
     private BottomNavigationView navigation;
+    private MenuItem navLogInOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,15 +60,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
-
-        /*
-        if(mFirebaseUser == null) {
-
-            startActivity(new Intent(this, LoginActivity.class));
-            finish();
-            return;
-        }
-        */
 
         // 로그인 후 화면에 default fragment 설정
         homeFragment = new HomeFragment();
@@ -88,10 +75,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED); // 잠금 : 손가락으로 밀어도 안열림
         navigationView = findViewById(R.id.navigation_view);    // activity_main NavigationView id
         navigationView.setNavigationItemSelectedListener(this);
+
+
     }
 
     /* 영화 데이터 베이스 불러오기용 코드 */
-    private void ReadData(){
+    private void ReadData() {
         DocumentReference docRef = db.collection("Movie").document("조커");
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -127,15 +116,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             switch (menuItem.getItemId()) {
                 case R.id.navigation_home:
                     homeFragment = new HomeFragment();
-                    fragmentTransaction.replace(R.id.frame,homeFragment);
+                    fragmentTransaction.replace(R.id.frame, homeFragment);
                     break;
                 case R.id.navigation_freemovie:
                     freeMovie = new FreeMovie();
-                    fragmentTransaction.replace(R.id.frame,freeMovie);
+                    fragmentTransaction.replace(R.id.frame, freeMovie);
                     break;
                 case R.id.navigation_eventpage:
                     eventPage = new EventPage();
-                    fragmentTransaction.replace(R.id.frame,eventPage);
+                    fragmentTransaction.replace(R.id.frame, eventPage);
                     break;
                 case R.id.navigation_mypage:
                     drawerLayout.openDrawer(navigationView);    // 네이게이션 오픈
@@ -152,36 +141,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DrawerLayout.DrawerListener listener = new DrawerLayout.DrawerListener() {
         @Override
         public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+            changeOptionMenuItem();
         }
 
         @Override
-        public void onDrawerOpened(@NonNull View drawerView) {
-        }
+        public void onDrawerOpened(@NonNull View drawerView) {}
 
         @Override
-        public void onDrawerClosed(@NonNull View drawerView) {
-        }
+        public void onDrawerClosed(@NonNull View drawerView) {}
 
         @Override
-        public void onDrawerStateChanged(int newState) {
-        }
+        public void onDrawerStateChanged(int newState) {}
     };
 
-        // 우측 네비게이션 아이템 이벤트핸들러
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+    // 우측 네비게이션 아이템 이벤트핸들러
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         switch (menuItem.getItemId()) {
-            case R.id.nav_logout:
-                mFirebaseAuth.signOut();
-                startActivity(new Intent(this, LoginActivity.class));
+            case R.id.nav_loginout:
+                if(navLogInOut.getTitle().equals("로그아웃")) {
+                    mFirebaseAuth.signOut();
+                    startActivity(new Intent(this, LoginActivity.class));
+                } else startActivity(new Intent(this, LoginActivity.class));
                 finish();
                 break;
-
             case R.id.navigation_right_mypage:
-                if(mFirebaseUser == null) {
+                if (mFirebaseUser == null) {
                     startActivity(new Intent(this, LoginActivity.class));
                     finish();
                     break;
@@ -211,24 +199,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         transaction.addToBackStack(null);
         transaction.commit();
         return true;
-
     }
 
     @Override
     public void onBackPressed() {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)) {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
     }
 
-    private void myStartActivity(Class c){
-            Intent intent = new Intent(this, c);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
+    private void myStartActivity(Class c) {
+        Intent intent = new Intent(this, c);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
+
+
+    private void changeOptionMenuItem() {
+        Menu nav_menu = navigationView.getMenu();
+        navLogInOut = nav_menu.findItem(R.id.nav_loginout);
+
+        if(mFirebaseUser != null) {
+            navLogInOut.setTitle("로그인"); // default : 로그아웃
+            nav_menu.findItem(R.id.nav_reservation_information).setVisible(false);
+            nav_menu.findItem(R.id.navigation_right_mypage).setVisible(false);
+        } else navLogInOut.setTitle("로그아웃");
+    }
+
+
 }
+
 
 
 

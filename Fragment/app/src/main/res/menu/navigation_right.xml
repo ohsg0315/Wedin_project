@@ -12,12 +12,12 @@
         <item
             android:id="@+id/nav_reservation_information"
             android:title="예약 정보"
-            android:icon="@drawable/wedin_logo"/>
+            android:icon="@drawable/wedin_logo" />
 
         <item
-            android:id="@+id/nav_logout"
+            android:id="@+id/nav_loginout"
             android:title="로그아웃"
-            android:icon="@drawable/wedin_logo"/>
+            android:icon="@drawable/wedin_logo" />
     </group>
 
 
