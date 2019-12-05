@@ -82,6 +82,9 @@ public class FindPassword extends Fragment {
     }
 
     private void resetPassword(String email){
+        auth.setLanguageCode("fr");
+        auth.useAppLanguage();
+
         FirebaseAuth auth = FirebaseAuth.getInstance();
         String emailAddress = email;
 

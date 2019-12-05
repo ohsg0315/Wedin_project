@@ -6,7 +6,9 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -19,12 +21,15 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.hong.fragement.Event.EventPage;
 import com.hong.fragement.Home.HomeFragment;
 import com.hong.fragement.Login.LoginActivity;
+import com.hong.fragement.MyPage.MemberInfo;
+import com.hong.fragement.MyPage.MyPage;
 
 import java.util.Map;
 
@@ -60,23 +65,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
-        Intent intent = getIntent();
-    //    String nickName = intent.getStringExtra("nickName"); // 닉네임
-     //   String photoUrl = intent.getStringExtra("photoUrl"); // 프로필 url 전달
-
-
         /*
         if(mFirebaseUser == null) {
 
             startActivity(new Intent(this, LoginActivity.class));
             finish();
             return;
-        } else {
-            mUsername = mFirebaseUser.getDisplayName();
-            if(mFirebaseUser != null) {
-                mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
-            }
-        }*/
+        }
+        */
 
         // 로그인 후 화면에 default fragment 설정
         homeFragment = new HomeFragment();
@@ -182,6 +178,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 mFirebaseAuth.signOut();
                 startActivity(new Intent(this, LoginActivity.class));
                 finish();
+                break;
+
+            case R.id.navigation_right_mypage:
+                if(mFirebaseUser == null) {
+                    startActivity(new Intent(this, LoginActivity.class));
+                    finish();
+                    break;
+                } else {
+                    if (mFirebaseUser != null) {
+                        for (UserInfo profile : mFirebaseUser.getProviderData()) {
+                            // Id of the provider (ex: google.com)
+                            //String providerId = profile.getProviderId();
+
+                            // UID specific to the provider
+                            //String uid = profile.getUid();
+
+                            // Name, email address, and profile photo Url
+                            String name = profile.getDisplayName();
+
+                            //내 정보로 들어감.
+                            myStartActivity(MemberInfo.class);
+
+                            //String email = profile.getEmail();
+                            //Uri photoUrl = profile.getPhotoUrl();
+                        }
+                    }
+                }
+                break;
         }
 
         transaction.addToBackStack(null);
@@ -197,6 +221,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             super.onBackPressed();
         }
+    }
+
+    private void myStartActivity(Class c){
+            Intent intent = new Intent(this, c);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
     }
 }
 
