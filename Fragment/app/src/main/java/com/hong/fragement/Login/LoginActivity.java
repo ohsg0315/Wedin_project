@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -41,6 +42,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText userId;
     private EditText userPassowrd;
 
+    private ImageView logo;
+
     private Button login;
     private Button signUpBtn;
     private Button idFind;
@@ -69,11 +72,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         userId = findViewById(R.id.user_id);
         userPassowrd = findViewById(R.id.user_password);
 
+        logo = findViewById(R.id.login_wedin_logo);
         login = findViewById(R.id.sign_in_btn);
         idFind = findViewById(R.id.id_find_btn);
         signUpBtn = findViewById(R.id.sign_up_btn);
         googleBtn = findViewById(R.id.google_btn);
 
+        logo.setOnClickListener(this);
         userId.setOnClickListener(this);
         idFind.setOnClickListener(this);
         userPassowrd.setOnClickListener(this);
@@ -118,6 +123,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         else if(view == signUpBtn) signUp();
         else if(view == login) signInByOriginal(userId.getText().toString(), userPassowrd.getText().toString());
         else if(view == idFind) startIdFind();
+        else if(view == logo) myStartActivity(MainActivity.class);
     }
 
     private void startIdFind(){
@@ -185,6 +191,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    private void myStartActivity(Class c) {
+        Intent intent = new Intent(this, c);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
     }
 }
 
