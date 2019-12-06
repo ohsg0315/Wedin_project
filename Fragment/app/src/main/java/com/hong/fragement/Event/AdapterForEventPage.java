@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.hong.fragement.R;
 
 import java.util.List;
@@ -38,14 +39,18 @@ public class AdapterForEventPage extends RecyclerView.Adapter<AdapterForEventPag
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdapterForEventPage.EventViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AdapterForEventPage.EventViewHolder holder, int position)
+    {
+        Glide.with(holder.itemView)
+                .load(list.get(position).getEventUrl())
+                .into(holder.eventImage);
 
     }
 
     @Override
     public int getItemCount() {
 
-        return list.size();
+        return (list != null ? list.size() : 0);
     }
 
     public class EventViewHolder extends RecyclerView.ViewHolder

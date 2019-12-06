@@ -21,7 +21,7 @@
                 android:layout_width="100dp"
                 android:layout_weight="70"
                 android:scaleType="centerInside"
-                android:src="@drawable/p1"
+                android:src="@drawable/naver_logo"
                 android:id="@+id/OTT_site_Logo_Image">
 
             </ImageView>

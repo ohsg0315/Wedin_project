@@ -5,13 +5,15 @@ public class EventInfo {
 
     private int OTTsiteLogoImage;
     private String nameLogo;
-    private int eventImage;
+    private String webUrl;
     private String eventUrl;
 
-    public EventInfo(int OTTsiteLogoImage, int eventImage, String nameLogo, String eventUrl) {
+    public EventInfo() { }
+
+    public EventInfo(int OTTsiteLogoImage, String webUrl, String nameLogo, String eventUrl) {
         this.OTTsiteLogoImage = OTTsiteLogoImage;
         this.nameLogo=nameLogo;
-        this.eventImage = eventImage;
+        this.webUrl=webUrl;
         this.eventUrl =  eventUrl;
     }
 
@@ -22,8 +24,8 @@ public class EventInfo {
     public String getNameLogo() {
         return nameLogo;
     }
-    public int getEventImage() {
-        return eventImage;
+    public String getWebUrl() {
+        return webUrl;
     }
     public String getEventUrl() {
         return eventUrl;
@@ -38,8 +40,8 @@ public class EventInfo {
         this.nameLogo = nameLogo;
     }
 
-    public void setEventImage(int eventImage) {
-        this.eventImage = eventImage;
+    public void setWebUrl(String webUrl) {
+        this.webUrl = webUrl;
     }
 
     public void setEventUrl(String eventUrl) {

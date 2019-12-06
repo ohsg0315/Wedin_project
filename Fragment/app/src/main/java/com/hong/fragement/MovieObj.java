@@ -18,6 +18,7 @@ public class MovieObj {
         this.price = price;
     }
 
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -33,6 +34,8 @@ public class MovieObj {
     public void setImageUri(String imageUri) {
         this.imageUri = imageUri;
     }
+
+
 
     public String getTitle(){
         return title;
