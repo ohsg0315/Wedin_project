@@ -28,9 +28,12 @@ import com.hong.fragement.R;
 
 import java.lang.reflect.Member;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MemberInfo extends AppCompatActivity implements View.OnClickListener {
 
+    private static final String TAG = "시발";
+    private String email, uid;
     private Button updateConfirmBtn, confirmBtn;
     private EditText passwordEdit, repasswordEdit, nameEdit, yearEdit, monthEdit, dayEdit;
     private ImageView setImage;
@@ -59,7 +62,10 @@ public class MemberInfo extends AppCompatActivity implements View.OnClickListene
         setViewSpinner();
 
         Intent intent = getIntent();
+        email = intent.getStringExtra("email");
+        uid = intent.getStringExtra("email");
         memberObj = (MemberObj) intent.getSerializableExtra("member");
+
 
         initProfile();
     }
@@ -74,40 +80,38 @@ public class MemberInfo extends AppCompatActivity implements View.OnClickListene
     }
 
 
-    private void profileUpdate() {}
-    /*
+    private void profileUpdate() {
+
         String name = nameEdit.getText().toString();
         String year = yearEdit.getText().toString();
         String month = monthEdit.getText().toString();
         String day = dayEdit.getText().toString();
-        ArrayList<String> pGenre = new ArrayList<String>();
+        ArrayList<String> pGenre = new ArrayList<>();
+
         for (int i = 0; i < 3; i++) {
-            pGenre.set(i, genre[i].getSelectedItem().toString());
+            pGenre.add(i, genre[i].getSelectedItem().toString());
         }
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         MemberObj newMemberObj = new MemberObj(name, year, month, day, pGenre);
-
-        if (user != null) {
-            db.collection("User").document(user.getUid()).set(newMemberObj)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(getApplicationContext(), "업데이트를 성공했습니다.", Toast.LENGTH_SHORT).show();
-                            finish();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getApplicationContext(), "업데이트를 실패했습니다.", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        }
+        db.collection("Users").document(firebaseUser.getUid()).set(newMemberObj)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getApplicationContext(), "내 정보를 수정했습니다.", Toast.LENGTH_SHORT).show();
+                        myStartActivity(MainActivity.class);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "내 정보 수정을 실패했습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
-     */
+
     @Override
     public void onClick(View v) {
         if (v == updateConfirmBtn) profileUpdate();

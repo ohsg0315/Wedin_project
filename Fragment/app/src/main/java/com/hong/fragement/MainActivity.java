@@ -40,7 +40,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     // Access a Cloud Firestore instance from your Activity
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String TAG = "Read Data from FireStore";
     private Map<String, Object> uriLink;
 
