@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         // 구글 SignIn 버튼 클릭 시 기본적인 사항 연동
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))  // 웹 클라이언트 ID
+                .requestIdToken(GOOGLE_WEB_CLIENT_ID)  // 웹 클라이언트 ID
                 .requestEmail()
                 .build();
 
@@ -108,16 +108,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == REQ_SIGN_GOOGLE){
+        if (requestCode == REQ_SIGN_GOOGLE) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
 
             // 인증 결과가 성공
-            if(result.isSuccess()){
+            if (result.isSuccess()) {
                 Log.d("시발", "인증 성공했어!!!");
                 GoogleSignInAccount account = result.getSignInAccount();  // account에 구글 로그인 정보가 모두 담김
                 resultLogin(account);  // 로그인 결과값 출력 메소드
-            }
-            else {
+            } else {
                 Log.d("시발", "인증 실패했어!!!");
             }
         }
@@ -131,14 +130,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     // 로그인이 성공했는지
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             Toast.makeText(LoginActivity.this, "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show();
                             Log.d("시발", "성공했어!!!");
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                             startActivity(intent);
-                        }
-                        else{
+                        } else {
                             Toast.makeText(LoginActivity.this, "로그인에 실패했습니다.", Toast.LENGTH_SHORT).show();
                             Log.d("시발", "실패했어");
                         }
@@ -147,7 +146,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     // 앱 자체 회원 로그인
-    private void signInByOriginal(String email, String password){
+    private void signInByOriginal(String email, String password) {
         auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -171,20 +170,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        if(view == signUpBtn) signUp();
-        else if(view == login) signInByOriginal(userId.getText().toString(), userPassowrd.getText().toString());
-        else if(view == idFind) startIdFind();
-        else if(view == logo) myStartActivity(MainActivity.class);
+        if (view == signUpBtn)
+            signUp();
+        else if (view == login)
+            signInByOriginal(userId.getText().toString(), userPassowrd.getText().toString());
+        else if (view == idFind)
+            startIdFind();
+        else if (view == logo)
+            myStartActivity(MainActivity.class);
+
     }
 
-    private void startIdFind(){
+    private void startIdFind() {
         Intent idFindIntent = new Intent(LoginActivity.this, FindInfo.class);
         startActivity(idFindIntent);
     }
-    private void signUp(){
+
+    private void signUp() {
         Intent signUpIntent = new Intent(LoginActivity.this, SignUp.class);
         startActivity(signUpIntent);
     }
+
     private void signIn() {
         Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
         startActivityForResult(intent, REQ_SIGN_GOOGLE);
