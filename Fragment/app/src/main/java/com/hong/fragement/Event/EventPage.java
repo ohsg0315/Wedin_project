@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -57,6 +58,10 @@ public class EventPage extends Fragment {
         readDataForEvent();
 
 
+
+
+
+
         return view;
 
 
@@ -70,30 +75,41 @@ public class EventPage extends Fragment {
     {
         data = new EventInfo();
 
-        DocumentReference documentReference
-                = db.collection("Event")
-                .document("wavveEvent");
+        CollectionReference collectionReference
+                = db.collection("Event");
 
-        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+
+        collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                DocumentSnapshot documentSnapshot = task.getResult();
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-                if (documentSnapshot.exists())
+                if (task.isSuccessful())
                 {
-                    data = documentSnapshot.toObject(EventInfo.class);
-                    Log.d("TAG", "successFire");
+                    for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult())
+                    {
+                        data = queryDocumentSnapshot.toObject(EventInfo.class);
 
-                     data.setEventUrl(documentSnapshot.get("imageUri").toString());
-                     //data.setWebUrl(documentSnapshot.get("webUri").toString());
+                        data.setName(queryDocumentSnapshot.toObject(EventInfo.class).getName());
 
-                    eventInfoList.add(data);
 
+                        data.setWebUrl(queryDocumentSnapshot.toObject(EventInfo.class).getWebUrl());
+
+
+                        data.setOTTsiteLogoImage(queryDocumentSnapshot.get("OTTsiteLogoImage").toString());
+                        data.setImageUrl(queryDocumentSnapshot.get("imageUri").toString());
+                        //data.setWebUrl(queryDocumentSnapshot.get("webUrl").toString());
+
+                        eventInfoList.add(data);
+                    }
+                    mAdapterForEventPage = new AdapterForEventPage(eventInfoList, getActivity());
+                    recyclerView.setAdapter(mAdapterForEventPage);
                 }
-                mAdapterForEventPage = new AdapterForEventPage(eventInfoList, getActivity());
-                recyclerView.setAdapter(mAdapterForEventPage);
+
             }
         });
+
+
+
 
 
 
