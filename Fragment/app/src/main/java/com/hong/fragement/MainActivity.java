@@ -75,6 +75,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         homeFragment = new HomeFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.frame, homeFragment).commit();
 
+        Intent intent = getIntent();
+        memberObj = (MemberObj) intent.getSerializableExtra("member");
+
         // 하단 네비게이션
         navigation = findViewById(R.id.navigation);     // activity_main BottomNavigationView id
         navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
@@ -202,7 +205,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     //내 정보를 객체로 전달하여 MemberInfo로 들어감.
                     Intent intent = new Intent(getApplicationContext(), MemberInfo.class);
                     intent.putExtra("member", memberObj);
-                    myStartActivity(MemberInfo.class);
                     startActivity(intent);
 
                     //String email = profile.getEmail();
@@ -225,13 +227,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
-
-    private void myStartActivity(Class c) {
-        Intent intent = new Intent(this, c);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-    }
-
 
     private void changeOptionMenuItem() {
         Menu nav_menu = navigationView.getMenu();

@@ -1,157 +1,163 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:scrollbars="vertical" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <com.google.android.youtube.player.YouTubePlayerView
-        android:id="@+id/youtubeview"
-        android:layout_width="match_parent"
-        android:layout_height="250dp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_marginTop="30dp">
-
-        <ImageView
-            android:id="@+id/poster_detail_movie"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="5"
-            android:scaleType="fitXY" />
+        <com.google.android.youtube.player.YouTubePlayerView
+            android:id="@+id/youtubeview"
+            android:layout_width="match_parent"
+            android:layout_height="250dp" />
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="5"
-            android:paddingLeft="20dp">
+            android:orientation="horizontal"
+            android:layout_marginTop="30dp">
 
-            <TextView
-                android:id="@+id/title_detail_movie"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:textSize="30dp"
-                android:textColor="#000000" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="네이버"
-                    android:textSize="20dp"
-                    android:paddingLeft="3dp"/>
-
-                <TextView
-                    android:id="@+id/movie_low_price"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="20dp"
-                    android:gravity="center" />
-
-            </LinearLayout>
+            <ImageView
+                android:id="@+id/poster_detail_movie"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:scaleType="fitXY" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="5"
+                android:paddingLeft="20dp">
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:id="@+id/title_detail_movie"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:textSize="30dp"
+                    android:textColor="#000000" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="웨이브"
-                    android:textSize="20dp"
-                    android:paddingLeft="3dp"/>
+                    android:orientation="horizontal" >
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="네이버"
+                        android:textSize="20dp"
+                        android:paddingLeft="3dp"/>
+
+                    <TextView
+                        android:id="@+id/movie_low_price"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="20dp"
+                        android:gravity="center" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="웨이브"
+                        android:textSize="20dp"
+                        android:paddingLeft="3dp"/>
+
+                    <TextView
+                        android:id="@+id/movie_high_price"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="20dp"
+                        android:gravity="center" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="100"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/genre1_detail_movie"
+                        android:layout_height="30dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="30"
+                        android:textSize="10dp"
+                        android:text="장르1" />
+
+                    <Button
+                        android:id="@+id/genre2_detail_movie"
+                        android:layout_height="30dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="30"
+                        android:textSize="10dp"
+                        android:text="장르2" />
+
+                    <Button
+                        android:id="@+id/genre3_detail_movie"
+                        android:layout_height="30dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="30"
+                        android:text="장르3"
+                        android:textSize="10dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RatingBar
+                        android:id="@+id/ratingBar_detail_movie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:isIndicator="false"
+                        android:numStars="5"
+                        android:stepSize="0.5"
+
+                        style="@style/Widget.AppCompat.RatingBar.Small" />
+
+                    <TextView
+                        android:id="@+id/rating_detail_movie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="4.2" />
+
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/movie_high_price"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="20dp"
-                    android:gravity="center" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="100"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/genre1_detail_movie"
-                    android:layout_height="30dp"
-                    android:layout_width="0dp"
-                    android:layout_weight="30"
-                    android:textSize="10dp"
-                    android:text="장르1" />
-
-                <Button
-                    android:id="@+id/genre2_detail_movie"
-                    android:layout_height="30dp"
-                    android:layout_width="0dp"
-                    android:layout_weight="30"
-                    android:textSize="10dp"
-                    android:text="장르2" />
-
-                <Button
-                    android:id="@+id/genre3_detail_movie"
-                    android:layout_height="30dp"
-                    android:layout_width="0dp"
-                    android:layout_weight="30"
-                    android:text="장르3"
+                    android:id="@+id/summary_detail_movie"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
                     android:textSize="10dp" />
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <RatingBar
-                    android:id="@+id/ratingBar_detail_movie"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:isIndicator="false"
-                    android:numStars="5"
-                    android:stepSize="0.1"
-                    style="@style/Widget.AppCompat.RatingBar.Small">
-
-                </RatingBar>
-
-                <TextView
-                    android:id="@+id/rating_detail_movie"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="4.2" />
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/summary_detail_movie"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:textSize="10dp" />
-
         </LinearLayout>
 
-    </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rating_recyclerview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-</LinearLayout>
+    </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>
