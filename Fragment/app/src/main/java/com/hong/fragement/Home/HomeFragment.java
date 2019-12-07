@@ -1,10 +1,7 @@
 package com.hong.fragement.Home;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Movie;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,8 +21,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.hong.fragement.FreeMovie;
-import com.hong.fragement.Login.LoginActivity;
 import com.hong.fragement.MovieDetailPage.DetailMovieActivity;
 import com.hong.fragement.MovieObj;
 import com.hong.fragement.R;
@@ -89,6 +83,7 @@ public class HomeFragment extends Fragment {
 
                 intent.putExtra("summary",selectedMovie.getSummary());
                 intent.putExtra("title",selectedMovie.getTitle());
+                intent.putExtra("youtubeUri",selectedMovie.getYoutubeUri());
 
                 startActivity(intent);
             }
@@ -127,6 +122,7 @@ public class HomeFragment extends Fragment {
                                 data.setImageUri(document.toObject(MovieObj.class).getImageUri());
                                 data.setPrice(document.toObject(MovieObj.class).getPrice());
                                 data.setSummary(document.toObject(MovieObj.class).getSummary());
+                                data.setYoutubeUri(document.toObject(MovieObj.class).getYoutubeUri());
 
                                 datList.add(data);
                             }

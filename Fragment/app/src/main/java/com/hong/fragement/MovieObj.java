@@ -8,16 +8,19 @@ public class MovieObj {
     private  String imageUri;
     private  String summary;
     private Map<String, Integer> price = new HashMap<>();
+    private boolean free;
+    private String youtubeUri;
 
     public MovieObj(){}
 
-    public MovieObj(String imageUri, Map<String, Integer> price, String summary, String title ){
+    public MovieObj(String title, String imageUri, String summary, Map<String, Integer> price, boolean free, String youtubeUri) {
         this.title = title;
         this.imageUri = imageUri;
         this.summary = summary;
         this.price = price;
+        this.free = free;
+        this.youtubeUri = youtubeUri;
     }
-
 
     public void setTitle(String title) {
         this.title = title;
@@ -35,6 +38,9 @@ public class MovieObj {
         this.imageUri = imageUri;
     }
 
+    public void setFree(boolean free) { this.free = free; }
+
+    public void setYoutubeUri(String youtubeUri) { this.youtubeUri = youtubeUri; }
 
 
     public String getTitle(){
@@ -52,4 +58,12 @@ public class MovieObj {
     public Map<String, Integer> getPrice(){
         return price;
     }
+
+    public boolean isFree() {
+        return free;
+    }
+
+    public String getYoutubeUri() { return youtubeUri; }
+
+
 }

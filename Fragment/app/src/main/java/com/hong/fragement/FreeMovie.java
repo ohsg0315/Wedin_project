@@ -61,7 +61,7 @@ public class FreeMovie extends Fragment {
         data = new MovieObj();
         CollectionReference collectionReference
                 = db.collection("Movie");
-        collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        collectionReference.whereEqualTo("free",true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful())
@@ -74,6 +74,7 @@ public class FreeMovie extends Fragment {
 
                         data.setTitle(queryDocumentSnapshot.toObject(MovieObj.class).getTitle());
                         data.setImageUri(queryDocumentSnapshot.toObject(MovieObj.class).getImageUri());
+                        //data.setImageUri(queryDocumentSnapshot.get("imageUri").toString());
                         data.setPrice(queryDocumentSnapshot.toObject(MovieObj.class).getPrice());
                         data.setSummary(queryDocumentSnapshot.toObject(MovieObj.class).getSummary());
                         Log.d(TAG, "Success getting documents: ");
