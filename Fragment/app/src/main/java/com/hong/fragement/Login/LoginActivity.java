@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private GoogleSignInClient mGoogleSignInClient;
     public static final int RC_SIGN_IN = 1;
-    private static final String GOOGLE_CLIENT_ID = "281264414900-0ljurntk62rt2k17buufaam6vp7p3umj.apps.googleusercontent.com";
+    private static final String GOOGLE_CLIENT_ID = "281264414900-14qhjboc6vlpjj2vk8g6idj1iucrrs44.apps.googleusercontent.com";
 
     private EditText userId;
     private EditText userPassowrd;
@@ -65,8 +65,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                //.requestIdToken(GOOGLE_CLIENT_ID)
-                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestIdToken(GOOGLE_CLIENT_ID)
+                //.requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
@@ -92,6 +92,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         googleBtn.setOnClickListener(this);
     }
 
+    /*
     @Override
     public void onStart() {
         super.onStart();
@@ -99,6 +100,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         FirebaseUser currentUser = auth.getCurrentUser();
         updateUI(currentUser);
     }
+     */
 
 
     @Override
