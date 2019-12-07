@@ -63,8 +63,6 @@ public class MemberInfo extends AppCompatActivity implements View.OnClickListene
         setViewSpinner();
 
         Intent intent = getIntent();
-        email = intent.getStringExtra("email");
-        uid = intent.getStringExtra("email");
         memberObj = (MemberObj) intent.getSerializableExtra("member");
 
 
@@ -157,5 +155,12 @@ public class MemberInfo extends AppCompatActivity implements View.OnClickListene
         for (int i = 0; i < 3; i++) {
             ArrayAdapter myAdap = (ArrayAdapter) genre[i].getAdapter();
         }
+    }
+
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
     }
 }

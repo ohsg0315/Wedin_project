@@ -27,6 +27,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
@@ -34,7 +35,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.hong.fragement.MainActivity;
 import com.hong.fragement.MyPage.MemberObj;
 import com.hong.fragement.R;
@@ -70,7 +75,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(GOOGLE_CLIENT_ID)
-                //.requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
@@ -122,29 +126,34 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     // 구글 로그인
     private void signInByGoogle() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        signInIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     // 앱 자체 회원 로그인
     private void signInByOriginal(String email, String password) {
-        auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            FirebaseUser user = auth.getCurrentUser();
-                            updateUI(user);
-                            Toast.makeText(getApplicationContext(), "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show();
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            updateUI(null);
-                            Toast.makeText(getApplicationContext(), "로그인에 실패했습니다.", Toast.LENGTH_SHORT).show();
-                        }
+        if (email.length() > 0 && password.length() > 5) {
+            auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                FirebaseUser user = auth.getCurrentUser();
+                                updateUI(user);
+                                Toast.makeText(getApplicationContext(), "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                updateUI(null);
+                                Toast.makeText(getApplicationContext(), "로그인에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                            }
 
-                        // ...
-                    }
-                });
+                            // ...
+                        }
+                    });
+        } else {
+            Toast.makeText(getApplicationContext(), "이메일 or 비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
+        }
     }
 
     // 아이디 찾기
@@ -203,13 +212,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-
                             Log.d(TAG, "signInWithCredential:success");
-                            Log.d(TAG,  "이름 : "+ acct.getDisplayName() + "/이멜 : " + acct.getEmail() + "/아디 : " + acct.getAccount());
 
                             FirebaseUser user = auth.getCurrentUser();
                             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+                            //기존 구글 아이디 DB가 존재하지 않는 경우 초기화하여 DB생성
                             String year = "1900";
                             String month = "1";
                             String day = "1";
@@ -226,10 +234,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                          //  Snackbar.make(findViewById(R.id.main_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
+                            //  Snackbar.make(findViewById(R.id.main_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
                             updateUI(null);
                         }
-
                         // ...
                     }
                 });
