@@ -34,8 +34,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.hong.fragement.MainActivity;
+import com.hong.fragement.MyPage.MemberObj;
 import com.hong.fragement.R;
+
+import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -92,7 +96,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         googleBtn.setOnClickListener(this);
     }
 
-    /*
     @Override
     public void onStart() {
         super.onStart();
@@ -100,8 +103,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         FirebaseUser currentUser = auth.getCurrentUser();
         updateUI(currentUser);
     }
-     */
-
 
     @Override
     public void onClick(View view) {
@@ -202,9 +203,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
+
                             Log.d(TAG, "signInWithCredential:success");
                             Log.d(TAG,  "이름 : "+ acct.getDisplayName() + "/이멜 : " + acct.getEmail() + "/아디 : " + acct.getAccount());
+
                             FirebaseUser user = auth.getCurrentUser();
+                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                            String year = "1900";
+                            String month = "1";
+                            String day = "1";
+                            ArrayList<String> pGenre = new ArrayList<>();
+
+                            for (int i = 0; i < 3; i++) {
+                                pGenre.add(i, "드라마");
+                            }
+
+                            MemberObj newMemberObj = new MemberObj(acct.getEmail(), acct.getDisplayName(), year, month, day, pGenre, "Google");
+                            db.collection("Users").document(user.getUid()).set(newMemberObj);
+
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.

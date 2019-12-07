@@ -35,7 +35,7 @@ public class MemberInfo extends AppCompatActivity implements View.OnClickListene
     private static final String TAG = "시발";
     private String email, uid;
     private Button updateConfirmBtn, confirmBtn;
-    private EditText passwordEdit, repasswordEdit, nameEdit, yearEdit, monthEdit, dayEdit;
+    private EditText emailEdit, passwordEdit, repasswordEdit, nameEdit, yearEdit, monthEdit, dayEdit;
     private ImageView setImage;
     private MemberObj memberObj;
     private Spinner[] genre = new Spinner[3];
@@ -46,6 +46,7 @@ public class MemberInfo extends AppCompatActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_info);
 
+        emailEdit = findViewById(R.id. member_email_update);
         passwordEdit = findViewById(R.id.member_password_update);
         repasswordEdit = findViewById(R.id.member_re_password_update);
         nameEdit = findViewById(R.id.member_name_update);
@@ -82,11 +83,13 @@ public class MemberInfo extends AppCompatActivity implements View.OnClickListene
 
     private void profileUpdate() {
 
+        String email = emailEdit.getText().toString();
         String name = nameEdit.getText().toString();
         String year = yearEdit.getText().toString();
         String month = monthEdit.getText().toString();
         String day = dayEdit.getText().toString();
         ArrayList<String> pGenre = new ArrayList<>();
+        String type = null;
 
         for (int i = 0; i < 3; i++) {
             pGenre.add(i, genre[i].getSelectedItem().toString());
@@ -95,7 +98,7 @@ public class MemberInfo extends AppCompatActivity implements View.OnClickListene
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        MemberObj newMemberObj = new MemberObj(name, year, month, day, pGenre);
+        MemberObj newMemberObj = new MemberObj(email, name, year, month, day, pGenre, type);
         db.collection("Users").document(firebaseUser.getUid()).set(newMemberObj)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

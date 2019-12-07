@@ -9,16 +9,20 @@ public class MemberObj implements Serializable{
     private String month;
     private String day;
     private ArrayList<String> genre;
+    private String email;
+    private String type;
 
     public MemberObj() {
     }
 
-    public MemberObj(String name, String year, String month, String day, ArrayList<String> genre) {
+    public MemberObj(String email, String name, String year, String month, String day, ArrayList<String> genre, String type) {
+        this.email = email;
         this.name = name;
         this.year = year;
         this.month = month;
         this.day = day;
         this.genre = genre;
+        this.type = type;
     }
 
     public void setName(String name) {
@@ -41,6 +45,8 @@ public class MemberObj implements Serializable{
         this.genre = genre;
     }
 
+    public String getEmail() {return email;}
+
     public String getName() {
         return name;
     }
@@ -60,4 +66,6 @@ public class MemberObj implements Serializable{
     public ArrayList<String> getGenre() {
         return genre;
     }
+
+    public String getType() {return type; }
 }

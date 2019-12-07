@@ -28,9 +28,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.hong.fragement.MainActivity;
+import com.hong.fragement.MyPage.MemberObj;
 import com.hong.fragement.R;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -123,6 +126,24 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
                                 FirebaseUser user = mAuth.getCurrentUser();
+                                FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                                // 회원가입시 정보 저장
+                                String email = emailEdit.getText().toString();
+                                String name = nameEdit.getText().toString();
+                                String year = yearEdit.getText().toString();
+                                String month = monthEdit.getText().toString();
+                                String day = dayEdit.getText().toString();
+                                ArrayList<String> pGenre = new ArrayList<>();
+                                String type = "App";
+
+                                for (int i = 0; i < 3; i++) {
+                                    pGenre.add(i, preferenceGenre[i].getSelectedItem().toString());
+                                }
+
+                                MemberObj newMemberObj = new MemberObj(email, name, year, month, day, pGenre, type);
+                                db.collection("Users").document(mAuth.getUid()).set(newMemberObj);
+
                                 updateUI(user);
                             } else {
                                 // If sign in fails, display a message to the user.
