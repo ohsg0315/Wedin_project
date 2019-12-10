@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="350dp"
+        android:layout_height="300dp"
+        android:background="@drawable/round_coner"
+        android:orientation="vertical" >
+
+        <RatingBar
+            android:id="@+id/rating_bar"
+            android:theme="@style/MyRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center_horizontal"
+            android:stepSize="0.5" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:theme="@style/com_facebook_activity_theme"
+            android:id="@+id/ti_review"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="리뷰를 작성해주세요"
+                android:textColorHint="#FF0000"
+                android:textColor="#FF0000"
+                android:gravity="center"
+                android:background="@drawable/round_coner"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/add_btn"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="게시" />
+
+            <Button
+                android:id="@+id/cancel_btn"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="취소" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

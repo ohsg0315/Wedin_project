@@ -129,7 +129,7 @@
                         android:id="@+id/ratingBar_detail_movie"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:isIndicator="false"
+                        android:isIndicator="true"
                         android:numStars="5"
                         android:stepSize="0.5"
 
@@ -150,6 +150,30 @@
                     android:textSize="10dp" />
 
             </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/round_coner"
+                android:gravity="center"
+                android:text="Review"
+                android:textSize="20dp" />
+
+            <Button
+                android:id="@+id/review_add_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/round_coner"
+                android:text="+"
+                android:textSize="30dp" />
 
         </LinearLayout>
 

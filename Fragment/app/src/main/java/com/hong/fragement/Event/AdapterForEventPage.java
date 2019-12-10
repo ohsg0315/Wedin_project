@@ -1,9 +1,12 @@
 package com.hong.fragement.Event;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,6 +23,7 @@ public class AdapterForEventPage extends RecyclerView.Adapter<AdapterForEventPag
 
     private List<EventInfo> list;
     Context context;
+    static private Uri uri;
 
     public AdapterForEventPage(List<EventInfo> list, Context context)
     {
@@ -35,15 +39,28 @@ public class AdapterForEventPage extends RecyclerView.Adapter<AdapterForEventPag
                 .inflate(R.layout.each_event,parent,false);
 
         EventViewHolder eventViewHolder = new EventViewHolder(view);
+        context=parent.getContext();
+
+
         return eventViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdapterForEventPage.EventViewHolder holder, int position)
+    public void onBindViewHolder(@NonNull final AdapterForEventPage.EventViewHolder holder, final int position)
     {
         Glide.with(holder.itemView)
-                .load(list.get(position).getEventUrl())
+                .load(list.get(position).getImageUrl())
                 .into(holder.eventImage);
+
+        Glide.with(holder.itemView)
+                .load(list.get(position).getOTTsiteLogoImage())
+                .into(holder.OTTsiteLogoImage);
+        holder.name.setText(list.get(position).getName());
+
+
+
+
+
 
     }
 
@@ -56,16 +73,36 @@ public class AdapterForEventPage extends RecyclerView.Adapter<AdapterForEventPag
     public class EventViewHolder extends RecyclerView.ViewHolder
     {
         protected ImageView OTTsiteLogoImage;
-        protected TextView nameLogo;
+        protected TextView name;
         protected ImageView eventImage;
+        protected Button webUri;
+
 
 
         public EventViewHolder(@NonNull View itemView)
         {
             super(itemView);
             OTTsiteLogoImage = (ImageView)itemView.findViewById(R.id.OTT_site_Logo_Image);
-            nameLogo = (TextView)itemView.findViewById(R.id.name_Logo);
+            name = (TextView)itemView.findViewById(R.id.name_Logo);
             eventImage = (ImageView)itemView.findViewById(R.id.event_Image);
+            webUri = (Button)itemView.findViewById(R.id.weburi_button);
+
+            webUri.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    uri = Uri.parse(list.get(position).getWebUrl());
+
+                    Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+                    context.startActivity(intent);
+
+
+
+                }
+            });
+
+
+
 
         }
     }
