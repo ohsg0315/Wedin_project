@@ -1,13 +1,18 @@
 package com.hong.fragement.MovieDetailPage;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,21 +25,20 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.hong.fragement.R;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class DetailMovieActivity extends YouTubeBaseActivity {
 
     private String TAG = "Read Data from FireStore";
 
     private YouTubePlayerView youTubePlayerView;
-    private YouTubePlayer.OnInitializedListener onInitializedListener;
     private String youtubeUri;
 
     private ImageView poster;
@@ -42,6 +46,7 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
     private TextView lowPrice;
     private TextView highPrice;
     private TextView summary;
+    private Button reviewAddBtn;
 
     private Intent intent;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -53,11 +58,16 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
 
     private RecyclerView ratingRecyclerVeiw;
     private DetailMoviewAdapter adapter;
+    private CustomDialog customDialog;
+    private String movieTitle;
+
+    public DetailMovieActivity() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_movie);
+        setContentView(R.layout.detail_movie_activity);
 
         intent = getIntent();
         dataList = new ArrayList<RatingObj>();
@@ -70,6 +80,7 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
         summary = findViewById(R.id.summary_detail_movie);
         ratingBar = findViewById(R.id.ratingBar_detail_movie);
         ratingRecyclerVeiw = findViewById(R.id.rating_recyclerview);
+        reviewAddBtn = findViewById(R.id.review_add_btn);
 
         Glide.with(this)
                 .load(intent.getStringExtra("imageUri"))
@@ -82,20 +93,9 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
         summary.setText(intent.getStringExtra("summary"));
         youtubeUri= intent.getStringExtra("youtubeUri");
 
-        onInitializedListener = new YouTubePlayer.OnInitializedListener() {
-            @Override
-            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-                youTubePlayer.loadVideo(youtubeUri);
-            }
 
-            @Override
-            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-
-            }
-        };
-
-        youTubePlayerView.initialize("AIzaSyBMm09T_Ycgeh1gXB-wFNZzdhuSs21J5n8", onInitializedListener);
-
+        youTubePlayerView.initialize(youtubeUri, onInitializedListener);
+        reviewAddBtn.setOnClickListener(reviewAddBtnListener);
 
         ratingRecyclerVeiw.setLayoutManager(new LinearLayoutManager(this));
         ratingRecyclerVeiw.setHasFixedSize(true);
@@ -105,14 +105,14 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
     }
 
     private void readRatingData() {
-        String movieTitle =  intent.getStringExtra("title");
+        movieTitle =  intent.getStringExtra("title");
 
         ratingRef.document(movieTitle).collection("review").get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     float scoreSum = 0;
                     @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                    public void onSuccess(QuerySnapshot documentSnapshots) {
+                        for (QueryDocumentSnapshot documentSnapshot : documentSnapshots) {
                             data = new RatingObj();
                             data.setId(documentSnapshot.toObject(RatingObj.class).getId());
                             data.setReview(documentSnapshot.toObject(RatingObj.class).getReview());
@@ -121,7 +121,9 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
                             dataList.add(data);
                             scoreSum += data.getScore();
                         }
+
                         scoreSum = (float) (Math.round(scoreSum / dataList.size() * 100) / 100.0);
+                        Log.i("결과를 뽑아봅니다",scoreSum+" scoreSum입니다");
                         ratingBar.setRating(scoreSum);
 
                         adapter = new DetailMoviewAdapter(dataList);
@@ -131,16 +133,39 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getApplicationContext(),"리뷰 데이터가 없습니다",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DetailMovieActivity.this,"리뷰 데이터가 없습니다",Toast.LENGTH_SHORT).show();
             }
         });
 
-
-
     }
 
+    private View.OnClickListener reviewAddBtnListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            customDialog = new CustomDialog(DetailMovieActivity.this, movieTitle);
+            customDialog.show();
+            customDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialogInterface) {
+                    Toast.makeText(DetailMovieActivity.this,"다이얼로그를종료합니다",
+                            Toast.LENGTH_SHORT).show();
 
+                }
+            });
+        }
+    };
 
+    private YouTubePlayer.OnInitializedListener onInitializedListener = new YouTubePlayer.OnInitializedListener() {
+        @Override
+        public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+            youTubePlayer.loadVideo(youtubeUri);
+        }
+
+        @Override
+        public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+
+        }
+    };
 
 }
 
