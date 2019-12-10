@@ -28,6 +28,8 @@ import com.google.firebase.auth.UserInfo;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.hong.fragement.Event.EventPage;
 import com.hong.fragement.Home.HomeFragment;
 import com.hong.fragement.Login.LoginActivity;
@@ -41,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // Access a Cloud Firestore instance from your Activity
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private String TAG = "Read Data from FireStore";
+    private String TAG = "시발";
     private Map<String, Object> uriLink;
 
     private DrawerLayout drawerLayout;
@@ -93,6 +95,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (mFirebaseUser != null) {
             ReadUserData();
         }
+
+
     }
 
 
