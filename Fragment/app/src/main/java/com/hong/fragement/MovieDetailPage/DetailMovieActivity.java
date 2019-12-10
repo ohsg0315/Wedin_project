@@ -1,7 +1,6 @@
 package com.hong.fragement.MovieDetailPage;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,9 +23,7 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.hong.fragement.R;
@@ -97,7 +93,11 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
         youTubePlayerView.initialize(youtubeUri, onInitializedListener);
         reviewAddBtn.setOnClickListener(reviewAddBtnListener);
 
-        ratingRecyclerVeiw.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+
+        ratingRecyclerVeiw.setLayoutManager(layoutManager);
         ratingRecyclerVeiw.setHasFixedSize(true);
 
         readRatingData();

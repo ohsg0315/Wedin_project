@@ -3,7 +3,6 @@ package com.hong.fragement.MovieDetailPage;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.PopupMenu;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -21,7 +20,6 @@ public class DetailMoviewAdapter extends RecyclerView.Adapter<DetailMoviewAdapte
     public DetailMoviewAdapter(ArrayList<RatingObj> dataList) {
         this.dataList = dataList;
     }
-
 
     @NonNull
     @Override
@@ -49,13 +47,12 @@ public class DetailMoviewAdapter extends RecyclerView.Adapter<DetailMoviewAdapte
         TextView review;
         RatingBar score;
 
-
         public MovieViewHolder(@NonNull View itemView) {
             super(itemView);
             id = itemView.findViewById(R.id.rating_id);
             review = itemView.findViewById(R.id.rating_review);
             score = itemView.findViewById(R.id.rating_score);
-
         }
     }
+
 }

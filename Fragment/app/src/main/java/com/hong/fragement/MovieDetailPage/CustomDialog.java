@@ -44,7 +44,6 @@ public class CustomDialog extends Dialog {
     public CustomDialog(Context context, String movieTitle) {
         super(context);
         this.movieTitle = movieTitle;
-        this.adapter = adapter;
     }
 
     @Override
