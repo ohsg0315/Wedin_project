@@ -34,7 +34,6 @@ public class CustomDialog extends Dialog {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference ratingRef = db.collection("Rating");
     private String movieTitle;;
-    private DetailMoviewAdapter adapter;
 
     private FirebaseAuth mFirebaseAuth ;
     FirebaseUser mFirebaseUser;
@@ -84,7 +83,7 @@ public class CustomDialog extends Dialog {
         ti_review.setCounterEnabled(true);
         ti_review.setCounterMaxLength(100);
 
-        mAddButton.setOnClickListener(new View.OnClickListener() {
+        mAddButton.setOnClickListener(new View.OnClickListener() {  // 리뷰추가버튼 리스너
             @Override
             public void onClick(View view) {
 
@@ -101,16 +100,20 @@ public class CustomDialog extends Dialog {
                     Toast.makeText(getContext(),"리뷰를 작성해주세요",Toast.LENGTH_SHORT).show();
                     edit_review.requestFocus();
                 } else {
-                    ratingRef.document(movieTitle).collection("review").document().set(obj);
+                    String addDBOrder = Integer.toString(DetailMovieActivity.dataList.size()+1); // DB에 (데이터 사이즈 + 1)의 숫자로 doc 저장
+                    ratingRef.document(movieTitle).collection("review").document(addDBOrder).set(obj);
+                    DetailMovieActivity.dataList.add(obj);
                     dismiss();
                 }
 
             }
         });
 
-        mCancelButton.setOnClickListener(new View.OnClickListener() {
+        mCancelButton.setOnClickListener(new View.OnClickListener() {   // 취소버튼 리스너
             @Override
             public void onClick(View view) {
+                Toast.makeText(getContext(),"다이얼로그를종료합니다",
+                        Toast.LENGTH_SHORT).show();
                 dismiss();
             }
         });
