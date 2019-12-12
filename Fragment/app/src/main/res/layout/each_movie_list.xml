@@ -12,9 +12,9 @@
     <ImageView
         android:id="@+id/poster_each_movie_list"
         android:layout_height="match_parent"
-        android:layout_width="20dp"
+        android:layout_width="50dp"
         android:baseline="200dp"
-        android:src="@drawable/poster_money"
+
         android:layout_weight="60">
 
     </ImageView>
@@ -34,7 +34,7 @@
             android:id="@+id/title_each_movie_list"
             android:layout_gravity="top"
             android:textSize="20dp"
-            android:text="돈">
+            >
 
         </TextView>
 
@@ -48,7 +48,7 @@
                 android:layout_weight="25"
                 android:id="@+id/priceLow_each_movie_list"
                 android:layout_gravity="top"
-                android:textSize="20dp"
+                android:textSize="10dp"
                 android:text="최저가 ">
 
             </TextView>
@@ -61,7 +61,7 @@
                 android:layout_weight="25"
                 android:layout_gravity="top"
                 android:textSize="20dp"
-                android:text="5,500">
+                >
 
             </TextView>
 
@@ -71,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_weight="15"
                 android:layout_gravity="top"
-                android:textSize="20dp"
+                android:textSize="10dp"
                 android:text="~원 ">
 
             </TextView>
@@ -121,7 +121,7 @@
             android:layout_height="100dp"
             android:layout_width="match_parent"
             android:id="@+id/story_each_movie_list"
-            android:text="@string/story_ex"
+
             android:textSize="6dp">
 
         </TextView>

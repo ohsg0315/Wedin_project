@@ -92,7 +92,8 @@ public class EventPage extends Fragment {
                         data.setName(queryDocumentSnapshot.toObject(EventInfo.class).getName());
 
 
-                        data.setWebUrl(queryDocumentSnapshot.toObject(EventInfo.class).getWebUrl());
+                       // data.setWebUrl(queryDocumentSnapshot.toObject(EventInfo.class).getWebUrl());
+                        data.setWebUrl(queryDocumentSnapshot.get("webUri").toString());
 
 
                         data.setOTTsiteLogoImage(queryDocumentSnapshot.get("OTTsiteLogoImage").toString());

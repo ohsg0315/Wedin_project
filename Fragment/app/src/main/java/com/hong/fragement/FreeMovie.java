@@ -70,14 +70,13 @@ public class FreeMovie extends Fragment {
                     {
                         data = queryDocumentSnapshot.toObject(MovieObj.class);
 
-                        //data.setImageUri(queryDocumentSnapshot.get("imageUri").toString());
+
 
                         data.setTitle(queryDocumentSnapshot.toObject(MovieObj.class).getTitle());
-                        data.setImageUri(queryDocumentSnapshot.toObject(MovieObj.class).getImageUri());
-                        //data.setImageUri(queryDocumentSnapshot.get("imageUri").toString());
+                        data.setImageUri(queryDocumentSnapshot.get("imageUri").toString());
                         data.setPrice(queryDocumentSnapshot.toObject(MovieObj.class).getPrice());
                         data.setSummary(queryDocumentSnapshot.toObject(MovieObj.class).getSummary());
-                        Log.d(TAG, "Success getting documents: ");
+
                         movieObjList.add(data);
 
 

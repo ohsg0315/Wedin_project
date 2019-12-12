@@ -1,6 +1,7 @@
 package com.hong.fragement;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class AdapterForFreeMovie extends RecyclerView.Adapter<AdapterForFreeMovie.FreeMovieViewHolder> {
@@ -19,6 +22,9 @@ public class AdapterForFreeMovie extends RecyclerView.Adapter<AdapterForFreeMovi
 
     private List<MovieObj> list;
     Context context;
+    private List<Integer> priceArray;
+    int i;
+
 
     public AdapterForFreeMovie(List<MovieObj> list, Context context) {
         this.list = list;
@@ -44,7 +50,21 @@ public class AdapterForFreeMovie extends RecyclerView.Adapter<AdapterForFreeMovi
                 .into(holder.posterImage);
         holder.title.setText(list.get(position).getTitle());
         holder.summary.setText(list.get(position).getSummary());
-        holder.price.setText(list.get(position).getPrice().toString());
+
+
+        priceArray = new ArrayList<>();
+        for (String key: list.get(position).getPrice().keySet())
+        {
+
+           priceArray.add((int)list.get(position).getPrice().get(key));
+
+            //Log.d("-----가격배열-----",list.get(position).getPrice().get(key).toString());
+
+        }
+        Collections.sort(priceArray);
+
+        holder.price.setText(priceArray.get(0).toString());
+
 
     }
 
@@ -65,6 +85,8 @@ public class AdapterForFreeMovie extends RecyclerView.Adapter<AdapterForFreeMovi
 
 
             super(itemView);
+
+
             title=(TextView)itemView.findViewById(R.id.title_each_movie_list);
             posterImage=(ImageView)itemView.findViewById(R.id.poster_each_movie_list);
             price= (TextView)itemView.findViewById(R.id.price_each_movie_list);
@@ -72,4 +94,6 @@ public class AdapterForFreeMovie extends RecyclerView.Adapter<AdapterForFreeMovi
 
         }
     }
+
+
 }
