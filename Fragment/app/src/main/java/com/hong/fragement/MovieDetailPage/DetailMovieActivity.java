@@ -1,24 +1,18 @@
 package com.hong.fragement.MovieDetailPage;
 
 import androidx.annotation.NonNull;
-<<<<<<< Updated upstream
-=======
-import androidx.annotation.Nullable;
->>>>>>> Stashed changes
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-<<<<<<< Updated upstream
-=======
 import android.util.Log;
->>>>>>> Stashed changes
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,12 +25,7 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.google.firebase.firestore.CollectionReference;
-<<<<<<< Updated upstream
-=======
-import com.google.firebase.firestore.EventListener;
->>>>>>> Stashed changes
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.hong.fragement.R;
@@ -66,13 +55,7 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
     private DetailMoviewAdapter adapter;
     private CustomDialog customDialog;
     private String movieTitle;
-<<<<<<< Updated upstream
     static ArrayList<RatingObj> dataList;
-=======
-
-    public DetailMovieActivity() {
-    }
->>>>>>> Stashed changes
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +65,7 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
         intent = getIntent();
         dataList = new ArrayList<RatingObj>();
 
-        youTubePlayerView= findViewById(R.id.youtubeview);
+        youTubePlayerView = findViewById(R.id.youtubeview);
         poster = findViewById(R.id.poster_detail_movie);
         title = findViewById(R.id.title_detail_movie);
         lowPrice = findViewById(R.id.movie_low_price);
@@ -101,9 +84,8 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
         lowPrice.setText(intent.getStringExtra("price1"));
         highPrice.setText(intent.getStringExtra("price2"));
         summary.setText(intent.getStringExtra("summary"));
-        youtubeUri= intent.getStringExtra("youtubeUri");
+        youtubeUri = intent.getStringExtra("youtubeUri");
 
-<<<<<<< Updated upstream
         youTubePlayerView.initialize(youtubeUri, onInitializedListener);
         reviewAddBtn.setOnClickListener(reviewAddBtnListener);
 
@@ -111,26 +93,21 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
         layoutManager.setReverseLayout(true);
 
         ratingRecyclerVeiw.setLayoutManager(layoutManager);
-=======
+        ratingRecyclerVeiw.setHasFixedSize(true);
 
         youTubePlayerView.initialize("AIzaSyBMm09T_Ycgeh1gXB-wFNZzdhuSs21J5n8", onInitializedListener);
         reviewAddBtn.setOnClickListener(reviewAddBtnListener);
 
-
-        ratingRecyclerVeiw.setLayoutManager(new LinearLayoutManager(this));
->>>>>>> Stashed changes
-        ratingRecyclerVeiw.setHasFixedSize(true);
-
         readRatingData();
-
     }
 
     private void readRatingData() {
-        movieTitle =  intent.getStringExtra("title");
+        movieTitle = intent.getStringExtra("title");
 
         ratingRef.document(movieTitle).collection("review").get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     float scoreSum = 0;
+
                     @Override
                     public void onSuccess(QuerySnapshot documentSnapshots) {
                         for (QueryDocumentSnapshot documentSnapshot : documentSnapshots) {
@@ -144,7 +121,7 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
                         }
 
                         scoreSum = (float) (Math.round(scoreSum / dataList.size() * 100) / 100.0);
-                        Log.i("결과를 뽑아봅니다",scoreSum+" scoreSum입니다");
+                        Log.i("결과를 뽑아봅니다", scoreSum + " scoreSum입니다");
                         ratingBar.setRating(scoreSum);
 
                         adapter = new DetailMoviewAdapter(dataList);
@@ -155,7 +132,7 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(DetailMovieActivity.this,"리뷰 데이터가 없습니다",Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetailMovieActivity.this, "리뷰 데이터가 없습니다", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -166,20 +143,13 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
         public void onClick(View view) {
             customDialog = new CustomDialog(DetailMovieActivity.this, movieTitle);
             customDialog.show();
-<<<<<<< Updated upstream
 
-            customDialog.setOnDismissListener(new DialogInterface.OnDismissListener() { // 다이얼로그 종료시 데이터 변화 적용 감지 리스너
-                @Override
-                public void onDismiss(DialogInterface dialogInterface) {
-                    adapter.notifyDataSetChanged();
-=======
             customDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialogInterface) {
-                    Toast.makeText(DetailMovieActivity.this,"다이얼로그를종료합니다",
+                    Toast.makeText(DetailMovieActivity.this, "다이얼로그를종료합니다",
                             Toast.LENGTH_SHORT).show();
 
->>>>>>> Stashed changes
                 }
             });
         }
@@ -196,11 +166,4 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
 
         }
     };
-
-<<<<<<< Updated upstream
 }
-=======
-}
-
-
->>>>>>> Stashed changes

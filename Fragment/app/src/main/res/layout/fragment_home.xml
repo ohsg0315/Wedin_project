@@ -25,9 +25,9 @@
                 android:id="@+id/movie_search_bar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:completionHint="영화를 선택하세요"
+                android:hint="영화를 검색하세요"
                 android:textColorHint="#000000"
-                android:completionThreshold="2" >
+                android:completionThreshold="1" >
 
             </androidx.appcompat.widget.AppCompatAutoCompleteTextView>
 

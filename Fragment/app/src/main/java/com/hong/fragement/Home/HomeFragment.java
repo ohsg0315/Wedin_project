@@ -30,21 +30,19 @@ import java.util.Map;
 
 public class HomeFragment extends Fragment {
 
-    private String TAG = "Read Data from FireStore";
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private AutoCompleteTextView movieSearchBar;
-
-    private Button btn1,bt2,btn3,btn4;
+    private Button btn;
 
     private RecyclerView recyclerView1;
     private RecyclerView recyclerView2;
     private RecyclerView recyclerView3;
 
-    private HomeAdapter adapter;
-    private ArrayList<MovieObj> datList;
     private MovieObj data;
-    private OnItemClick listener;
+    private HomeAdapter adapter;
+    private ArrayList<String> titleList;
+    private ArrayList<MovieObj> datList;
 
     @Nullable
     @Override
@@ -56,6 +54,8 @@ public class HomeFragment extends Fragment {
         recyclerView3 = view.findViewById(R.id.recyclerview3);
 
         movieSearchBar = view.findViewById(R.id.movie_search_bar);
+
+        /*
         movieSearchBar.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
@@ -63,31 +63,7 @@ public class HomeFragment extends Fragment {
                 else return false;
             }
         });
-
-        datList = new ArrayList<MovieObj>();  // MovieObj Type의 data ArrayList에 담기위해 객체 생성
-        listener = new OnItemClick() {
-            @Override
-            public void onMovieSelected(MovieObj selectedMovie) {
-                Intent intent = new Intent(getContext(), DetailMovieActivity.class);
-
-
-                intent.putExtra("imageUri",selectedMovie.getImageUri());
-                intent.putExtra("title",selectedMovie.getTitle());
-
-                Map<String, Integer> moviePrice = selectedMovie.getPrice();
-
-                String naverPrice = moviePrice.get("네이버").toString();
-                String wavePrice = moviePrice.get("웨이브").toString();
-                intent.putExtra("price1",naverPrice);
-                intent.putExtra("price2",wavePrice);
-
-                intent.putExtra("summary",selectedMovie.getSummary());
-                intent.putExtra("title",selectedMovie.getTitle());
-                intent.putExtra("youtubeUri",selectedMovie.getYoutubeUri());
-
-                startActivity(intent);
-            }
-        };
+         */
 
         recyclerView1.setHasFixedSize(true); // 리사이클러뷰 안의 아이템 크기를 일정하게 고정
         recyclerView1.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL,false));
@@ -100,6 +76,11 @@ public class HomeFragment extends Fragment {
         recyclerView3.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL,false));
 
         readImageUri(); // DB에서 데이터를 빼와 리스트에 담고 adapter를 생성, 세팅하는 메서드
+
+        titleList = new ArrayList<String>();
+        ArrayAdapter<String> titleListAdapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_list_item_1,titleList);
+        movieSearchBar.setAdapter(titleListAdapter);
+
         readImageUri2();
         readImageUri3();
 
@@ -108,8 +89,36 @@ public class HomeFragment extends Fragment {
 
 
     private void readImageUri() {
+        datList = new ArrayList<MovieObj>();
 
-        data = new MovieObj();  // DB에서 빼온 imageUri를 MovieObj 객체에 넣기위해 생성
+        db.collection("Movie").get()    // DB의 "Movie" 컬렉션에서 데이터 가져옴
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {   // 스냅샷을 떠서 MovieObj 타입으로 변환 후 리스트에 담음
+                                data = new MovieObj();
+                                data.setTitle(document.toObject(MovieObj.class).getTitle());
+                                data.setImageUri(document.toObject(MovieObj.class).getImageUri());
+                                data.setPrice(document.toObject(MovieObj.class).getPrice());
+                                data.setSummary(document.toObject(MovieObj.class).getSummary());
+                                data.setYoutubeUri(document.toObject(MovieObj.class).getYoutubeUri());
+
+                                titleList.add(document.toObject(MovieObj.class).getTitle());
+                                datList.add(data);
+                            }
+                            adapter = new HomeAdapter(datList, getActivity(),listener);
+                            recyclerView1.setAdapter(adapter);
+                              // 데이터 생성. Context : getActivity (프래그먼트 이용)
+
+                        }
+                    }
+                });
+
+    }
+
+    private void readImageUri2() {
+        datList = new ArrayList<MovieObj>();
 
         db.collection("Movie").get()    // DB의 "Movie" 컬렉션에서 데이터 가져옴
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -126,33 +135,6 @@ public class HomeFragment extends Fragment {
 
                                 datList.add(data);
                             }
-                            adapter = new HomeAdapter(datList, getActivity(),listener);
-                            recyclerView1.setAdapter(adapter);
-                              // 데이터 생성. Context : getActivity (프래그먼트 이용)
-
-                        }
-                    }
-                });
-
-    }
-
-    private void readImageUri2() {
-
-        data = new MovieObj();  // DB에서 빼온 imageUri를 MovieObj 객체에 넣기위해 생성
-
-        db.collection("Movie").get()    // DB의 "Movie" 컬렉션에서 데이터 가져옴
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {   // 스냅샷을 떠서 MovieObj 타입으로 변환 후 리스트에 담음
-                                data = new MovieObj();
-                                data.setTitle(document.toObject(MovieObj.class).getTitle());
-                                data.setImageUri(document.toObject(MovieObj.class).getImageUri());
-                                data.setPrice(document.toObject(MovieObj.class).getPrice());
-                                data.setSummary(document.toObject(MovieObj.class).getSummary());
-                            }
-
                             adapter = new HomeAdapter(datList, getActivity(),listener);   // 데이터 생성. Context : getActivity (프래그먼트 이용)
                             recyclerView2.setAdapter(adapter);
                         }
@@ -162,6 +144,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void readImageUri3() {
+        datList = new ArrayList<MovieObj>();
 
         db.collection("Movie").get()    // DB의 "Movie" 컬렉션에서 데이터 가져옴
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -174,6 +157,9 @@ public class HomeFragment extends Fragment {
                                 data.setImageUri(document.toObject(MovieObj.class).getImageUri());
                                 data.setPrice(document.toObject(MovieObj.class).getPrice());
                                 data.setSummary(document.toObject(MovieObj.class).getSummary());
+                                data.setYoutubeUri(document.toObject(MovieObj.class).getYoutubeUri());
+
+                                datList.add(data);
                             }
                             adapter = new HomeAdapter(datList, getActivity(),listener);   // 데이터 생성. Context : getActivity (프래그먼트 이용)
                             recyclerView3.setAdapter(adapter);
@@ -183,12 +169,29 @@ public class HomeFragment extends Fragment {
 
     }
 
-    private void searchMovie() {
-        ArrayAdapter<MovieObj> adpater = new ArrayAdapter<MovieObj>(getActivity(),
-                android.R.layout.simple_dropdown_item_1line, datList);
+    // 영화 포스터 클릭시 상세페이지 전환 이벤트
+    private OnItemClick listener = new OnItemClick() {
+        @Override
+        public void onMovieSelected(MovieObj selectedMovie) {
+            Intent intent = new Intent(getContext(), DetailMovieActivity.class);
 
-        movieSearchBar.setAdapter(adpater);
-    }
+            intent.putExtra("imageUri",selectedMovie.getImageUri());
+            intent.putExtra("title",selectedMovie.getTitle());
+
+            Map<String, Integer> moviePrice = selectedMovie.getPrice();
+
+            String naverPrice = moviePrice.get("네이버").toString();
+            String wavePrice = moviePrice.get("웨이브").toString();
+            intent.putExtra("price1",naverPrice);
+            intent.putExtra("price2",wavePrice);
+
+            intent.putExtra("summary",selectedMovie.getSummary());
+            intent.putExtra("title",selectedMovie.getTitle());
+            intent.putExtra("youtubeUri",selectedMovie.getYoutubeUri());
+
+            startActivity(intent);
+        }
+    };
 
     public interface OnItemClick {
         void onMovieSelected(MovieObj selectedMovie);
