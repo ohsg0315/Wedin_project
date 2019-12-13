@@ -1,15 +1,24 @@
 package com.hong.fragement.MovieDetailPage;
 
 import androidx.annotation.NonNull;
+<<<<<<< Updated upstream
+=======
+import androidx.annotation.Nullable;
+>>>>>>> Stashed changes
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+<<<<<<< Updated upstream
+=======
+import android.util.Log;
+>>>>>>> Stashed changes
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,7 +31,12 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.google.firebase.firestore.CollectionReference;
+<<<<<<< Updated upstream
+=======
+import com.google.firebase.firestore.EventListener;
+>>>>>>> Stashed changes
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.hong.fragement.R;
@@ -52,7 +66,13 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
     private DetailMoviewAdapter adapter;
     private CustomDialog customDialog;
     private String movieTitle;
+<<<<<<< Updated upstream
     static ArrayList<RatingObj> dataList;
+=======
+
+    public DetailMovieActivity() {
+    }
+>>>>>>> Stashed changes
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +103,7 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
         summary.setText(intent.getStringExtra("summary"));
         youtubeUri= intent.getStringExtra("youtubeUri");
 
+<<<<<<< Updated upstream
         youTubePlayerView.initialize(youtubeUri, onInitializedListener);
         reviewAddBtn.setOnClickListener(reviewAddBtnListener);
 
@@ -90,6 +111,14 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
         layoutManager.setReverseLayout(true);
 
         ratingRecyclerVeiw.setLayoutManager(layoutManager);
+=======
+
+        youTubePlayerView.initialize("AIzaSyBMm09T_Ycgeh1gXB-wFNZzdhuSs21J5n8", onInitializedListener);
+        reviewAddBtn.setOnClickListener(reviewAddBtnListener);
+
+
+        ratingRecyclerVeiw.setLayoutManager(new LinearLayoutManager(this));
+>>>>>>> Stashed changes
         ratingRecyclerVeiw.setHasFixedSize(true);
 
         readRatingData();
@@ -115,6 +144,7 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
                         }
 
                         scoreSum = (float) (Math.round(scoreSum / dataList.size() * 100) / 100.0);
+                        Log.i("결과를 뽑아봅니다",scoreSum+" scoreSum입니다");
                         ratingBar.setRating(scoreSum);
 
                         adapter = new DetailMoviewAdapter(dataList);
@@ -136,11 +166,20 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
         public void onClick(View view) {
             customDialog = new CustomDialog(DetailMovieActivity.this, movieTitle);
             customDialog.show();
+<<<<<<< Updated upstream
 
             customDialog.setOnDismissListener(new DialogInterface.OnDismissListener() { // 다이얼로그 종료시 데이터 변화 적용 감지 리스너
                 @Override
                 public void onDismiss(DialogInterface dialogInterface) {
                     adapter.notifyDataSetChanged();
+=======
+            customDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialogInterface) {
+                    Toast.makeText(DetailMovieActivity.this,"다이얼로그를종료합니다",
+                            Toast.LENGTH_SHORT).show();
+
+>>>>>>> Stashed changes
                 }
             });
         }
@@ -158,4 +197,10 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
         }
     };
 
+<<<<<<< Updated upstream
 }
+=======
+}
+
+
+>>>>>>> Stashed changes
