@@ -40,6 +40,7 @@ import com.hong.fragement.MyPage.MemberObj;
 import com.hong.fragement.R;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.mail.MessagingException;
 import javax.mail.SendFailedException;
@@ -51,7 +52,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener, D
     private Spinner[] preferenceGenre = new Spinner[3];
     private ArrayAdapter arrayAdapter;
 
-    private String TAG = "SignUpActivity";
+    private String TAG = "SignUpActivity", authenticationString;
 
     private Button signUpConfirmBtn, idAuthBtn;
     private EditText emailEdit, passwordEdit, repasswordEdit, nameEdit, yearEdit, monthEdit, dayEdit;
@@ -67,7 +68,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener, D
     EditText emailAuth_number; //인증 번호를 입력 하는 칸
     Button emailAuth_btn, idAuthCancelBtn; // 인증버튼
     CountDownTimer countDownTimer;
-    String mail_message = "시발 123123";
+    private  String mail_message;
 
     final int MILLISINFUTURE = 300 * 1000; //총 시간 (300초 = 5분)
     final int COUNT_DOWN_INTERVAL = 1000; //onTick 메소드를 호출할 간격 (1초)
@@ -135,14 +136,16 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener, D
         // Dialog 내 인증 버튼을 눌렀을 경우
         else if (view == emailAuth_btn) {
             if (emailAuth_number.getText().toString().length() > 0) {
-                int user_answer = Integer.parseInt(emailAuth_number.getText().toString());
 
-                if (user_answer == 123123) {
+                if (emailAuth_number.getText().toString().equals(authenticationString)) {
                     Toast.makeText(this, "이메일 인증 성공", Toast.LENGTH_SHORT).show();
                     authDialog.cancel();
                 } else {
                     Toast.makeText(this, "이메일 인증 실패", Toast.LENGTH_SHORT).show();
                 }
+            }
+            else {
+                Toast.makeText(this, "인증 번호를 입력해주세요.", Toast.LENGTH_SHORT).show();
             }
         }
         // Dialog 내 취소 번튼을 눌렀을 경우
@@ -167,28 +170,34 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener, D
     }
 
     private void emailAuth() {
+        if (emailEdit.getText().toString().length() > 3) {
+            try {
+                authenticationString = makeAuthenticationString();
 
-        try{
-            GMailSender gMailSender = new GMailSender("ohsg0315@gmail.com", "Aiden0088151!");
-            gMailSender.sendMail("Wedin 인증 메일입니다.", mail_message, emailEdit.getText().toString());
-            Toast.makeText(getApplicationContext(), "이메일 보내기 성공~!~!", Toast.LENGTH_SHORT).show();
-            Log.d("시발", emailEdit.getText().toString());
-        }catch (SendFailedException e){
-            Toast.makeText(getApplicationContext(), "이메일 형식이 잘못됨~!~!", Toast.LENGTH_SHORT).show();
-        }catch (MessagingException e) {
-            Toast.makeText(getApplicationContext(), "인터넷 연결확인~!~!", Toast.LENGTH_SHORT).show();
-        }catch (Exception e) {
-            e.printStackTrace();
+                GMailSender gMailSender = new GMailSender("ohsg0315@gmail.com", "Aiden0088151!");
+                gMailSender.sendMail("Wedin 인증 메일입니다.", " Wedin 어플을 이용해주셔서 감하삽니다. \n회원가입을 위한 인증 번호는 >>  " + authenticationString + "  << 입니다.\n Wedin 인증을 위해 입력해주세요.\n", emailEdit.getText().toString());
+                Toast.makeText(getApplicationContext(), "이메일 보내기 성공~!~!", Toast.LENGTH_SHORT).show();
+                Log.d("시발", emailEdit.getText().toString());
+            } catch (SendFailedException e) {
+                Toast.makeText(getApplicationContext(), "이메일 형식이 잘못됨~!~!", Toast.LENGTH_SHORT).show();
+            } catch (MessagingException e) {
+                Toast.makeText(getApplicationContext(), "인터넷 연결확인~!~!", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            dialog = LayoutInflater.from(this);
+            dialogLayout = dialog.inflate(R.layout.auth_dialog, null); // LayoutInflater를 통해 XML에 정의된 Resource들을 View의 형태로 반환 시켜 줌
+            authDialog = new Dialog(this); //Dialog 객체 생성
+            authDialog.setContentView(dialogLayout); //Dialog에 inflate한 View를 탑재 하여줌
+            authDialog.setCanceledOnTouchOutside(false); //Dialog 바깥 부분을 선택해도 닫히지 않게 설정함.
+            authDialog.setOnCancelListener(this); // 다이얼로그 닫을 때
+            authDialog.show(); //Dialog를 나타내어 준다.
+            countDownTimer();
         }
-
-        dialog = LayoutInflater.from(this);
-        dialogLayout = dialog.inflate(R.layout.auth_dialog, null); // LayoutInflater를 통해 XML에 정의된 Resource들을 View의 형태로 반환 시켜 줌
-        authDialog = new Dialog(this); //Dialog 객체 생성
-        authDialog.setContentView(dialogLayout); //Dialog에 inflate한 View를 탑재 하여줌
-        authDialog.setCanceledOnTouchOutside(false); //Dialog 바깥 부분을 선택해도 닫히지 않게 설정함.
-        authDialog.setOnCancelListener(this); // 다이얼로그 닫을 때
-        authDialog.show(); //Dialog를 나타내어 준다.
-        countDownTimer();
+        else{
+            Toast.makeText(this, "이메일을 입력해주세요.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     // 카운트 다운 메소드
@@ -298,5 +307,20 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener, D
     public void onCancel(DialogInterface dialog) {
         countDownTimer.cancel();
     }
+
+    private String makeAuthenticationString(){
+        int ten = 1, randomValue = 0;
+        double value;
+        for(int i = 0; i < 10; i++){
+            value = Math.random();
+            ten *= 10;
+            value *= ten;
+            randomValue += (int)value;
+        }
+        String res = Integer.toHexString(randomValue);
+        Log.d("시발", res);
+        return res;
+    }
+
 }
 
