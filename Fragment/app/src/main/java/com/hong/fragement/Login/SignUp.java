@@ -132,7 +132,6 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener, D
         if (view == idAuthBtn) {
             emailAuth();
         }
-
         // Dialog 내 인증 버튼을 눌렀을 경우
         else if (view == emailAuth_btn) {
             if (emailAuth_number.getText().toString().length() > 0) {
@@ -169,6 +168,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener, D
         }
     }
 
+    // 이메일 인증 함수
     private void emailAuth() {
         if (emailEdit.getText().toString().length() > 3) {
             try {
