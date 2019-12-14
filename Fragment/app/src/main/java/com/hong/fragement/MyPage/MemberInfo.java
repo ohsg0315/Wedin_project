@@ -63,8 +63,7 @@ public class MemberInfo extends AppCompatActivity implements View.OnClickListene
         setViewSpinner();
 
         Intent intent = getIntent();
-        memberObj = (MemberObj) intent.getSerializableExtra("member");
-
+        memberObj = (MemberObj) intent.getParcelableExtra("member");
 
         initProfile();
     }
