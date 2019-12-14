@@ -1,9 +1,12 @@
 package com.hong.fragement.MyPage;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class MemberObj implements Serializable{
+public class MemberObj implements Parcelable {
     private String name;
     private String year;
     private String month;
@@ -24,6 +27,44 @@ public class MemberObj implements Serializable{
         this.genre = genre;
         this.type = type;
     }
+
+    protected MemberObj(Parcel in) {
+        name = in.readString();
+        year = in.readString();
+        month = in.readString();
+        day = in.readString();
+        genre = in.createStringArrayList();
+        email = in.readString();
+        type = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(year);
+        dest.writeString(month);
+        dest.writeString(day);
+        dest.writeStringList(genre);
+        dest.writeString(email);
+        dest.writeString(type);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<MemberObj> CREATOR = new Creator<MemberObj>() {
+        @Override
+        public MemberObj createFromParcel(Parcel in) {
+            return new MemberObj(in);
+        }
+
+        @Override
+        public MemberObj[] newArray(int size) {
+            return new MemberObj[size];
+        }
+    };
 
     public void setName(String name) {
         this.name = name;
