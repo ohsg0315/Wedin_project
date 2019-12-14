@@ -25,18 +25,21 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.hong.fragement.MovieObj;
 import com.hong.fragement.R;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class DetailMovieActivity extends YouTubeBaseActivity {
 
     private YouTubePlayerView youTubePlayerView;
-    private String youtubeUri;
 
+    private String youtubeUri;
     private ImageView poster;
     private TextView title;
     private TextView lowPrice;
@@ -44,12 +47,13 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
     private TextView summary;
     private Button reviewAddBtn;
 
-    private Intent intent;
+
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference ratingRef = db.collection("Rating");
 
     private RatingObj data;
     private RatingBar ratingBar;
+    private Intent intent;
 
     private RecyclerView ratingRecyclerVeiw;
     private DetailMoviewAdapter adapter;
@@ -62,8 +66,10 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_movie_activity);
 
-        intent = getIntent();
         dataList = new ArrayList<RatingObj>();
+        intent = getIntent();
+        int dataFlag = Integer.parseInt(intent.getStringExtra("dataFlag"));
+        movieTitle = intent.getStringExtra("title");
 
         youTubePlayerView = findViewById(R.id.youtubeview);
         poster = findViewById(R.id.poster_detail_movie);
@@ -71,23 +77,10 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
         lowPrice = findViewById(R.id.movie_low_price);
         highPrice = findViewById(R.id.movie_high_price);
         summary = findViewById(R.id.summary_detail_movie);
+
         ratingBar = findViewById(R.id.ratingBar_detail_movie);
         ratingRecyclerVeiw = findViewById(R.id.rating_recyclerview);
         reviewAddBtn = findViewById(R.id.review_add_btn);
-
-        Glide.with(this)
-                .load(intent.getStringExtra("imageUri"))
-                .error(R.drawable.common_full_open_on_phone)
-                .into(poster);
-
-        title.setText(intent.getStringExtra("title"));
-        lowPrice.setText(intent.getStringExtra("price1"));
-        highPrice.setText(intent.getStringExtra("price2"));
-        summary.setText(intent.getStringExtra("summary"));
-        youtubeUri = intent.getStringExtra("youtubeUri");
-
-        youTubePlayerView.initialize(youtubeUri, onInitializedListener);
-        reviewAddBtn.setOnClickListener(reviewAddBtnListener);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setReverseLayout(true);
@@ -95,14 +88,60 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
         ratingRecyclerVeiw.setLayoutManager(layoutManager);
         ratingRecyclerVeiw.setHasFixedSize(true);
 
-        youTubePlayerView.initialize("AIzaSyBMm09T_Ycgeh1gXB-wFNZzdhuSs21J5n8", onInitializedListener);
         reviewAddBtn.setOnClickListener(reviewAddBtnListener);
 
+        setPageView(dataFlag);
         readRatingData();
     }
 
+
+    // HomeeFragmet에서 intent 방식에 따라 DetailMovieActivity의 View를 세팅해줌
+    private void setPageView(int flag) {
+
+        switch(flag) {
+            case 1:     // 검색 타이틑을  가져와 DB에서 검색해 View 세팅
+                db.collection("Movie").document(movieTitle).get()
+                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                Glide.with(DetailMovieActivity.this)
+                                        .load(documentSnapshot.toObject(MovieObj.class).getImageUri())
+                                        .error(R.drawable.common_full_open_on_phone)
+                                        .into(poster);
+
+                                title.setText(movieTitle);
+
+                                Map<String,Integer> moviePrice = documentSnapshot.toObject(MovieObj.class).getPrice();
+                                int naverPrice = moviePrice.get("네이버");
+                                int wavePrice = moviePrice.get("웨이브");
+                                lowPrice.setText(naverPrice);
+                                highPrice.setText(wavePrice);
+                                summary.setText(documentSnapshot.toObject(MovieObj.class).getSummary());
+                                youTubePlayerView.initialize(documentSnapshot.toObject(MovieObj.class)
+                                        .getYoutubeUri(), onInitializedListener);
+
+                            }
+                        });
+                break;
+
+            case 2 :    // 선택한 포스터의 정보를 intent로 가져와 바로 세팅
+                Glide.with(DetailMovieActivity.this)
+                        .load(intent.getStringExtra("imageUri"))
+                        .error(R.drawable.common_full_open_on_phone)
+                        .into(poster);
+
+                youtubeUri = intent.getStringExtra("youtubeUri");
+                youTubePlayerView.initialize(youtubeUri, onInitializedListener);
+                title.setText(movieTitle);
+                lowPrice.setText(intent.getStringExtra("price1"));
+                highPrice.setText(intent.getStringExtra("price2"));
+                summary.setText(intent.getStringExtra("summary"));
+
+                break;
+        }
+    }
+
     private void readRatingData() {
-        movieTitle = intent.getStringExtra("title");
 
         ratingRef.document(movieTitle).collection("review").get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -135,8 +174,9 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
                 Toast.makeText(DetailMovieActivity.this, "리뷰 데이터가 없습니다", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
+
+
 
     private View.OnClickListener reviewAddBtnListener = new View.OnClickListener() {
         @Override
@@ -149,7 +189,6 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
                 public void onDismiss(DialogInterface dialogInterface) {
                     Toast.makeText(DetailMovieActivity.this, "다이얼로그를종료합니다",
                             Toast.LENGTH_SHORT).show();
-
                 }
             });
         }
