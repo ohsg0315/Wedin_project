@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -69,7 +70,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener, D
     EditText emailAuth_number; //인증 번호를 입력 하는 칸
     Button emailAuth_btn, idAuthCancelBtn; // 인증버튼
     CountDownTimer countDownTimer;
-    private  String mail_message;
+    private boolean isEmailAuthentication;
 
     final int MILLISINFUTURE = 300 * 1000; //총 시간 (300초 = 5분)
     final int COUNT_DOWN_INTERVAL = 1000; //onTick 메소드를 호출할 간격 (1초)
@@ -80,13 +81,14 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener, D
         setContentView(R.layout.activity_sign_up);
 
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-        .permitDiskReads()
-        .permitDiskWrites()
-        .permitNetwork().build());
+                .permitDiskReads()
+                .permitDiskWrites()
+                .permitNetwork().build());
 
 
         setViewSpinner();
 
+        isEmailAuthentication = false;
         signUpConfirmBtn = findViewById(R.id.sign_up_finish);
         idAuthBtn = findViewById(R.id.email_auth_btn);
         emailEdit = findViewById(R.id.email_sign_up);
@@ -139,31 +141,28 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener, D
 
                 if (emailAuth_number.getText().toString().equals(authenticationString)) {
                     Toast.makeText(this, "이메일 인증 성공", Toast.LENGTH_SHORT).show();
+
+                    isEmailAuthentication = true;
+                    idAuthBtn.setText("인증이 완료되었습니다.");
+                    idAuthBtn.setEnabled(false);
+
                     authDialog.cancel();
                 } else {
                     Toast.makeText(this, "이메일 인증 실패", Toast.LENGTH_SHORT).show();
                 }
-            }
-            else {
+            } else {
                 Toast.makeText(this, "인증 번호를 입력해주세요.", Toast.LENGTH_SHORT).show();
             }
         }
         // Dialog 내 취소 번튼을 눌렀을 경우
-        else if(view == idAuthCancelBtn){
+        else if (view == idAuthCancelBtn) {
             authDialog.cancel();
         }
 
         // 회원가입 완료 버튼
         else if (view == signUpConfirmBtn) {
-
-            // 성공
-            if (passwordEdit.getText().toString().equals(repasswordEdit.getText().toString())) {
+            if (isInput()) {
                 newSignUp(emailEdit.getText().toString(), passwordEdit.getText().toString());
-            }
-
-            //실패
-            else {
-                Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -177,7 +176,6 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener, D
                 GMailSender gMailSender = new GMailSender("ohsg0315@gmail.com", "Aiden0088151!");
                 gMailSender.sendMail("Wedin 인증 메일입니다.", " Wedin 어플을 이용해주셔서 감하삽니다. \n회원가입을 위한 인증 번호는 >>  " + authenticationString + "  << 입니다.\n Wedin 인증을 위해 입력해주세요.\n", emailEdit.getText().toString());
                 Toast.makeText(getApplicationContext(), "이메일 보내기 성공~!~!", Toast.LENGTH_SHORT).show();
-                Log.d("시발", emailEdit.getText().toString());
             } catch (SendFailedException e) {
                 Toast.makeText(getApplicationContext(), "이메일 형식이 잘못됨~!~!", Toast.LENGTH_SHORT).show();
             } catch (MessagingException e) {
@@ -194,8 +192,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener, D
             authDialog.setOnCancelListener(this); // 다이얼로그 닫을 때
             authDialog.show(); //Dialog를 나타내어 준다.
             countDownTimer();
-        }
-        else{
+        } else {
             Toast.makeText(this, "이메일을 입력해주세요.", Toast.LENGTH_SHORT).show();
         }
     }
@@ -240,47 +237,85 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener, D
 
     // 회원가입 함수
     private void newSignUp(String email, String password) {
-        if (email.length() > 0 && password.length() > 5) {
-            mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                FirebaseFirestore db = FirebaseFirestore.getInstance();
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-                                // 회원가입시 정보 저장
-                                String email = emailEdit.getText().toString();
-                                String name = nameEdit.getText().toString();
-                                String year = yearEdit.getText().toString();
-                                String month = monthEdit.getText().toString();
-                                String day = dayEdit.getText().toString();
-                                ArrayList<String> pGenre = new ArrayList<>();
-                                String type = "App";
+                            // 회원가입시 정보 저장
+                            String email = emailEdit.getText().toString();
+                            String name = nameEdit.getText().toString();
+                            String year = yearEdit.getText().toString();
+                            String month = monthEdit.getText().toString();
+                            String day = dayEdit.getText().toString();
+                            ArrayList<String> pGenre = new ArrayList<>();
+                            String type = "App";
 
-                                for (int i = 0; i < 3; i++) {
-                                    pGenre.add(i, preferenceGenre[i].getSelectedItem().toString());
-                                }
-
-                                MemberObj newMemberObj = new MemberObj(email, name, year, month, day, pGenre, type);
-                                db.collection("Users").document(mAuth.getUid()).set(newMemberObj);
-                                Toast.makeText(getApplicationContext(), "회원가입에 성공하였습니다.", Toast.LENGTH_LONG).show();
-                                updateUI(user);
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                if (task.getException() != null)
-                                    Toast.makeText(getApplicationContext(), task.getException().toString(), Toast.LENGTH_SHORT).show();
-                                //Toast.makeText(EmailPasswordActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-                                updateUI(null);
+                            for (int i = 0; i < 3; i++) {
+                                pGenre.add(i, preferenceGenre[i].getSelectedItem().toString());
                             }
 
-                            // ...
+                            MemberObj newMemberObj = new MemberObj(email, name, year, month, day, pGenre, type);
+                            db.collection("Users").document(mAuth.getUid()).set(newMemberObj);
+                            Toast.makeText(getApplicationContext(), "회원가입에 성공하였습니다.", Toast.LENGTH_LONG).show();
+                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            if (task.getException() != null)
+                                Toast.makeText(getApplicationContext(), task.getException().toString(), Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(EmailPasswordActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                            updateUI(null);
                         }
-                    });
-        } else {
-            Toast.makeText(getApplicationContext(), "이메일 또는 비밀번호를 입력해주세요.", Toast.LENGTH_LONG).show();
-        }
+
+                        // ...
+                    }
+                });
+    }
+
+
+    private void makeDialog(String title) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("< 알림 >").setMessage(title + "을/를 확인해주세요.");
+        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+
+    // 회원정보 입력 확인
+    private boolean isInput() {
+        if (emailEdit.length() <= 0) {
+            makeDialog("이메일");
+            return false;
+        } else if ((passwordEdit.length() <= 5) || !(passwordEdit.getText().toString().equals(repasswordEdit.getText().toString()))) {
+            makeDialog("비밀번호");
+            return false;
+        } else if (nameEdit.length() <= 0) {
+            makeDialog("이름");
+            return false;
+        } else if (yearEdit.length() <= 0) {
+            makeDialog("생년월일");
+            return false;
+        } else if (monthEdit.length() <= 0) {
+            makeDialog("생년월일");
+            return false;
+        } else if (dayEdit.length() <= 0) {
+            makeDialog("생년월일");
+            return false;
+        } else if (!isEmailAuthentication) {
+            makeDialog("이메일 인증");
+            return false;
+        } else
+            return true;
     }
 
     // 스피너 세팅
@@ -310,14 +345,14 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener, D
         countDownTimer.cancel();
     }
 
-    private String makeAuthenticationString(){
+    private String makeAuthenticationString() {
         int ten = 1, randomValue = 0;
         double value;
-        for(int i = 0; i < 10; i++){
+        for (int i = 0; i < 10; i++) {
             value = Math.random();
             ten *= 10;
             value *= ten;
-            randomValue += (int)value;
+            randomValue += (int) value;
         }
         String res = Integer.toHexString(randomValue);
         Log.d("시발", res);
