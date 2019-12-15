@@ -70,6 +70,7 @@ public class MemberInfo extends AppCompatActivity implements View.OnClickListene
 
     // 읽어온 객체를 입력
     private void initProfile() {
+        emailEdit.setText(memberObj.getEmail());
         nameEdit.setText(memberObj.getName());
         yearEdit.setText(memberObj.getYear());
         monthEdit.setText(memberObj.getMonth());
@@ -115,9 +116,12 @@ public class MemberInfo extends AppCompatActivity implements View.OnClickListene
     @Override
     public void onClick(View v) {
         if (v == updateConfirmBtn) profileUpdate();
-        else if (v == confirmBtn) myStartActivity(MainActivity.class);
+        else if (v == confirmBtn) backToMain();
     }
 
+    private void backToMain(){
+        finish();
+    }
     private void myStartActivity(Class c) {
         Intent intent = new Intent(this, c);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

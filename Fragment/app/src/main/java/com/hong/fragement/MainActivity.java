@@ -200,7 +200,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     LogoutAlertDialog();
                 } else {
                     startActivity(new Intent(this, LoginActivity.class));
-                    finish();
                 }
                 break;
             case R.id.navigation_right_mypage:

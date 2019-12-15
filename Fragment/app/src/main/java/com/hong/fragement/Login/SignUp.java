@@ -3,6 +3,7 @@ package com.hong.fragement.Login;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -157,7 +158,6 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener, D
 
             // 성공
             if (passwordEdit.getText().toString().equals(repasswordEdit.getText().toString())) {
-                Toast.makeText(getApplicationContext(), "회원가입에 성공하였습니다.", Toast.LENGTH_LONG).show();
                 newSignUp(emailEdit.getText().toString(), passwordEdit.getText().toString());
             }
 
@@ -265,7 +265,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener, D
 
                                 MemberObj newMemberObj = new MemberObj(email, name, year, month, day, pGenre, type);
                                 db.collection("Users").document(mAuth.getUid()).set(newMemberObj);
-
+                                Toast.makeText(getApplicationContext(), "회원가입에 성공하였습니다.", Toast.LENGTH_LONG).show();
                                 updateUI(user);
                             } else {
                                 // If sign in fails, display a message to the user.
@@ -297,7 +297,9 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener, D
 
     public void updateUI(FirebaseUser user) {
         if (user != null) {
-            startActivity(new Intent(this, MainActivity.class));
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
             finish();
         }
     }
