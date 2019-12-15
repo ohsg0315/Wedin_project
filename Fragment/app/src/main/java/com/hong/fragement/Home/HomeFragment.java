@@ -1,4 +1,4 @@
-    package com.hong.fragement.Home;
+package com.hong.fragement.Home;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,7 +33,7 @@ public class HomeFragment extends Fragment {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private AutoCompleteTextView movieSearchBar;
-    private Button searchBtn;
+    private ImageButton searchBtn;
 
     private RecyclerView recyclerView1;
 
@@ -46,9 +47,9 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        // searchBtn = view.findViewById(R.id.)
         recyclerView1 = view.findViewById(R.id.recyclerview1);
         movieSearchBar = view.findViewById(R.id.movie_search_bar);
+        searchBtn = view.findViewById(R.id.search_btn);
 
         /*
         movieSearchBar.setOnKeyListener(new View.OnKeyListener() {
@@ -58,7 +59,6 @@ public class HomeFragment extends Fragment {
                 else return false;
             }
         });
-
          */
 
         recyclerView1.setHasFixedSize(true); // 리사이클러뷰 안의 아이템 크기를 일정하게 고정
@@ -71,6 +71,7 @@ public class HomeFragment extends Fragment {
         titleList = new ArrayList<String>();
         ArrayAdapter<String> titleListAdapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_list_item_1,titleList);
         movieSearchBar.setAdapter(titleListAdapter);
+        searchBtn.setOnClickListener(btnClcikListener);
 
         return view;
     }
@@ -97,7 +98,6 @@ public class HomeFragment extends Fragment {
                             }
                             adapter = new HomeAdapter(datList, getActivity(),listener); // 데이터 생성. Context : getActivity (프래그먼트 이용)
                             recyclerView1.setAdapter(adapter);
-
                         }
                     }
                 });
@@ -127,7 +127,6 @@ public class HomeFragment extends Fragment {
         }
     };
 
-    /*
     // 영화 입력 후 검색 버튼 클릭시 상세 페이지 전환 이벤트
     private View.OnClickListener btnClcikListener = new View.OnClickListener() {
         @Override
@@ -141,8 +140,6 @@ public class HomeFragment extends Fragment {
             startActivity(intent);
         }
     };
-
-     */
 
     public interface OnItemClick {
         void onMovieSelected(MovieObj selectedMovie);

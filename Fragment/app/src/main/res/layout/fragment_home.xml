@@ -10,31 +10,42 @@
 
         <ImageView
             android:id="@+id/logo"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_gravity="center"
             android:src="@drawable/wedin_logo" />
 
-        <com.google.android.material.textfield.TextInputLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp">
+            android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                android:id="@+id/movie_search_bar"
-                android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="367dp"
                 android:layout_height="match_parent"
-                android:hint="영화를 검색하세요"
-                android:textColorHint="#000000"
-                android:completionThreshold="1" >
+                android:layout_weight="1">
 
-            </androidx.appcompat.widget.AppCompatAutoCompleteTextView>
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    android:id="@+id/movie_search_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:completionThreshold="1"
+                    android:hint="영화를 검색하세요"
+                    android:textSize="25dp"
+                    android:textColorHint="#000000" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageButton
+                android:id="@+id/search_btn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/search_icon"
+                android:scaleType="fitXY"
+                android:adjustViewBounds="true"/>
 
 
-
+        </LinearLayout>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="40dp"

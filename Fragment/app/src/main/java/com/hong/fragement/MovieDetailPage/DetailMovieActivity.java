@@ -37,6 +37,9 @@ import java.util.Map;
 
 public class DetailMovieActivity extends YouTubeBaseActivity {
 
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference ratingRef = db.collection("Rating");
+
     private YouTubePlayerView youTubePlayerView;
 
     private String youtubeUri;
@@ -47,19 +50,15 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
     private TextView summary;
     private Button reviewAddBtn;
 
-
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference ratingRef = db.collection("Rating");
-
+    static ArrayList<RatingObj> dataList;
     private RatingObj data;
     private RatingBar ratingBar;
-    private Intent intent;
 
+    private Intent intent;
     private RecyclerView ratingRecyclerVeiw;
     private DetailMoviewAdapter adapter;
     private CustomDialog customDialog;
     private String movieTitle;
-    static ArrayList<RatingObj> dataList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +69,7 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
         intent = getIntent();
         int dataFlag = Integer.parseInt(intent.getStringExtra("dataFlag"));
         movieTitle = intent.getStringExtra("title");
+        Log.e("-------",movieTitle);
 
         youTubePlayerView = findViewById(R.id.youtubeview);
         poster = findViewById(R.id.poster_detail_movie);
@@ -104,21 +104,21 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
                         .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                Map<String,Integer> moviePrice = documentSnapshot.toObject(MovieObj.class).getPrice();
+                                int naverPrice = moviePrice.get("네이버");
+                                int wavePrice = moviePrice.get("웨이브");
+                                youtubeUri = documentSnapshot.toObject(MovieObj.class).getYoutubeUri();
+
                                 Glide.with(DetailMovieActivity.this)
                                         .load(documentSnapshot.toObject(MovieObj.class).getImageUri())
                                         .error(R.drawable.common_full_open_on_phone)
                                         .into(poster);
 
                                 title.setText(movieTitle);
-
-                                Map<String,Integer> moviePrice = documentSnapshot.toObject(MovieObj.class).getPrice();
-                                int naverPrice = moviePrice.get("네이버");
-                                int wavePrice = moviePrice.get("웨이브");
-                                lowPrice.setText(naverPrice);
-                                highPrice.setText(wavePrice);
+                                lowPrice.setText(Integer.toString(naverPrice));
+                                highPrice.setText(Integer.toString(naverPrice));
                                 summary.setText(documentSnapshot.toObject(MovieObj.class).getSummary());
-                                youTubePlayerView.initialize(documentSnapshot.toObject(MovieObj.class)
-                                        .getYoutubeUri(), onInitializedListener);
+                                youTubePlayerView.initialize(youtubeUri, onInitializedListener);
 
                             }
                         });
@@ -175,8 +175,6 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
             }
         });
     }
-
-
 
     private View.OnClickListener reviewAddBtnListener = new View.OnClickListener() {
         @Override
