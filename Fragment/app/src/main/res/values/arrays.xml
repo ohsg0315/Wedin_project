@@ -3,14 +3,13 @@
     <string-array name="movie_genre">
         <item>코미디</item>
         <item>멜로</item>
-        <item>로맨스</item>
-        <item>공포</item>
         <item>액션</item>
-        <item>스릴러</item>
+        <item>공포/스릴러</item>
         <item>드라마</item>
+        <item>독립영화</item>
         <item>애니메이션</item>
-        <item>판타지</item>
+        <item>SF/판타지</item>
         <item>다큐멘터리</item>
-        <item>SF</item>
+        <item>공연실황</item>
     </string-array>
 </resources>
