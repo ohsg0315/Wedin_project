@@ -45,6 +45,8 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.hong.fragement.MainActivity;
 import com.hong.fragement.MyPage.MemberObj;
@@ -59,6 +61,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private static final String TAG = "시발";
     private FirebaseAuth auth; // 파이어 베이스 인증 객체
+    private FirebaseFirestore db;
 
     private GoogleSignInClient mGoogleSignInClient;
     public static final int RC_SIGN_IN = 1;
@@ -74,7 +77,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button idFind;
     private SignInButton googleBtn; // 구글 로그인 버튼
     private LoginButton facebookBtn; // 페이스북 로그인 버튼
-
     public CallbackManager callbackManager;
 
     @Override
@@ -212,7 +214,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     // 인증 성공시 Intent
     public void updateUI(FirebaseUser user) {
         if (user != null) {
-            Log.d(TAG, "가자가자");
             Intent intent = new Intent(this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
@@ -258,21 +259,38 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             Log.d(TAG, "signInWithCredential:success");
 
                             FirebaseUser user = auth.getCurrentUser();
-                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+                            db = FirebaseFirestore.getInstance();
 
-                            //기존 구글 아이디 DB가 존재하지 않는 경우 초기화하여 DB생성
-                            String year = "1900";
-                            String month = "1";
-                            String day = "1";
-                            ArrayList<String> pGenre = new ArrayList<>();
+                            DocumentReference docRef = db.collection("Users").document(user.getUid());
+                            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        DocumentSnapshot document = task.getResult();
+                                        if (document.exists()) {
+                                            Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                                        } else {
+                                            Log.d(TAG, "No such document");
+                                            FirebaseUser user = auth.getCurrentUser();
 
-                            for (int i = 0; i < 3; i++) {
-                                pGenre.add(i, "드라마");
-                            }
+                                            //기존 구글 아이디 DB가 존재하지 않는 경우 초기화하여 DB생성
+                                            String year = "1900";
+                                            String month = "1";
+                                            String day = "1";
+                                            ArrayList<String> pGenre = new ArrayList<>();
 
-                            MemberObj newMemberObj = new MemberObj(acct.getEmail(), acct.getDisplayName(), year, month, day, pGenre, "Google");
-                            db.collection("Users").document(user.getUid()).set(newMemberObj);
+                                            for (int i = 0; i < 3; i++) {
+                                                pGenre.add(i, "드라마");
+                                            }
 
+                                            MemberObj newMemberObj = new MemberObj(acct.getEmail(), acct.getDisplayName(), year, month, day, pGenre, "Google");
+                                            db.collection("Users").document(user.getUid()).set(newMemberObj);
+                                        }
+                                    } else {
+                                        Log.d(TAG, "get failed with ", task.getException());
+                                    }
+                                }
+                            });
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -296,8 +314,38 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
-                            FirebaseUser user = auth.getCurrentUser();
-                            Log.d("시발",  user.getUid() + "/" + user.getDisplayName() + "/" + user.getEmail());
+                            final FirebaseUser user = auth.getCurrentUser();
+                            db = FirebaseFirestore.getInstance();
+
+                            DocumentReference docRef = db.collection("Users").document(user.getUid());
+                            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        DocumentSnapshot document = task.getResult();
+                                        if (document.exists()) {
+                                            Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                                        } else {
+                                            Log.d(TAG, "No such document");
+
+                                            //기존 페이스북 아이디 DB가 존재하지 않는 경우 초기화하여 DB생성
+                                            String year = "1900";
+                                            String month = "1";
+                                            String day = "1";
+                                            ArrayList<String> pGenre = new ArrayList<>();
+
+                                            for (int i = 0; i < 3; i++) {
+                                                pGenre.add(i, "드라마");
+                                            }
+
+                                            MemberObj newMemberObj = new MemberObj(user.getEmail(), user.getDisplayName(), year, month, day, pGenre, "Facebook");
+                                            db.collection("Users").document(user.getUid()).set(newMemberObj);
+                                        }
+                                    } else {
+                                        Log.d(TAG, "get failed with ", task.getException());
+                                    }
+                                }
+                            });
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
