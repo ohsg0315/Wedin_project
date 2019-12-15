@@ -18,6 +18,8 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -43,15 +45,14 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.hong.fragement.MainActivity;
 import com.hong.fragement.MyPage.MemberObj;
 import com.hong.fragement.R;
 
+import org.json.JSONObject;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -72,6 +73,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button signUpBtn;
     private Button idFind;
     private SignInButton googleBtn; // 구글 로그인 버튼
+    private LoginButton facebookBtn; // 페이스북 로그인 버튼
+
     public CallbackManager callbackManager;
 
     @Override
@@ -82,7 +85,32 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         callbackManager = CallbackManager.Factory.create();
 
-        LoginButton facebookBtn = findViewById(R.id.login_button);
+        // Configure sign-in to request the user's ID, email address, and basic
+        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(GOOGLE_CLIENT_ID)
+                .requestEmail()
+                .build();
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        auth = FirebaseAuth.getInstance();  // 파이어베이스 인증 객체 초기화
+
+        initSettings();
+    }
+
+    private void initSettings() {
+        facebookBtn = findViewById(R.id.facebook_login_button);
+        googleBtn = findViewById(R.id.google_btn);
+        userId = findViewById(R.id.user_id);
+        userPassowrd = findViewById(R.id.user_password);
+        logo = findViewById(R.id.login_wedin_logo);
+        login = findViewById(R.id.sign_in_btn);
+        idFind = findViewById(R.id.id_find_btn);
+        signUpBtn = findViewById(R.id.sign_up_btn);
+
+
         facebookBtn.setReadPermissions("email", "public_profile");
         facebookBtn.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -102,31 +130,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
 
-
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(GOOGLE_CLIENT_ID)
-                .requestEmail()
-                .build();
-
-        // Build a GoogleSignInClient with the options specified by gso.
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-        auth = FirebaseAuth.getInstance();  // 파이어베이스 인증 객체 초기화
-
-        initSettings();
-    }
-
-    private void initSettings() {
-        googleBtn = findViewById(R.id.google_btn);
-        userId = findViewById(R.id.user_id);
-        userPassowrd = findViewById(R.id.user_password);
-        logo = findViewById(R.id.login_wedin_logo);
-        login = findViewById(R.id.sign_in_btn);
-        idFind = findViewById(R.id.id_find_btn);
-        signUpBtn = findViewById(R.id.sign_up_btn);
-
+        if(LoginManager.getInstance() != null)
+            LoginManager.getInstance().logOut();
 
         logo.setOnClickListener(this);
         userId.setOnClickListener(this);
@@ -209,7 +214,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (user != null) {
             Log.d(TAG, "가자가자");
             Intent intent = new Intent(this, MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
     }
@@ -222,8 +227,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
@@ -280,7 +285,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 });
     }
 
-    private void handleFacebookAccessToken(AccessToken token) {
+    private void handleFacebookAccessToken(final AccessToken token) {
         Log.d(TAG, "handleFacebookAccessToken:" + token);
 
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
@@ -292,6 +297,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = auth.getCurrentUser();
+                            Log.d("시발",  user.getUid() + "/" + user.getDisplayName() + "/" + user.getEmail());
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -302,6 +308,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         // ...
                     }
                 });
+    }
+
+    // 사용자 정보 요청
+    public void requestMe(AccessToken token) {
+        GraphRequest graphRequest = GraphRequest.newMeRequest(token,
+                new GraphRequest.GraphJSONObjectCallback() {
+
+                    @Override
+                    public void onCompleted(JSONObject object, GraphResponse response) {
+                        Log.e("result", object.toString());
+                    }
+                });
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id,name,email,gender,birthday");
+        graphRequest.setParameters(parameters);
+        graphRequest.executeAsync();
     }
 }
 

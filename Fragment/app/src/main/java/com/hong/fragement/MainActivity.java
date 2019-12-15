@@ -99,7 +99,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-
     private void ReadUserData() {
         DocumentReference docRef = db.collection("Users").document(mFirebaseUser.getUid());
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -249,7 +248,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .setPositiveButton("로그아웃", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        mFirebaseAuth.signOut();
+                        mFirebaseAuth.getInstance().signOut();
 
                         Intent intent = getIntent();
                         finish();

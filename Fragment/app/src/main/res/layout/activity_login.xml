@@ -95,7 +95,7 @@
             android:layout_gravity="center" />
 
         <com.facebook.login.widget.LoginButton
-            android:id="@+id/login_button"
+            android:id="@+id/facebook_login_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
