@@ -17,7 +17,9 @@
         <activity android:name=".Login.FindInfo" />
         <activity android:name=".Login.LoginActivity" />
         <activity android:name=".Login.SignUp" />
-        <activity android:name=".MovieDetailPage.DetailMovieActivity" />
+        <activity
+            android:name=".MovieDetailPage.DetailMovieActivity"
+            android:launchMode="singleTask" />
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan" >

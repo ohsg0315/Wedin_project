@@ -206,4 +206,10 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
 
         }
     };
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        }
+
 }

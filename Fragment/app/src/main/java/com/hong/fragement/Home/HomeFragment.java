@@ -2,6 +2,7 @@ package com.hong.fragement.Home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,7 +80,7 @@ public class HomeFragment extends Fragment {
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), DetailMovieActivity.class);
 
-                intent.putExtra("title",titleList.get(position).toString());
+                intent.putExtra("title",movieSearchBar.getText().toString());
                 intent.putExtra("dataFlag","1");
 
                 startActivity(intent);
