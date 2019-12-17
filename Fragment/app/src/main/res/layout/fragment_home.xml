@@ -6,44 +6,67 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:background="#363636">
 
-        <ImageView
-            android:id="@+id/logo"
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="#c4302b"
             android:layout_marginTop="20dp"
-            android:layout_gravity="center"
-            android:src="@drawable/wedin_logo"
-            android:focusable="true"
-            android:focusableInTouchMode="true" />
+            android:layout_marginLeft="130dp"
+            android:layout_marginRight="130dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:paddingRight="2dp"
+            android:paddingLeft="2dp">
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:src="@drawable/wedin_logo"
+                android:scaleType="fitXY"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_weight="1" />
+
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/round_coner"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#FFFFFF">
 
                 <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                     android:id="@+id/movie_search_bar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:background="#FFFFFF"
                     android:completionThreshold="1"
                     android:hint="영화를 검색하세요"
-                    android:textSize="20dp"
+                    android:maxLines="1"
                     android:textColorHint="#000000"
-                    android:maxLines="1"/>
+                    android:textSize="24dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <ImageButton
                 android:id="@+id/search_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:adjustViewBounds="true"
                 android:background="#FFFFFF"
                 android:scaleType="fitXY"
@@ -52,35 +75,56 @@
 
         </LinearLayout>
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#c4302b"
-            android:text="맞춤장르추천"
-            android:textSize="24dp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"/>
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wedin"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" 최신 Movie"
+                android:textSize="24dp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"/>
+
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scrollbars="horizontal" />
+            android:scrollbars="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#c4302b"
-            android:text="TOP100"
+            android:text="맞춤장르추천"
             android:textSize="24dp"
             android:textStyle="bold"
-            android:textColor="#FFFFFF"/>
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scrollbars="horizontal" />
+            android:scrollbars="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"/>
 
     </LinearLayout>
 
