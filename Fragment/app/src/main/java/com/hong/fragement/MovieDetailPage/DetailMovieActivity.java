@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -51,6 +52,7 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
     private TextView summary;
     private TextView ratingScoreView;
     private Button reviewAddBtn;
+    private Button summaryReadBtn;
 
     static ArrayList<RatingObj> dataList;
     private RatingObj data;
@@ -62,6 +64,9 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
     private CustomDialog customDialog;
     private String movieTitle;
 
+    private int dataFlag;
+    private String summayStory;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,9 +74,8 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
 
         dataList = new ArrayList<RatingObj>();
         intent = getIntent();
-        int dataFlag = Integer.parseInt(intent.getStringExtra("dataFlag"));
+        dataFlag = Integer.parseInt(intent.getStringExtra("dataFlag"));
         movieTitle = intent.getStringExtra("title");
-        Log.e("-------",movieTitle);
 
         youTubePlayerView = findViewById(R.id.youtubeview);
         poster = findViewById(R.id.poster_detail_movie);
@@ -79,6 +83,7 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
         lowPrice = findViewById(R.id.movie_low_price);
         highPrice = findViewById(R.id.movie_high_price);
         summary = findViewById(R.id.summary_detail_movie);
+        summaryReadBtn = findViewById(R.id.story_read);
 
         ratingScoreView = findViewById(R.id.rating_detail_movie);
         ratingBar = findViewById(R.id.ratingBar_detail_movie);
@@ -93,6 +98,7 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
         ratingRecyclerVeiw.addItemDecoration(new DividerItemDecoration(this, 1));   // 댓글마다 구분선
 
         reviewAddBtn.setOnClickListener(reviewAddBtnListener);
+        summaryReadBtn.setOnClickListener(summaryReadListener);
 
         setPageView(dataFlag);
         readRatingData();
@@ -122,7 +128,9 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
                                 title.setText(movieTitle);
                                 lowPrice.setText(Integer.toString(naverPrice));
                                 highPrice.setText(Integer.toString(wavePrice));
-                                summary.setText(documentSnapshot.toObject(MovieObj.class).getSummary());
+
+                                summayStory = documentSnapshot.toObject(MovieObj.class).getSummary();
+                                summary.setText(summayStory);
                             }
                         });
                 break;
@@ -138,7 +146,9 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
                 title.setText(movieTitle);
                 lowPrice.setText(intent.getStringExtra("price1"));
                 highPrice.setText(intent.getStringExtra("price2"));
-                summary.setText(intent.getStringExtra("summary"));
+
+                summayStory = intent.getStringExtra("summary");
+                summary.setText(summayStory);
 
                 break;
         }
@@ -179,6 +189,26 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
         });
     }
 
+    private View.OnClickListener summaryReadListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(DetailMovieActivity.this);
+            builder.setTitle(movieTitle + " 줄거리").setMessage(summayStory);
+            builder.setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Toast.makeText(DetailMovieActivity.this, "Cancel Click",Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+
+        }
+    };
+
+
+
     private View.OnClickListener reviewAddBtnListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -206,6 +236,7 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
 
         }
     };
+
 
     @Override
     public void onBackPressed() {

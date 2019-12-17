@@ -157,7 +157,17 @@
                     android:id="@+id/summary_detail_movie"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:textSize="10dp" />
+                    android:textSize="20dp"
+                    android:layout_marginRight="20dp"
+                    android:maxLines="4"/>
+
+                <Button
+                    android:id="@+id/story_read"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="줄거리더보기"
+                    android:textColor="@color/com_facebook_blue"
+                    android:layout_gravity="center" />
 
             </LinearLayout>
 

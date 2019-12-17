@@ -2,15 +2,15 @@ package com.hong.fragement.Home;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -146,13 +146,17 @@ public class HomeFragment extends Fragment {
     private View.OnClickListener btnClcikListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent();
-            intent.setClass(getContext(),DetailMovieActivity.class);
+            if (TextUtils.isEmpty(movieSearchBar.getText().toString())) {
+                Toast.makeText(getActivity(),"글자를 입력해주세요!",Toast.LENGTH_SHORT).show();
+            } else {
+                Intent intent = new Intent();
+                intent.setClass(getContext(), DetailMovieActivity.class);
 
-            intent.putExtra("title",movieSearchBar.getText().toString().trim());
-            intent.putExtra("dataFlag","1");
+                intent.putExtra("title", movieSearchBar.getText().toString().trim());
+                intent.putExtra("dataFlag", "1");
 
-            startActivity(intent);
+                startActivity(intent);
+            }
         }
     };
 

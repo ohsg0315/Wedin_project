@@ -35,7 +35,8 @@
                     android:completionThreshold="1"
                     android:hint="영화를 검색하세요"
                     android:textSize="20dp"
-                    android:textColorHint="#000000" />
+                    android:textColorHint="#000000"
+                    android:maxLines="1"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
