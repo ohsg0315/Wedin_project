@@ -18,7 +18,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:layout_gravity="center_horizontal"
-            android:stepSize="0.5" />
+            android:numStars="5"
+            android:stepSize="0.1"
+            style="@style/MyRatingBar" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:theme="@style/com_facebook_activity_theme"
@@ -35,7 +37,7 @@
                 android:textColorHint="#FF0000"
                 android:textColor="#FF0000"
                 android:gravity="center"
-                android:background="@drawable/round_coner"/>
+                android:background="@drawable/round_coner" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

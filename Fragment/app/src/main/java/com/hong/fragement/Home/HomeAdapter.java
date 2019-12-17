@@ -82,16 +82,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MovieViewHolde
             }
         });
 
-
-
         }
-
-
-
-
-
-
-
 
     }
 }

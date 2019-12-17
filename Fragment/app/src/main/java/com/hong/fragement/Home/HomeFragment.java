@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -71,6 +72,19 @@ public class HomeFragment extends Fragment {
         titleList = new ArrayList<String>();
         ArrayAdapter<String> titleListAdapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_list_item_1,titleList);
         movieSearchBar.setAdapter(titleListAdapter);
+        movieSearchBar.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), DetailMovieActivity.class);
+
+                intent.putExtra("title",titleList.get(position).toString());
+                intent.putExtra("dataFlag","1");
+
+                startActivity(intent);
+            }
+        });
         searchBtn.setOnClickListener(btnClcikListener);
 
         return view;

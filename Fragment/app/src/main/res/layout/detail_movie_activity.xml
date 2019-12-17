@@ -18,13 +18,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:layout_marginTop="30dp">
+            android:layout_marginTop="30dp" >
 
             <ImageView
                 android:id="@+id/poster_detail_movie"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="5"
+                android:layout_marginLeft="20dp"
                 android:scaleType="fitXY" />
 
             <LinearLayout
@@ -32,7 +33,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:layout_weight="5"
-                android:paddingLeft="20dp">
+                android:paddingLeft="20dp" >
 
                 <TextView
                     android:id="@+id/title_detail_movie"
@@ -45,7 +46,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal" >
-
 
                     <TextView
                         android:layout_width="0dp"
@@ -92,15 +92,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:weightSum="100"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal" >
 
                     <Button
                         android:id="@+id/genre1_detail_movie"
-                        android:layout_height="30dp"
                         android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="30"
-                        android:textSize="10dp"
-                        android:text="장르1" />
+                        android:text="장르1"
+                        android:textSize="10dp" />
 
                     <Button
                         android:id="@+id/genre2_detail_movie"
@@ -123,7 +123,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal" >
 
                     <RatingBar
                         android:id="@+id/ratingBar_detail_movie"
@@ -131,15 +131,21 @@
                         android:layout_height="wrap_content"
                         android:isIndicator="true"
                         android:numStars="5"
-                        android:stepSize="0.5"
-
+                        android:stepSize="0.1"
+                        android:progressTint="#866d4b"
+                        android:progressBackgroundTint="#000000"
                         style="@style/Widget.AppCompat.RatingBar.Small" />
 
                     <TextView
                         android:id="@+id/rating_detail_movie"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="4.2" />
+                        android:layout_marginLeft="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text=" / 5.0"/>
 
                 </LinearLayout>
 
@@ -153,16 +159,19 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp" >
             <TextView
-                android:layout_width="150dp"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/round_coner"
                 android:gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_alignParentStart="true"
                 android:text="Review"
+                android:textStyle="bold"
                 android:textSize="20dp" />
 
             <Button
@@ -171,16 +180,19 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
                 android:layout_marginRight="20dp"
+                android:layout_alignParentEnd="true"
                 android:background="@drawable/round_coner"
                 android:text="+"
                 android:textSize="30dp" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rating_recyclerview"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp" />
 
     </LinearLayout>
 

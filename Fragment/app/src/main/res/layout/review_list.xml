@@ -5,26 +5,35 @@
 
     <TextView
         android:id="@+id/rating_id"
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="50dp"
         android:text="ID"
-        android:textSize="30dp" />
+        android:textSize="30dp"
+        android:gravity="center"
+        android:background="@drawable/round_coner"/>
 
     <RatingBar
         android:id="@+id/rating_score"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:numStars="5"
+        android:stepSize="0.1"
         android:isIndicator="true"
+        android:layout_marginLeft="20dp"
         android:layout_toRightOf="@id/rating_id"
+        android:layout_alignParentTop="true"
+        android:progressTint="#866d4b"
+        android:progressBackgroundTint="#000000"
         style="@style/Widget.AppCompat.RatingBar.Small" />
 
     <TextView
         android:id="@+id/rating_review"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/rating_id"
-        android:layout_below="@+id/rating_score"/>
+        android:layout_height="30dp"
+        android:layout_marginLeft="20dp"
+        android:text="연습입니다"
+        android:layout_below="@+id/rating_score"
+        android:layout_toRightOf="@+id/rating_id"/>
 
 
 </RelativeLayout>

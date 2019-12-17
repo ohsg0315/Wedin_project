@@ -48,6 +48,7 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
     private TextView lowPrice;
     private TextView highPrice;
     private TextView summary;
+    private TextView ratingScoreView;
     private Button reviewAddBtn;
 
     static ArrayList<RatingObj> dataList;
@@ -78,6 +79,7 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
         highPrice = findViewById(R.id.movie_high_price);
         summary = findViewById(R.id.summary_detail_movie);
 
+        ratingScoreView = findViewById(R.id.rating_detail_movie);
         ratingBar = findViewById(R.id.ratingBar_detail_movie);
         ratingRecyclerVeiw = findViewById(R.id.rating_recyclerview);
         reviewAddBtn = findViewById(R.id.review_add_btn);
@@ -94,7 +96,6 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
         readRatingData();
     }
 
-
     // HomeeFragmet에서 intent 방식에 따라 DetailMovieActivity의 View를 세팅해줌
     private void setPageView(int flag) {
 
@@ -107,7 +108,9 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
                                 Map<String,Integer> moviePrice = documentSnapshot.toObject(MovieObj.class).getPrice();
                                 int naverPrice = moviePrice.get("네이버");
                                 int wavePrice = moviePrice.get("웨이브");
+
                                 youtubeUri = documentSnapshot.toObject(MovieObj.class).getYoutubeUri();
+                                youTubePlayerView.initialize(youtubeUri, onInitializedListener);
 
                                 Glide.with(DetailMovieActivity.this)
                                         .load(documentSnapshot.toObject(MovieObj.class).getImageUri())
@@ -116,10 +119,8 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
 
                                 title.setText(movieTitle);
                                 lowPrice.setText(Integer.toString(naverPrice));
-                                highPrice.setText(Integer.toString(naverPrice));
+                                highPrice.setText(Integer.toString(wavePrice));
                                 summary.setText(documentSnapshot.toObject(MovieObj.class).getSummary());
-                                youTubePlayerView.initialize(youtubeUri, onInitializedListener);
-
                             }
                         });
                 break;
@@ -160,7 +161,7 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
                         }
 
                         scoreSum = (float) (Math.round(scoreSum / dataList.size() * 100) / 100.0);
-                        Log.i("결과를 뽑아봅니다", scoreSum + " scoreSum입니다");
+                        ratingScoreView.setText(Float.toString(scoreSum));
                         ratingBar.setRating(scoreSum);
 
                         adapter = new DetailMoviewAdapter(dataList);
