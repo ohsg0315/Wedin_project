@@ -2,6 +2,7 @@ package com.hong.fragement.MovieDetailPage;
 
 import androidx.annotation.NonNull;
 
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -89,6 +90,7 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
 
         ratingRecyclerVeiw.setLayoutManager(layoutManager);
         ratingRecyclerVeiw.setHasFixedSize(true);
+        ratingRecyclerVeiw.addItemDecoration(new DividerItemDecoration(this, 1));   // 댓글마다 구분선
 
         reviewAddBtn.setOnClickListener(reviewAddBtnListener);
 
@@ -160,7 +162,7 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
                             scoreSum += data.getScore();
                         }
 
-                        scoreSum = (float) (Math.round(scoreSum / dataList.size() * 100) / 100.0);
+                        scoreSum = (float) (Math.round(scoreSum / dataList.size() * 10) / 10.0);
                         ratingScoreView.setText(Float.toString(scoreSum));
                         ratingBar.setRating(scoreSum);
 

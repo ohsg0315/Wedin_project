@@ -1,24 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/wedin_logo"
+        android:icon="@drawable/home_icon"
+        app:showAsAction="ifRoom"
         android:title="@string/title_home" />
 
     <item
         android:id="@+id/navigation_freemovie"
-        android:icon="@drawable/wedin_logo"
+        android:icon="@drawable/movie_icon"
+        app:showAsAction="ifRoom"
         android:title="@string/title_freemovie" />
 
     <item
         android:id="@+id/navigation_eventpage"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/event_icon"
+        app:showAsAction="ifRoom"
         android:title="@string/title_eventpage" />
 
     <item
         android:id="@+id/navigation_mypage"
-        android:icon="@drawable/wedin_logo"
+        android:icon="@drawable/my_icon"
+        app:showAsAction="ifRoom"
         android:title="@string/title_mypage" />
 
 </menu>

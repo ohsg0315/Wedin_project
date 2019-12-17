@@ -23,18 +23,18 @@
 
             </FrameLayout>
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/navigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="0dp"
-            android:layout_marginStart="0dp"
-            android:background="#FFFFFF"
-            app:menu="@menu/navigation"
-            app:itemTextColor="@color/colorPrimary"
-            app:itemIconTint="@color/colorPrimary" />
-    </LinearLayout>
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/navigation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"
+                app:itemTextColor="#c4302b"
+                app:itemIconTint="#c4302b"
+                app:menu="@menu/navigation" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 

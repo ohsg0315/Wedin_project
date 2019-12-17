@@ -6,14 +6,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical" >
 
         <ImageView
             android:id="@+id/logo"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="100dp"
+            android:layout_marginTop="20dp"
             android:layout_gravity="center"
-            android:src="@drawable/wedin_logo" />
+            android:src="@drawable/wedin_logo"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,18 +41,20 @@
 
             <ImageButton
                 android:id="@+id/search_btn"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/search_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:background="#FFFFFF"
                 android:scaleType="fitXY"
-                android:adjustViewBounds="true"/>
+                android:layout_gravity="center"
+                android:src="@drawable/search_icon" />
 
         </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#000000"
+            android:background="#c4302b"
             android:text="맞춤장르추천"
             android:textSize="24dp"
             android:textStyle="bold"
@@ -64,7 +69,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#000000"
+            android:background="#c4302b"
             android:text="TOP100"
             android:textSize="24dp"
             android:textStyle="bold"
@@ -72,21 +77,6 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scrollbars="horizontal" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#000000"
-            android:text="TOP100"
-            android:textSize="24dp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scrollbars="horizontal" />
