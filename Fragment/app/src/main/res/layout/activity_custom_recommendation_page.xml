@@ -10,10 +10,10 @@
         android:background="#363636">
 
         <TextView
-            android:id="@+id/text_newmovie"
+            android:id="@+id/text_custom_recommendation"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:text="최신 영화"
+            android:text="맞춤 장르"
             android:textSize="20dp"
             android:gravity="center|left"
             android:layout_margin="5dp"
@@ -22,7 +22,7 @@
             android:fontFamily="@font/nanumsquare_aceb"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview_newmovie"
+            android:id="@+id/recyclerview_custom_recommendation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="vertical"

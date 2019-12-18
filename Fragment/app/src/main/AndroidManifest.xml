@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SearchResult.SearchResultPage"></activity>
+        <activity android:name=".CustomRecommendationPage.CustomRecommendationPage"></activity>
+        <activity android:name=".SearchResult.SearchResultPage" />
         <activity android:name=".NewMoviePage.NewMoviePage" />
         <activity android:name=".MyPage.MemberInfo" />
         <activity android:name=".Login.FindInfo" />

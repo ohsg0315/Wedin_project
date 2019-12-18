@@ -59,7 +59,8 @@
                     android:hint="영화를 검색하세요"
                     android:maxLines="1"
                     android:textColorHint="#000000"
-                    android:textSize="24dp" />
+                    android:textSize="24dp"
+                    android:fontFamily="@font/nanumsquare_aceb"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -82,21 +83,16 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Wedin"
-                android:textSize="18dp"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF"/>
+
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" 최신 Movie"
+                android:text=" 최신 영화"
                 android:textSize="24dp"
                 android:textStyle="bold"
-                android:textColor="#FFFFFF"/>
+                android:textColor="#FFFFFF"
+                android:fontFamily="@font/nanumsquare_aceb"/>
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -112,7 +108,7 @@
                 android:text="더보기"
                 android:textColor="#FFFFFF"
                 android:background="#363636"
-                >
+                android:fontFamily="@font/nanumsquare_acb">
 
             </Button>
 
@@ -141,7 +137,8 @@
             android:textColor="#FFFFFF"
 
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/nanumsquare_aceb"/>
 
             <View
                 android:layout_width="0dp"
@@ -157,7 +154,8 @@
                 android:layout_gravity="right"
                 android:text="더보기"
                 android:textColor="#FFFFFF"
-                android:background="#363636">
+                android:background="#363636"
+                android:fontFamily="@font/nanumsquare_acb">
 
             </Button>
 

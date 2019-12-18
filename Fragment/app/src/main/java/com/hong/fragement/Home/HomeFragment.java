@@ -24,6 +24,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.hong.fragement.CustomRecommendationPage.CustomRecommendationPage;
 import com.hong.fragement.MovieDetailPage.DetailMovieActivity;
 import com.hong.fragement.MovieObj;
 import com.hong.fragement.NewMoviePage.NewMoviePage;
@@ -75,6 +76,8 @@ public class HomeFragment extends Fragment {
         btn_more_custom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CustomRecommendationPage.class);
+                startActivity(intent);
 
             }
         });
