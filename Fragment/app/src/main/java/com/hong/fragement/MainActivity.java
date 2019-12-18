@@ -13,9 +13,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-;
 
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,8 +27,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.hong.fragement.Event.EventPage;
+
 import com.hong.fragement.FreeMoviePage.FreeMovie;
+
+import com.hong.fragement.Home.HomeAdapter;
+
 import com.hong.fragement.Home.HomeFragment;
 import com.hong.fragement.Login.LoginActivity;
 import com.hong.fragement.MyPage.MemberInfo;
@@ -43,6 +53,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView navigationView;
     private FragmentTransaction fragmentTransaction;
 
+    // 영화 이름 부분 검색
+    private MovieObj movieData;
+    //private String searchTitle;
+
     private FirebaseUser mFirebaseUser;
     private FirebaseAuth mFirebaseAuth;
     private String mUsername;
@@ -57,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private BottomNavigationView navigation;
     private MenuItem navLogInOut;
+    private TextView userNameView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,14 +98,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED); // 잠금 : 손가락으로 밀어도 안열림
         navigationView = findViewById(R.id.navigation_view);    // activity_main NavigationView id
         navigationView.setNavigationItemSelectedListener(this);
+        userNameView = findViewById(R.id.nav_header_user_name);
 
         // 로그인 상태일 경우 회원 정보를 받아온다.
         if (mFirebaseUser != null) {
             ReadUserData();
         }
-
-
+        //searchTitle = "그림";
+        //ReadMovieData();
     }
+/*
+    private void ReadMovieData() {
+        Log.e(TAG, "에라이 !!!!!!!");
+
+        db.collection("Movie")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String compareTitle = document.toObject(MovieObj.class).getTitle();
+                                if (compareTitle.contains(searchTitle)) {
+                                    Log.d(TAG, document.getId() + " => " + document.getData());
+                                }
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+    }*/
 
     private void ReadUserData() {
         DocumentReference docRef = db.collection("Users").document(mFirebaseUser.getUid());
@@ -101,32 +140,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
     }
-
-    /* 영화 데이터 베이스 불러오기용 코드 */
-    private void ReadData() {
-        DocumentReference docRef = db.collection("Movie").document("조커");
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                MovieObj movieObj = documentSnapshot.toObject(MovieObj.class);
-
-                String movieTitle = movieObj.getTitle();
-                String movieSummary = movieObj.getSummary();
-                String movieImageUri = movieObj.getImageUri();
-                Map<String, Integer> moviePrice = movieObj.getPrice();
-                int naverPrice = moviePrice.get("네이버");
-                int wavePrice = moviePrice.get("웨이브");
-
-                Log.d(TAG, movieTitle);
-                Log.d(TAG, movieSummary);
-                Log.d(TAG, movieImageUri);
-                Log.d(TAG, "네이버 = " + moviePrice.get("네이버") + ", 웨이브 = " + moviePrice.get("웨이브"));
-            }
-        });
-
-    }
-
-    /* 코드 끝 */
 
     // 하단 네비게이션바 버튼 클릭 이벤트
     public BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener
@@ -231,7 +244,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navLogInOut.setTitle("로그인"); // default : 로그아웃
             nav_menu.findItem(R.id.nav_reservation_information).setVisible(false);
             nav_menu.findItem(R.id.navigation_right_mypage).setVisible(false);
-        } else navLogInOut.setTitle("로그아웃");
+        } else {
+            navLogInOut.setTitle("로그아웃");
+        }
     }
 
     // 로그아웃 다이얼로그

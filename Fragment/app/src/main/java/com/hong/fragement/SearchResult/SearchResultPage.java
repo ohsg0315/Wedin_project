@@ -59,39 +59,40 @@ public class SearchResultPage extends AppCompatActivity {
 
     private void readDataForSearchResult() {
         data = new MovieObj();
-        CollectionReference collectionReference
-                = db.collection("Movie");
-        collectionReference.whereEqualTo("free",true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful())
-                {
-                    for(QueryDocumentSnapshot queryDocumentSnapshot : task.getResult())
-                    {
-                        data = queryDocumentSnapshot.toObject(MovieObj.class);
+
+        db.collection("Movie")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                                String compareTitle = queryDocumentSnapshot.toObject(MovieObj.class).getTitle();
+                                if (compareTitle.contains(searchContent)) {
+                                    data = queryDocumentSnapshot.toObject(MovieObj.class);
+
+                                    data.setTitle(queryDocumentSnapshot.toObject(MovieObj.class).getTitle());
+                                    data.setImageUri(queryDocumentSnapshot.get("imageUri").toString());
+                                    data.setPrice(queryDocumentSnapshot.toObject(MovieObj.class).getPrice());
+                                    data.setSummary(queryDocumentSnapshot.toObject(MovieObj.class).getSummary());
+
+                                    movieObjList.add(data);
+                                }
 
 
 
-                        data.setTitle(queryDocumentSnapshot.toObject(MovieObj.class).getTitle());
-                        data.setImageUri(queryDocumentSnapshot.get("imageUri").toString());
-                        data.setPrice(queryDocumentSnapshot.toObject(MovieObj.class).getPrice());
-                        data.setSummary(queryDocumentSnapshot.toObject(MovieObj.class).getSummary());
-
-                        movieObjList.add(data);
 
 
+
+                            }
+                            mAdapterForSearchResult = new AdapterForSearchResult(movieObjList, context);
+                            recyclerView.setAdapter(mAdapterForSearchResult);
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
                     }
-                    mAdapterForSearchResult = new AdapterForSearchResult(movieObjList, context);
-                    recyclerView.setAdapter(mAdapterForSearchResult);
-
-                }
-                else
-                {
-                    Log.d(TAG, "Error getting documents: ", task.getException());
-                }
+                });
 
 
-            }
-        });
     }
 }
