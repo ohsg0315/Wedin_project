@@ -235,7 +235,6 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
 
         for (int num= 0; num<dataList.size(); num++) {
             scoreSum += dataList.get(num).getScore();
-            Log.e("www",dataList.get(num).getScore()+"입니다");
         }
         scoreSum = (float) (Math.round(scoreSum / dataList.size() * 10) / 10.0);
         ratingScoreView.setText(Float.toString(scoreSum));
