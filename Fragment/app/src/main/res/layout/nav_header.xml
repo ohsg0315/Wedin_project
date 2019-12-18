@@ -13,6 +13,7 @@
         android:src="@drawable/wedin_logo" />
 
     <TextView
+        android:id="@+id/nav_header_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
