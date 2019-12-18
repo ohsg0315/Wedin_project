@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -25,7 +26,9 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.hong.fragement.MovieDetailPage.DetailMovieActivity;
 import com.hong.fragement.MovieObj;
+import com.hong.fragement.NewMoviePage.NewMoviePage;
 import com.hong.fragement.R;
+import com.hong.fragement.SearchResult.SearchResultPage;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -36,6 +39,8 @@ public class HomeFragment extends Fragment {
 
     private AutoCompleteTextView movieSearchBar;
     private ImageButton searchBtn;
+    private Button btn_more_new;
+    private Button btn_more_custom;
 
     private RecyclerView recyclerView1;
 
@@ -43,6 +48,7 @@ public class HomeFragment extends Fragment {
     private HomeAdapter adapter;
     private ArrayList<String> titleList;
     private ArrayList<MovieObj> datList;
+
 
     @Nullable
     @Override
@@ -52,6 +58,26 @@ public class HomeFragment extends Fragment {
         recyclerView1 = view.findViewById(R.id.recyclerview1);
         movieSearchBar = view.findViewById(R.id.movie_search_bar);
         searchBtn = view.findViewById(R.id.search_btn);
+        btn_more_new = view.findViewById(R.id.more_new);
+        btn_more_custom = view.findViewById(R.id.more_custom_genre);
+
+        btn_more_new.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), NewMoviePage.class);
+                startActivity(intent);
+
+            }
+
+
+        });
+
+        btn_more_custom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         /*
         movieSearchBar.setOnKeyListener(new View.OnKeyListener() {
@@ -150,7 +176,7 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(getActivity(),"글자를 입력해주세요!",Toast.LENGTH_SHORT).show();
             } else {
                 Intent intent = new Intent();
-                intent.setClass(getContext(), DetailMovieActivity.class);
+                intent.setClass(getContext(), SearchResultPage.class);
 
                 intent.putExtra("title", movieSearchBar.getText().toString().trim());
                 intent.putExtra("dataFlag", "1");

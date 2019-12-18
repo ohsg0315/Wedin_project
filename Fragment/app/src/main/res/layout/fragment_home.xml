@@ -97,6 +97,24 @@
                 android:textSize="24dp"
                 android:textStyle="bold"
                 android:textColor="#FFFFFF"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </View>
+
+            <Button
+                android:id="@+id/more_new"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="더보기"
+                android:textColor="#FFFFFF"
+                android:background="#363636"
+                >
+
+            </Button>
 
         </LinearLayout>
 
@@ -108,15 +126,42 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"/>
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp">
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="맞춤장르추천"
             android:textSize="24dp"
             android:textStyle="bold"
             android:textColor="#FFFFFF"
+
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </View>
+
+            <Button
+                android:id="@+id/more_custom_genre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="더보기"
+                android:textColor="#FFFFFF"
+                android:background="#363636">
+
+            </Button>
+
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview2"
