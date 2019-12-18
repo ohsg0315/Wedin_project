@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -157,7 +158,6 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
 
         ratingRef.document(movieTitle).collection("review").get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    float scoreSum = 0;
 
                     @Override
                     public void onSuccess(QuerySnapshot documentSnapshots) {
@@ -168,12 +168,9 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
                             data.setScore(documentSnapshot.toObject(RatingObj.class).getScore());
 
                             dataList.add(data);
-                            scoreSum += data.getScore();
                         }
 
-                        scoreSum = (float) (Math.round(scoreSum / dataList.size() * 10) / 10.0);
-                        ratingScoreView.setText(Float.toString(scoreSum));
-                        ratingBar.setRating(scoreSum);
+                        setRatingBarScore();
 
                         adapter = new DetailMoviewAdapter(dataList);
                         ratingRecyclerVeiw.setAdapter(adapter);
@@ -195,9 +192,7 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
             builder.setTitle(movieTitle + " 줄거리").setMessage(summayStory);
             builder.setNegativeButton("확인", new DialogInterface.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    Toast.makeText(DetailMovieActivity.this, "Cancel Click",Toast.LENGTH_SHORT).show();
-                }
+                public void onClick(DialogInterface dialogInterface, int i) {}
             });
 
             AlertDialog alertDialog = builder.create();
@@ -217,8 +212,7 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
             customDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialogInterface) {
-                    Toast.makeText(DetailMovieActivity.this, "다이얼로그를종료합니다",
-                            Toast.LENGTH_SHORT).show();
+                    readRatingData();
                 }
             });
         }
@@ -236,6 +230,17 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
         }
     };
 
+    private void setRatingBarScore() {
+        float scoreSum = 0;
+
+        for (int num= 0; num<dataList.size(); num++) {
+            scoreSum += dataList.get(num).getScore();
+            Log.e("www",dataList.get(num).getScore()+"입니다");
+        }
+        scoreSum = (float) (Math.round(scoreSum / dataList.size() * 10) / 10.0);
+        ratingScoreView.setText(Float.toString(scoreSum));
+        ratingBar.setRating(scoreSum);;
+    }
 
     @Override
     public void onBackPressed() {
