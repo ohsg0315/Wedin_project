@@ -1,131 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="#363636">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:background="#c4302b"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="130dp"
-            android:layout_marginRight="130dp"
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            android:paddingRight="2dp"
-            android:paddingLeft="2dp">
-
-            <ImageView
-                android:id="@+id/logo"
-                android:layout_width="150dp"
-                android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:src="@drawable/wedin_logo"
-                android:scaleType="fitXY"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:layout_weight="1" />
-
-        </RelativeLayout>
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/round_coner"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
+            android:background="#363636"
+            android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="#FFFFFF">
+                android:layout_height="80dp"
+                android:layout_marginLeft="130dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="130dp"
+                android:background="#c4302b"
+                android:paddingLeft="2dp"
+                android:paddingTop="2dp"
+                android:paddingRight="2dp"
+                android:paddingBottom="2dp">
 
-                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                    android:id="@+id/movie_search_bar"
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_weight="1"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/wedin_logo" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/round_coner"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:background="#FFFFFF">
+
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:id="@+id/movie_search_bar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:background="#FFFFFF"
+                        android:completionThreshold="1"
+                        android:fontFamily="@font/nanumsquare_aceb"
+                        android:hint="영화를 검색하세요"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textColorHint="#000000"
+                        android:textSize="24dp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageButton
+                    android:id="@+id/search_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
                     android:background="#FFFFFF"
-                    android:completionThreshold="1"
-                    android:hint="영화를 검색하세요"
-                    android:maxLines="1"
-                    android:textColorHint="#000000"
-                    android:textSize="24dp" />
+                    android:scaleType="fitXY"
+                    android:src="@drawable/search_icon" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
 
-            <ImageButton
-                android:id="@+id/search_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:adjustViewBounds="true"
-                android:background="#FFFFFF"
-                android:scaleType="fitXY"
-                android:layout_gravity="center"
-                android:src="@drawable/search_icon" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
 
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nanumsquare_aceb"
+                    android:text=" 최신 영화"
+                    android:textColor="#FFFFFF"
+                    android:textSize="24dp"
+                    android:textStyle="bold" />
 
-            <TextView
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                </View>
+
+                <Button
+                    android:id="@+id/more_new"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:background="#363636"
+                    android:fontFamily="@font/nanumsquare_acb"
+                    android:text="더보기"
+                    android:textColor="#FFFFFF">
+
+                </Button>
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Wedin"
-                android:textSize="18dp"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF"/>
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:scrollbars="horizontal" />
 
-            <TextView
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/nanumsquare_aceb"
+                    android:text="TOP100"
+
+                    android:textColor="#FFFFFF"
+                    android:textSize="24dp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+                </View>
+
+                <Button
+                    android:id="@+id/more_top100"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:background="#363636"
+                    android:fontFamily="@font/nanumsquare_acb"
+                    android:text="더보기"
+                    android:textColor="#FFFFFF">
+
+                </Button>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" 최신 Movie"
-                android:textSize="24dp"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF"/>
-
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:scrollbars="horizontal" />
         </LinearLayout>
+    </ScrollView>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scrollbars="horizontal"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="맞춤장르추천"
-            android:textSize="24dp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scrollbars="horizontal"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="5dp"/>
-
-    </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

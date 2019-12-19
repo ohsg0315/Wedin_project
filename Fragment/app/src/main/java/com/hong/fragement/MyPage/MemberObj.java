@@ -6,12 +6,12 @@ import android.os.Parcelable;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class MemberObj implements Parcelable {
+public class MemberObj implements Serializable {
     private String name;
     private String year;
     private String month;
     private String day;
-    private ArrayList<String> genre;
+    private ArrayList<String> genre = new ArrayList<>();
     private String email;
     private String type;
 
@@ -27,44 +27,6 @@ public class MemberObj implements Parcelable {
         this.genre = genre;
         this.type = type;
     }
-
-    protected MemberObj(Parcel in) {
-        name = in.readString();
-        year = in.readString();
-        month = in.readString();
-        day = in.readString();
-        genre = in.createStringArrayList();
-        email = in.readString();
-        type = in.readString();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-        dest.writeString(year);
-        dest.writeString(month);
-        dest.writeString(day);
-        dest.writeStringList(genre);
-        dest.writeString(email);
-        dest.writeString(type);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Creator<MemberObj> CREATOR = new Creator<MemberObj>() {
-        @Override
-        public MemberObj createFromParcel(Parcel in) {
-            return new MemberObj(in);
-        }
-
-        @Override
-        public MemberObj[] newArray(int size) {
-            return new MemberObj[size];
-        }
-    };
 
     public void setName(String name) {
         this.name = name;

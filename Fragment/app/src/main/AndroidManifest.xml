@@ -12,7 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MyPage.MyMovieList"></activity>
+
+        <activity android:name=".Top100Page.Top100Page"></activity>
+        <activity android:name=".CustomRecommendationPage.CustomRecommendationPage" />
+        <activity android:name=".SearchResult.SearchResultPage" />
+        <activity android:name=".NewMoviePage.NewMoviePage" />
         <activity android:name=".MyPage.MemberInfo" />
         <activity android:name=".Login.FindInfo" />
         <activity android:name=".Login.LoginActivity" />

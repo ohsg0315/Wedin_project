@@ -10,8 +10,8 @@
             android:icon="@drawable/wedin_logo" />
 
         <item
-            android:id="@+id/nav_reservation_information"
-            android:title="예약 정보"
+            android:id="@+id/nav_recommand_movie"
+            android:title="영화 추천"
             android:icon="@drawable/wedin_logo" />
 
         <item

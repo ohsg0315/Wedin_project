@@ -1,4 +1,4 @@
-package com.hong.fragement;
+package com.hong.fragement.FreeMoviePage;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -15,11 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.hong.fragement.AdapterForMovieList;
+import com.hong.fragement.MovieObj;
+import com.hong.fragement.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ public class FreeMovie extends Fragment {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private RecyclerView recyclerView;
-    private AdapterForFreeMovie mAdapterForFreeMovie;
+    private AdapterForMovieList mAdapterForMovieList;
 
     private List<MovieObj> movieObjList;
     private MovieObj data;
@@ -81,8 +82,8 @@ public class FreeMovie extends Fragment {
 
 
                     }
-                    mAdapterForFreeMovie = new AdapterForFreeMovie(movieObjList, getActivity());
-                    recyclerView.setAdapter(mAdapterForFreeMovie);
+                    mAdapterForMovieList = new AdapterForMovieList(movieObjList, getActivity());
+                    recyclerView.setAdapter(mAdapterForMovieList);
 
                 }
                 else

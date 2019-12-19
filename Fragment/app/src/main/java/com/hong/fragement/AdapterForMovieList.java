@@ -1,7 +1,6 @@
 package com.hong.fragement;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class AdapterForFreeMovie extends RecyclerView.Adapter<AdapterForFreeMovie.FreeMovieViewHolder> {
+public class AdapterForMovieList extends RecyclerView.Adapter<AdapterForMovieList.FreeMovieViewHolder> {
 
 
     private List<MovieObj> list;
@@ -26,7 +25,7 @@ public class AdapterForFreeMovie extends RecyclerView.Adapter<AdapterForFreeMovi
     int i;
 
 
-    public AdapterForFreeMovie(List<MovieObj> list, Context context) {
+    public AdapterForMovieList(List<MovieObj> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -38,6 +37,8 @@ public class AdapterForFreeMovie extends RecyclerView.Adapter<AdapterForFreeMovi
                 .inflate(R.layout.each_movie_list,parent,false);
 
         FreeMovieViewHolder freeMovieViewHolder = new FreeMovieViewHolder(view);
+
+
 
         return freeMovieViewHolder;
     }

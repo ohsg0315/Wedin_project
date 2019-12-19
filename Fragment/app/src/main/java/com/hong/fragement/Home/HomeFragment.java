@@ -3,12 +3,14 @@ package com.hong.fragement.Home;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -23,9 +25,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.hong.fragement.CustomRecommendationPage.CustomRecommendationPage;
 import com.hong.fragement.MovieDetailPage.DetailMovieActivity;
 import com.hong.fragement.MovieObj;
+import com.hong.fragement.NewMoviePage.NewMoviePage;
 import com.hong.fragement.R;
+import com.hong.fragement.SearchResult.SearchResultPage;
+import com.hong.fragement.Top100Page.Top100Page;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -36,6 +42,10 @@ public class HomeFragment extends Fragment {
 
     private AutoCompleteTextView movieSearchBar;
     private ImageButton searchBtn;
+    //더보기 버튼 3개
+    private Button btn_more_new;
+    private Button btn_more_top100;
+
 
     private RecyclerView recyclerView1;
 
@@ -43,6 +53,7 @@ public class HomeFragment extends Fragment {
     private HomeAdapter adapter;
     private ArrayList<String> titleList;
     private ArrayList<MovieObj> datList;
+
 
     @Nullable
     @Override
@@ -53,15 +64,28 @@ public class HomeFragment extends Fragment {
         movieSearchBar = view.findViewById(R.id.movie_search_bar);
         searchBtn = view.findViewById(R.id.search_btn);
 
-        /*
-        movieSearchBar.setOnKeyListener(new View.OnKeyListener() {
+        btn_more_new = view.findViewById(R.id.more_new);
+        btn_more_top100 = view.findViewById(R.id.more_top100);
+
+                //더보기 버튼 이벤트처리
+        btn_more_new.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if (i == keyEvent.KEYCODE_SPACE) return true;
-                else return false;
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), NewMoviePage.class);
+                startActivity(intent);
+
+            }
+
+        });
+
+        btn_more_top100.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Top100Page.class);
+                startActivity(intent);
             }
         });
-         */
+
 
         recyclerView1.setHasFixedSize(true); // 리사이클러뷰 안의 아이템 크기를 일정하게 고정
         recyclerView1.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL,false));
@@ -150,7 +174,7 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(getActivity(),"글자를 입력해주세요!",Toast.LENGTH_SHORT).show();
             } else {
                 Intent intent = new Intent();
-                intent.setClass(getContext(), DetailMovieActivity.class);
+                intent.setClass(getContext(), SearchResultPage.class);
 
                 intent.putExtra("title", movieSearchBar.getText().toString().trim());
                 intent.putExtra("dataFlag", "1");

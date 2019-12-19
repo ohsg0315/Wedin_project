@@ -10,10 +10,10 @@
         android:background="#363636">
 
         <TextView
-            android:id="@+id/text_freemovie"
+            android:id="@+id/text_top100"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:text="무료 영화관"
+            android:text="TOP 100"
             android:textSize="20dp"
             android:gravity="center|left"
             android:layout_margin="5dp"
@@ -21,7 +21,7 @@
             android:textColor="#FFFFFF"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview_freemovie"
+            android:id="@+id/recyclerview_top100"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="vertical"
