@@ -15,9 +15,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.hong.fragement.AdapterForMovieList;
+import com.hong.fragement.MovieDetailPage.DetailMovieActivity;
 import com.hong.fragement.MovieObj;
 import com.hong.fragement.R;
+import com.hong.fragement.Top100Page.Top100Page;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ public class SearchResultPage extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private RecyclerView recyclerView;
-    private AdapterForMovieList mAdapterForMovieList;
+    private SearchResultPageAdapter mSearchResultPageAdapter;
 
     private List<MovieObj> movieObjList;
     private MovieObj data;
@@ -43,7 +44,6 @@ public class SearchResultPage extends AppCompatActivity {
 
         Intent intent = getIntent();
         searchContent = intent.getStringExtra("title");
-        Log.d(TAG, searchContent);
 
         movieObjList = new ArrayList<MovieObj>();
 
@@ -53,12 +53,10 @@ public class SearchResultPage extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
 
-
         readDataForSearchResult();
     }
 
     private void readDataForSearchResult() {
-        data = new MovieObj();
 
         db.collection("Movie")
                 .get()
@@ -78,21 +76,32 @@ public class SearchResultPage extends AppCompatActivity {
 
                                     movieObjList.add(data);
                                 }
-
-
-
-
-
-
                             }
-                            mAdapterForMovieList = new AdapterForMovieList(movieObjList, context);
-                            recyclerView.setAdapter(mAdapterForMovieList);
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                            mSearchResultPageAdapter = new  SearchResultPageAdapter(movieObjList,context,listener);
+                            recyclerView.setAdapter(mSearchResultPageAdapter);
                         }
                     }
                 });
-
-
     }
+
+    public interface OnItemClick {
+        void onMovieSelected(MovieObj selectedMovie);
+    }
+
+    private OnItemClick listener = new OnItemClick() {
+        @Override
+        public void onMovieSelected(MovieObj selectedMovie) {
+            Intent intent = new Intent();
+            intent.setClass(SearchResultPage.this, DetailMovieActivity.class);
+
+            intent.putExtra("title",selectedMovie.getTitle());
+            intent.putExtra("dataFlag","1");
+
+            startActivity(intent);
+        }
+    };
+
+
+
+
 }

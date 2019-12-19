@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private BottomNavigationView navigation;
     private MenuItem navLogInOut;
     private TextView userNameView;
+    private View nav_header_View;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +98,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED); // 잠금 : 손가락으로 밀어도 안열림
         navigationView = findViewById(R.id.navigation_view);    // activity_main NavigationView id
         navigationView.setNavigationItemSelectedListener(this);
-        userNameView = findViewById(R.id.nav_header_user_name);
+        nav_header_View = navigationView.getHeaderView(0);
+        userNameView = nav_header_View.findViewById(R.id.nav_header_user_name);
 
         // 로그인 상태일 경우 회원 정보를 받아온다.
         if (mFirebaseUser != null) {
@@ -152,6 +154,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
             changeOptionMenuItem();
+            if (mFirebaseUser != null) {
+                userNameView.setText(memberObj.getName());
+            }
         }
 
         @Override

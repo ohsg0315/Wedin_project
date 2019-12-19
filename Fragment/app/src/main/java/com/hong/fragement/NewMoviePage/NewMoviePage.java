@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -16,6 +16,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.hong.fragement.AdapterForMovieList;
+import com.hong.fragement.MovieDetailPage.DetailMovieActivity;
 import com.hong.fragement.MovieObj;
 import com.hong.fragement.R;
 
@@ -27,13 +28,11 @@ public class NewMoviePage extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private RecyclerView recyclerView;
-    private AdapterForMovieList mAdapterForMovieList;
+    private NewMoviePageAdapter mNewMoviePageAdapter;
 
     private List<MovieObj> movieObjList;
     private MovieObj data;
     private Context context;
-
-    private String TAG = "-----최신영화-----";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -48,7 +47,6 @@ public class NewMoviePage extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerview_newmovie);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
-
 
         readDataForNewMovie();
 
@@ -68,29 +66,34 @@ public class NewMoviePage extends AppCompatActivity {
                     {
                         data = queryDocumentSnapshot.toObject(MovieObj.class);
 
-
-
                         data.setTitle(queryDocumentSnapshot.toObject(MovieObj.class).getTitle());
                         data.setImageUri(queryDocumentSnapshot.get("imageUri").toString());
                         data.setPrice(queryDocumentSnapshot.toObject(MovieObj.class).getPrice());
                         data.setSummary(queryDocumentSnapshot.toObject(MovieObj.class).getSummary());
 
                         movieObjList.add(data);
-
-
                     }
-                    mAdapterForMovieList = new AdapterForMovieList(movieObjList, context  );
-                    recyclerView.setAdapter(mAdapterForMovieList);
-
+                    mNewMoviePageAdapter = new NewMoviePageAdapter(movieObjList, context, listener);
+                    recyclerView.setAdapter(mNewMoviePageAdapter);
                 }
-                else
-                {
-                    Log.d(TAG, "Error getting documents: ", task.getException());
-                }
-
-
             }
         });
-
     }
+
+    public interface OnItemClick {
+        void onMovieSelected(MovieObj selectedMovie);
+    }
+
+    private OnItemClick listener = new OnItemClick() {
+        @Override
+        public void onMovieSelected(MovieObj selectedMovie) {
+            Intent intent = new Intent();
+            intent.setClass(NewMoviePage.this, DetailMovieActivity.class);
+
+            intent.putExtra("title",selectedMovie.getTitle());
+            intent.putExtra("dataFlag","1");
+
+            startActivity(intent);
+        }
+    };
 }

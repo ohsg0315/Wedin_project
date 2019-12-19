@@ -44,7 +44,6 @@ public class CustomRecommendationPage extends AppCompatActivity {
     private Context context;
     private ArrayList<String> genre;
 
-
     private String TAG = "-----검색결과-----";
 
     @Override

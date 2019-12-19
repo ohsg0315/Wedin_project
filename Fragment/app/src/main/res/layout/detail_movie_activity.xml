@@ -159,7 +159,7 @@
                     android:id="@+id/summary_detail_movie"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:textSize="20dp"
+                    android:textSize="12dp"
                     android:layout_marginRight="20dp"
                     android:maxLines="4"/>
 

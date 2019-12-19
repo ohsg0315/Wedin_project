@@ -42,18 +42,16 @@ public class HomeFragment extends Fragment {
 
     private AutoCompleteTextView movieSearchBar;
     private ImageButton searchBtn;
-    //더보기 버튼 3개
     private Button btn_more_new;
     private Button btn_more_top100;
 
-
     private RecyclerView recyclerView1;
+    private RecyclerView recyclerView2;
 
     private MovieObj data;
     private HomeAdapter adapter;
     private ArrayList<String> titleList;
     private ArrayList<MovieObj> datList;
-
 
     @Nullable
     @Override
@@ -61,35 +59,22 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         recyclerView1 = view.findViewById(R.id.recyclerview1);
+        recyclerView2 = view.findViewById(R.id.recyclerview2);
         movieSearchBar = view.findViewById(R.id.movie_search_bar);
         searchBtn = view.findViewById(R.id.search_btn);
 
         btn_more_new = view.findViewById(R.id.more_new);
         btn_more_top100 = view.findViewById(R.id.more_top100);
 
-                //더보기 버튼 이벤트처리
-        btn_more_new.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), NewMoviePage.class);
-                startActivity(intent);
-
-            }
-
-        });
-
-        btn_more_top100.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Top100Page.class);
-                startActivity(intent);
-            }
-        });
-
+        btn_more_new.setOnClickListener(btnPageIntentListener);
+        btn_more_top100.setOnClickListener(btnPageIntentListener);
 
         recyclerView1.setHasFixedSize(true); // 리사이클러뷰 안의 아이템 크기를 일정하게 고정
         recyclerView1.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL,false));
         // recyclerView 나열방식 : Horizontal
+
+        recyclerView2.setHasFixedSize(true); // 리사이클러뷰 안의 아이템 크기를 일정하게 고정
+        recyclerView2.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL,false));
 
         readMovieData(); // DB에서 데이터를 빼와 리스트에 담고 adapter를 생성, 세팅하는 메서드
 
@@ -187,5 +172,22 @@ public class HomeFragment extends Fragment {
     public interface OnItemClick {
         void onMovieSelected(MovieObj selectedMovie);
     }
+
+    private View.OnClickListener btnPageIntentListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent();
+
+            switch (view.getId()) {
+                case R.id.more_new :
+                    intent.setClass(getActivity(), NewMoviePage.class);
+                    break;
+                case R.id.more_top100 :
+                    intent.setClass(getActivity(), Top100Page.class);
+                    break;
+            }
+            startActivity(intent);
+        }
+    };
 
 }
