@@ -45,19 +45,19 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:background="@drawable/round_coner"
-            android:hint="example@email.com"
+            android:hint=" example@email.com"
             android:imeOptions="actionNext"
             android:inputType="text" />
 
         <Button
-            android:text="이메일 인증하기"
             android:id="@+id/email_auth_btn"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
-            android:background="@drawable/round_coner" />
+            android:background="@drawable/round_coner"
+            android:text="이메일 인증하기" />
 
         <TextView
             android:layout_width="match_parent"
@@ -74,7 +74,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:background="@drawable/round_coner"
-            android:hint="최소 6글자를 입력해주세요"
+            android:hint=" 최소 6글자를 입력해주세요"
             android:imeOptions="actionNext"
             android:inputType="text"
             android:password="true"
@@ -137,7 +137,41 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
+            android:text="전화번호" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/phone_sign_up"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_weight="5"
+                android:background="@drawable/round_coner"
+                android:imeOptions="actionNext"
+                android:inputType="phone" />
+
+            <Button
+                android:id="@+id/phone_sign_up_btn"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/round_coner"
+                android:text="인증" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
             android:text="생년월일" />
+
 
         <LinearLayout
             android:layout_width="match_parent"

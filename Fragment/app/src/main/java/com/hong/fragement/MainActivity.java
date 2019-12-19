@@ -127,7 +127,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         }
                     }
                 });
-
     }
 
     private void ReadUserData() {
@@ -219,6 +218,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 }
                 break;
+
         }
 
         transaction.addToBackStack(null);

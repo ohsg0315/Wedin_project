@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -53,7 +55,7 @@ public class MemberInfo extends AppCompatActivity implements View.OnClickListene
         yearEdit = findViewById(R.id.member_birth_year);
         monthEdit = findViewById(R.id.member_birth_month);
         dayEdit = findViewById(R.id.member_birth_day);
-        setImage = findViewById(R.id.set_image_sign_up);
+        setImage = findViewById(R.id.member_set_image_update);
         updateConfirmBtn = findViewById(R.id.member_update_finish);
         confirmBtn = findViewById(R.id.member_finish);
 
@@ -66,6 +68,28 @@ public class MemberInfo extends AppCompatActivity implements View.OnClickListene
         memberObj = (MemberObj) intent.getParcelableExtra("member");
 
         initProfile();
+
+        // 비밀번호 관련
+        repasswordEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (passwordEdit.getText().toString().equals(repasswordEdit.getText().toString()) && passwordEdit.getText().toString().length() > 5) {
+                    setImage.setImageResource(R.drawable.sign_up_password_true);
+                } else {
+                    setImage.setImageResource(R.drawable.sign_up_password_false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     // 읽어온 객체를 입력
@@ -95,6 +119,22 @@ public class MemberInfo extends AppCompatActivity implements View.OnClickListene
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // 비밀번호 변경
+        if(passwordEdit.getText().toString().equals(repasswordEdit.getText().toString()) && passwordEdit.getText().toString().length() > 5){
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            String newPassword = passwordEdit.getText().toString();
+
+            user.updatePassword(newPassword)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Log.d("쓰벌", "User password updated.");
+                            }
+                        }
+                    });
+        }
 
         MemberObj newMemberObj = new MemberObj(email, name, year, month, day, pGenre, type);
         db.collection("Users").document(firebaseUser.getUid()).set(newMemberObj)
