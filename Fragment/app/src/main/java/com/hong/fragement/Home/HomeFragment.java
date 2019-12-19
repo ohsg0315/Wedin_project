@@ -30,6 +30,7 @@ import com.hong.fragement.MovieObj;
 import com.hong.fragement.NewMoviePage.NewMoviePage;
 import com.hong.fragement.R;
 import com.hong.fragement.SearchResult.SearchResultPage;
+import com.hong.fragement.Top100Page.Top100Page;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -40,8 +41,11 @@ public class HomeFragment extends Fragment {
 
     private AutoCompleteTextView movieSearchBar;
     private ImageButton searchBtn;
+    //더보기 버튼 3개
     private Button btn_more_new;
     private Button btn_more_custom;
+    private Button btn_more_top100;
+
 
     private RecyclerView recyclerView1;
 
@@ -59,9 +63,12 @@ public class HomeFragment extends Fragment {
         recyclerView1 = view.findViewById(R.id.recyclerview1);
         movieSearchBar = view.findViewById(R.id.movie_search_bar);
         searchBtn = view.findViewById(R.id.search_btn);
+
         btn_more_new = view.findViewById(R.id.more_new);
         btn_more_custom = view.findViewById(R.id.more_custom_genre);
+        btn_more_top100 = view.findViewById(R.id.more_top100);
 
+                //더보기 버튼 이벤트처리
         btn_more_new.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,6 +86,14 @@ public class HomeFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), CustomRecommendationPage.class);
                 startActivity(intent);
 
+            }
+        });
+
+        btn_more_top100.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Top100Page.class);
+                startActivity(intent);
             }
         });
 

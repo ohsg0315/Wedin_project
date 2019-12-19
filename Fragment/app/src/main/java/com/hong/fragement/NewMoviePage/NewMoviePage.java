@@ -15,6 +15,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.hong.fragement.AdapterForMovieList;
 import com.hong.fragement.MovieObj;
 import com.hong.fragement.R;
 
@@ -26,7 +27,7 @@ public class NewMoviePage extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private RecyclerView recyclerView;
-    private AdapterForNewMovie mAdapterForNewMovie;
+    private AdapterForMovieList mAdapterForMovieList;
 
     private List<MovieObj> movieObjList;
     private MovieObj data;
@@ -78,8 +79,8 @@ public class NewMoviePage extends AppCompatActivity {
 
 
                     }
-                    mAdapterForNewMovie = new AdapterForNewMovie(movieObjList, context  );
-                    recyclerView.setAdapter(mAdapterForNewMovie);
+                    mAdapterForMovieList = new AdapterForMovieList(movieObjList, context  );
+                    recyclerView.setAdapter(mAdapterForMovieList);
 
                 }
                 else

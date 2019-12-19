@@ -12,10 +12,10 @@ import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.hong.fragement.AdapterForMovieList;
 import com.hong.fragement.MovieObj;
 import com.hong.fragement.R;
 
@@ -27,7 +27,7 @@ public class SearchResultPage extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private RecyclerView recyclerView;
-    private AdapterForSearchResult mAdapterForSearchResult;
+    private AdapterForMovieList mAdapterForMovieList;
 
     private List<MovieObj> movieObjList;
     private MovieObj data;
@@ -85,8 +85,8 @@ public class SearchResultPage extends AppCompatActivity {
 
 
                             }
-                            mAdapterForSearchResult = new AdapterForSearchResult(movieObjList, context);
-                            recyclerView.setAdapter(mAdapterForSearchResult);
+                            mAdapterForMovieList = new AdapterForMovieList(movieObjList, context);
+                            recyclerView.setAdapter(mAdapterForMovieList);
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }

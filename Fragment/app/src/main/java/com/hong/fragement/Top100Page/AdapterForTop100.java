@@ -1,4 +1,5 @@
-package com.hong.fragement.NewMoviePage;
+package com.hong.fragement.Top100Page;
+
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -18,34 +19,36 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class AdapterForNewMovie extends RecyclerView.Adapter<AdapterForNewMovie.NewMovieViewHolder> {
+public class AdapterForTop100 extends RecyclerView.Adapter<AdapterForTop100.AdapterForTop100ViewHolder> {
+
 
     private List<MovieObj> list;
     Context context;
     private List<Integer> priceArray;
     int i;
 
-    public AdapterForNewMovie(List<MovieObj> list, Context context)
-    {
+
+    public AdapterForTop100(List<MovieObj> list, Context context) {
         this.list = list;
         this.context = context;
     }
 
     @NonNull
     @Override
-    public AdapterForNewMovie.NewMovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AdapterForTop100ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.each_movie_list,parent,false);
 
-       View view = LayoutInflater.from(parent.getContext())
-               .inflate(R.layout.each_movie_list,parent,false);
+        AdapterForTop100ViewHolder freeMovieViewHolder = new AdapterForTop100ViewHolder(view);
 
-        NewMovieViewHolder newMovieViewHolder = new NewMovieViewHolder(view);
+        Collections.sort(list);
 
-        return newMovieViewHolder;
+        return freeMovieViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdapterForNewMovie.NewMovieViewHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull AdapterForTop100ViewHolder holder, int position)
+    {
         Glide.with(holder.itemView)
                 .load(list.get(position).getImageUri())
                 .into(holder.posterImage);
@@ -66,6 +69,7 @@ public class AdapterForNewMovie extends RecyclerView.Adapter<AdapterForNewMovie.
 
         holder.price.setText(priceArray.get(0).toString());
 
+
     }
 
     @Override
@@ -73,20 +77,25 @@ public class AdapterForNewMovie extends RecyclerView.Adapter<AdapterForNewMovie.
         return list.size();
     }
 
-    public class NewMovieViewHolder extends RecyclerView.ViewHolder {
+    public class AdapterForTop100ViewHolder extends RecyclerView.ViewHolder {
 
         protected TextView title;
         protected TextView summary;
         protected TextView price;
         protected ImageView posterImage;
 
-        public NewMovieViewHolder(@NonNull View itemView) {
+
+        public AdapterForTop100ViewHolder(@NonNull View itemView) {
+
+
             super(itemView);
+
 
             title=(TextView)itemView.findViewById(R.id.title_each_movie_list);
             posterImage=(ImageView)itemView.findViewById(R.id.poster_each_movie_list);
             price= (TextView)itemView.findViewById(R.id.price_each_movie_list);
             summary=(TextView)itemView.findViewById(R.id.story_each_movie_list);
+
         }
     }
 

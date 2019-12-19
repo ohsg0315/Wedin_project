@@ -1,4 +1,4 @@
-package com.hong.fragement.CustomRecommendationPage;
+package com.hong.fragement.Top100Page;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,73 +20,90 @@ import com.hong.fragement.MovieObj;
 import com.hong.fragement.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class CustomRecommendationPage extends AppCompatActivity {
+public class Top100Page extends AppCompatActivity {
+
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private RecyclerView recyclerView;
-    private AdapterForMovieList mAdapterForMovieList;
+    private AdapterForTop100 mAdapterForTop100;
 
     private List<MovieObj> movieObjList;
     private MovieObj data;
     private Context context;
+    private String parse;
+    private int count=1;
 
 
-    private String TAG = "-----검색결과-----";
+    private String TAG = "-----TOP100!-----";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_custom_recommendation_page);
+        setContentView(R.layout.activity_top100_page);
 
         movieObjList = new ArrayList<MovieObj>();
 
         this.context = this;
 
-        recyclerView = findViewById(R.id.recyclerview_custom_recommendation);
+        recyclerView = findViewById(R.id.recyclerview_top100);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
 
 
-        readDataForAdapterForCustomRecommendation();
+        readDataForTop100();
     }
 
-    private void readDataForAdapterForCustomRecommendation() {
+    private void readDataForTop100() {
+
         data = new MovieObj();
         CollectionReference collectionReference
                 = db.collection("Movie");
         collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful())
-                {
-                    for(QueryDocumentSnapshot queryDocumentSnapshot : task.getResult())
-                    {
-                        data = queryDocumentSnapshot.toObject(MovieObj.class);
+        @Override
+        public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
+
+
+            if (task.isSuccessful())
+            {
+                for(QueryDocumentSnapshot queryDocumentSnapshot : task.getResult())
+                {
+                    data = queryDocumentSnapshot.toObject(MovieObj.class);
 
 
                         data.setTitle(queryDocumentSnapshot.toObject(MovieObj.class).getTitle());
                         data.setImageUri(queryDocumentSnapshot.get("imageUri").toString());
                         data.setPrice(queryDocumentSnapshot.toObject(MovieObj.class).getPrice());
                         data.setSummary(queryDocumentSnapshot.toObject(MovieObj.class).getSummary());
+                        data.setRank(queryDocumentSnapshot.toObject(MovieObj.class).getRank());
 
                         movieObjList.add(data);
+                        count++;
 
 
-                    }
-                    mAdapterForMovieList = new AdapterForMovieList(movieObjList, context  );
-                    recyclerView.setAdapter(mAdapterForMovieList);
+
 
                 }
-                else
-                {
-                    Log.d(TAG, "Error getting documents: ", task.getException());
-                }
-
+                mAdapterForTop100 = new AdapterForTop100(movieObjList, context);
+                recyclerView.setAdapter(mAdapterForTop100);
 
             }
-        });
-    }
+            else
+            {
+                Log.d(TAG, "Error getting documents: ", task.getException());
+            }
+
+
+        }
+    });
+
+}
+
+
+
+
+
 }
