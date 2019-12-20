@@ -22,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.hong.fragement.AdapterForMovieList;
+import com.hong.fragement.MovieDetailPage.DetailMovieActivity;
 import com.hong.fragement.MovieObj;
 import com.hong.fragement.MyPage.MemberObj;
 import com.hong.fragement.R;
@@ -36,7 +37,7 @@ public class CustomRecommendationPage extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
 
     private RecyclerView recyclerView;
-    private AdapterForMovieList mAdapterForMovieList;
+    private CustomRecommendAdapter mCustomRecommendAdapter;
 
     private List<MovieObj> movieObjList;
     private MovieObj data;
@@ -112,8 +113,8 @@ public class CustomRecommendationPage extends AppCompatActivity {
 
 
                             }
-                            mAdapterForMovieList = new AdapterForMovieList(movieObjList, context);
-                            recyclerView.setAdapter(mAdapterForMovieList);
+                            mCustomRecommendAdapter = new CustomRecommendAdapter(movieObjList, context, listener);
+                            recyclerView.setAdapter(mCustomRecommendAdapter);
 
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
@@ -123,4 +124,20 @@ public class CustomRecommendationPage extends AppCompatActivity {
                     }
                 });
     }
+    public interface OnItemClick {
+        void onMovieSelected(MovieObj selectedMovie);
+    }
+
+    private OnItemClick listener = new OnItemClick() {
+        @Override
+        public void onMovieSelected(MovieObj selectedMovie) {
+            Intent intent = new Intent();
+            intent.setClass(getApplicationContext(), DetailMovieActivity.class);
+
+            intent.putExtra("title",selectedMovie.getTitle());
+            intent.putExtra("dataFlag","1");
+
+            startActivity(intent);
+        }
+    };
 }
