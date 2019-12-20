@@ -20,6 +20,8 @@
             android:layout_gravity="center_horizontal"
             android:numStars="5"
             android:stepSize="0.1"
+            android:progressTint="#ffd700"
+            android:progressBackgroundTint="#000000"
             style="@style/MyRatingBar" />
 
         <com.google.android.material.textfield.TextInputLayout
