@@ -3,43 +3,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="350dp"
         android:layout_height="300dp"
-        android:background="@drawable/round_coner"
-        android:orientation="vertical" >
+        android:background="@drawable/round_coner_text"
+        android:orientation="vertical">
 
         <RatingBar
             android:id="@+id/rating_bar"
-            android:theme="@style/MyRatingBar"
+            style="@style/MyRatingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
             android:numStars="5"
-            android:stepSize="0.1"
-            android:progressTint="#ffd700"
             android:progressBackgroundTint="#000000"
-            style="@style/MyRatingBar" />
+            android:progressTint="#ffd700"
+            android:stepSize="0.1"
+            android:theme="@style/MyRatingBar" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:theme="@style/com_facebook_activity_theme"
             android:id="@+id/ti_review"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" >
+            android:fontFamily="@font/nanumsquare_aceb"
+            android:layout_gravity="center"
+            android:theme="@style/com_facebook_activity_theme">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_review"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="리뷰를 작성해주세요"
-                android:textColorHint="#FF0000"
-                android:textColor="#000000"
+                android:background="@drawable/round_coner_text"
                 android:gravity="center"
-                android:background="@drawable/round_coner" />
+                android:hint="리뷰를 작성해주세요"
+                android:fontFamily="@font/nanumsquare_aceb"
+                android:textColor="#ffffff"
+                android:textColorHint="#FF0000" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -48,19 +50,26 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:gravity="center"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/add_btn"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="게시" />
+                android:layout_marginRight="10dp"
+                android:background="@drawable/round_coner_text"
+                android:fontFamily="@font/nanumsquare_aceb"
+                android:text="게시"
+                android:textColor="#ffffff" />
 
             <Button
                 android:id="@+id/cancel_btn"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="취소" />
+                android:background="@drawable/round_coner_text"
+                android:fontFamily="@font/nanumsquare_aceb"
+                android:text="취소"
+                android:textColor="#ffffff" />
 
         </LinearLayout>
     </LinearLayout>

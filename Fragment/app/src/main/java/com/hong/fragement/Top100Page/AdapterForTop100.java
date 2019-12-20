@@ -83,8 +83,7 @@ public class AdapterForTop100 extends RecyclerView.Adapter<AdapterForTop100.Adap
             price= (TextView)itemView.findViewById(R.id.price_each_movie_list);
             posterImage=(ImageView)itemView.findViewById(R.id.poster_each_movie_list);
 
-            title.setClickable(true);
-            title.setOnClickListener(new View.OnClickListener() {
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     listner.onMovieSelected(list.get(getAdapterPosition()));

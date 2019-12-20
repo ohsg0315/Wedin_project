@@ -44,12 +44,12 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/round_coner"
+                android:background="@drawable/round_coner_text"
                 android:orientation="horizontal">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textColor="#ffffff"
                     android:textColorHint="#808080"
@@ -74,12 +74,12 @@
                 <ImageButton
                     android:id="@+id/search_btn"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="50dp"
                     android:layout_gravity="center"
                     android:adjustViewBounds="true"
                     android:background="#363636"
                     android:scaleType="fitXY"
-                    android:src="@drawable/search_icon" />
+                    android:src="@drawable/search_white" />
 
             </LinearLayout>
 

@@ -82,8 +82,7 @@ public class CustomRecommendAdapter extends RecyclerView.Adapter<CustomRecommend
             price = (TextView) itemView.findViewById(R.id.price_each_movie_list);
             summary = (TextView) itemView.findViewById(R.id.story_each_movie_list);
 
-            title.setClickable(true);
-            title.setOnClickListener(new View.OnClickListener() {
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     listener.onMovieSelected(list.get(getAdapterPosition()));
