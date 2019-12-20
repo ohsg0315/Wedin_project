@@ -51,7 +51,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp" >
 
                     <TextView
                         android:layout_width="0dp"
@@ -59,7 +60,9 @@
                         android:layout_weight="1"
                         android:text="네이버"
                         android:textSize="20dp"
+                        android:gravity="center"
                         android:paddingLeft="3dp"/>
+
 
                     <TextView
                         android:id="@+id/movie_low_price"
@@ -74,7 +77,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp" >
 
                     <TextView
                         android:layout_width="0dp"
@@ -82,6 +86,59 @@
                         android:layout_weight="1"
                         android:text="웨이브"
                         android:textSize="20dp"
+                        android:gravity="center"
+                        android:paddingLeft="3dp"/>
+
+
+                    <TextView
+                        android:id="@+id/movie_yes_price"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="20dp"
+                        android:gravity="center" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp" >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="YES24"
+                        android:textSize="20dp"
+                        android:gravity="center"
+                        android:paddingLeft="3dp"/>
+
+
+                    <TextView
+                        android:id="@+id/movie_play_price"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="20dp"
+                        android:gravity="center" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp" >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="플레이 스토어"
+                        android:textSize="16dp"
+                        android:gravity="center"
                         android:paddingLeft="3dp"/>
 
                     <TextView
@@ -100,29 +157,13 @@
                     android:weightSum="100"
                     android:orientation="horizontal" >
 
-                    <Button
-                        android:id="@+id/genre1_detail_movie"
-                        android:layout_width="0dp"
+                    <TextView
+                        android:id="@+id/genre_detail_movie"
+                        android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_weight="30"
-                        android:text="장르1"
-                        android:textSize="10dp" />
-
-                    <Button
-                        android:id="@+id/genre2_detail_movie"
-                        android:layout_height="30dp"
-                        android:layout_width="0dp"
-                        android:layout_weight="30"
-                        android:textSize="10dp"
-                        android:text="장르2" />
-
-                    <Button
-                        android:id="@+id/genre3_detail_movie"
-                        android:layout_height="30dp"
-                        android:layout_width="0dp"
-                        android:layout_weight="30"
-                        android:text="장르3"
-                        android:textSize="10dp" />
+                        android:background="@drawable/round_coner"
+                        android:textSize="24dp" />
 
                 </LinearLayout>
 

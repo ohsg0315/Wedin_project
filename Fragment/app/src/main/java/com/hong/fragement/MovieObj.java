@@ -11,10 +11,11 @@ public class MovieObj implements Comparable<MovieObj> {
     private boolean free;
     private String youtubeUri;
     private int rank;
+    private String genre;
 
     public MovieObj(){}
 
-    public MovieObj(String title, String imageUri, String summary, Map<String, Integer> price, boolean free, String youtubeUri, int rank) {
+    public MovieObj(String title, String imageUri, String summary, Map<String, Integer> price, boolean free, String youtubeUri, int rank, String genre) {
         this.title = title;
         this.imageUri = imageUri;
         this.summary = summary;
@@ -22,7 +23,7 @@ public class MovieObj implements Comparable<MovieObj> {
         this.free = free;
         this.youtubeUri = youtubeUri;
         this.rank = rank;
-
+        this.genre = genre;
     }
 
     public void setTitle(String title) {
@@ -71,6 +72,9 @@ public class MovieObj implements Comparable<MovieObj> {
 
     public int getRank() { return rank; }
 
+    public String getGenre() { return genre; }
+
+    public void setGenre(String genre) { this.genre = genre; }
 
     @Override
     public int compareTo(MovieObj obj) {

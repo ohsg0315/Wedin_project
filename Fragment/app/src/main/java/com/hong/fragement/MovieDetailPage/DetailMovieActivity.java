@@ -48,10 +48,14 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
     private TextView title;
     private TextView lowPrice;
     private TextView highPrice;
+    private TextView playPrice;
+    private TextView yesPrice;
     private TextView summary;
     private TextView ratingScoreView;
+    private TextView genre;
     private Button reviewAddBtn;
     private Button summaryReadBtn;
+
 
     static ArrayList<RatingObj> dataList;
     private RatingObj data;
@@ -81,8 +85,11 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
         title = findViewById(R.id.title_detail_movie);
         lowPrice = findViewById(R.id.movie_low_price);
         highPrice = findViewById(R.id.movie_high_price);
+        playPrice = findViewById(R.id.movie_play_price);
+        yesPrice = findViewById(R.id.movie_yes_price);
         summary = findViewById(R.id.summary_detail_movie);
         summaryReadBtn = findViewById(R.id.story_read);
+        genre = findViewById(R.id.genre_detail_movie);
 
         ratingScoreView = findViewById(R.id.rating_detail_movie);
         ratingBar = findViewById(R.id.ratingBar_detail_movie);
@@ -115,6 +122,8 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
                                 Map<String,Integer> moviePrice = documentSnapshot.toObject(MovieObj.class).getPrice();
                                 int naverPrice = moviePrice.get("네이버");
                                 int wavePrice = moviePrice.get("웨이브");
+                                int yesPriceData = moviePrice.get("예스24");
+                                int playPriceData = moviePrice.get("플레이스토어");
 
                                 youtubeUri = documentSnapshot.toObject(MovieObj.class).getYoutubeUri();
                                 youTubePlayerView.initialize(youtubeUri, onInitializedListener);
@@ -127,7 +136,10 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
                                 title.setText(movieTitle);
                                 lowPrice.setText(Integer.toString(naverPrice));
                                 highPrice.setText(Integer.toString(wavePrice));
+                                yesPrice.setText(Integer.toString(yesPriceData));
+                                playPrice.setText(Integer.toString(playPriceData));
 
+                                genre.setText(documentSnapshot.toObject(MovieObj.class).getGenre());
                                 summayStory = documentSnapshot.toObject(MovieObj.class).getSummary();
                                 summary.setText(summayStory);
                             }
@@ -145,7 +157,10 @@ public class DetailMovieActivity extends YouTubeBaseActivity {
                 title.setText(movieTitle);
                 lowPrice.setText(intent.getStringExtra("price1"));
                 highPrice.setText(intent.getStringExtra("price2"));
+                yesPrice.setText(intent.getStringExtra("price3"));
+                playPrice.setText(intent.getStringExtra("price4"));
 
+                genre.setText(intent.getStringExtra("genre"));
                 summayStory = intent.getStringExtra("summary");
                 summary.setText(summayStory);
 
