@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="20dp"
+    android:background="#363636"
     tools:context=".Login.SignUp">
 
     <LinearLayout
@@ -26,7 +27,7 @@
             android:layout_marginRight="15dp"
             android:enabled="false"
             android:text="개인정보"
-            android:textColor="#222222"
+            android:textColor="#FFFFFF"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -36,7 +37,8 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
-            android:text="아이디" />
+            android:text="아이디"
+            android:textColor="#FFFFFF" />
 
         <EditText
             android:id="@+id/member_email_update"
@@ -44,11 +46,11 @@
             android:layout_height="30dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:textColor="#222222"
-            android:background="@drawable/round_coner"
+            android:background="@drawable/round_coner_text"
             android:enabled="false"
             android:imeOptions="actionNext"
-            android:inputType="text" />
+            android:inputType="text"
+            android:textColor="#FFFFFF" />
 
         <TextView
             android:layout_width="match_parent"
@@ -56,7 +58,8 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
-            android:text="비밀번호" />
+            android:text="비밀번호"
+            android:textColor="#FFFFFF" />
 
         <EditText
             android:id="@+id/member_password_update"
@@ -64,12 +67,13 @@
             android:layout_height="30dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:background="@drawable/round_coner"
+            android:background="@drawable/round_coner_text"
             android:hint="최소 6글자를 입력해주세요"
             android:imeOptions="actionNext"
             android:inputType="text"
             android:password="true"
-            android:textColorHint="#ff0000"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#808080"
             android:textSize="15dp" />
 
         <TextView
@@ -78,7 +82,8 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
-            android:text="비밀번호 확인" />
+            android:text="비밀번호 확인"
+            android:textColor="#FFFFFF" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -91,10 +96,11 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_weight="8.5"
-                android:background="@drawable/round_coner"
+                android:background="@drawable/round_coner_text"
                 android:imeOptions="actionNext"
                 android:inputType="text"
-                android:password="true" />
+                android:password="true"
+                android:textColor="#FFFFFF" />
 
             <ImageView
                 android:id="@+id/member_set_image_update"
@@ -110,7 +116,8 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
-            android:text="이름" />
+            android:text="이름"
+            android:textColor="#FFFFFF" />
 
         <EditText
             android:id="@+id/member_name_update"
@@ -118,9 +125,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:background="@drawable/round_coner"
+            android:background="@drawable/round_coner_text"
             android:imeOptions="actionNext"
-            android:inputType="text" />
+            android:inputType="text"
+            android:textColor="#FFFFFF" />
 
         <TextView
             android:layout_width="match_parent"
@@ -128,7 +136,8 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
-            android:text="생년월일" />
+            android:text="생년월일"
+            android:textColor="#FFFFFF" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -142,10 +151,13 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_weight="1"
-                android:background="@drawable/round_coner"
+                android:background="@drawable/round_coner_text"
+                android:gravity="right"
                 android:hint="년"
                 android:imeOptions="actionNext"
-                android:inputType="date" />
+                android:inputType="date"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#808080" />
 
             <EditText
                 android:id="@+id/member_birth_month"
@@ -154,10 +166,13 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_weight="1"
-                android:background="@drawable/round_coner"
+                android:background="@drawable/round_coner_text"
+                android:gravity="right"
                 android:hint="월"
+                android:textColorHint="#808080"
                 android:imeOptions="actionNext"
-                android:inputType="date" />
+                android:inputType="date"
+                android:textColor="#FFFFFF" />
 
             <EditText
                 android:id="@+id/member_birth_day"
@@ -166,10 +181,13 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_weight="1"
-                android:background="@drawable/round_coner"
+                android:background="@drawable/round_coner_text"
+                android:gravity="right"
                 android:hint="일"
+                android:textColorHint="#808080"
                 android:imeOptions="actionNext"
-                android:inputType="date" />
+                android:inputType="date"
+                android:textColor="#FFFFFF" />
         </LinearLayout>
 
         <TextView
@@ -178,7 +196,9 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
-            android:text="장르 선택" />
+            android:text="장르 선택"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -192,7 +212,8 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="15dp"
                 android:layout_weight="1"
-                android:text="1순위" />
+                android:text="1순위"
+                android:textColor="#FFFFFF" />
 
             <TextView
                 android:layout_width="0dp"
@@ -201,9 +222,11 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="15dp"
                 android:layout_weight="1"
+                android:textColor="#FFFFFF"
                 android:text="2순위" />
 
             <TextView
+                android:textColor="#FFFFFF"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -225,7 +248,8 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_weight="1"
-                android:background="@drawable/round_coner"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/round_coner_text"
                 android:inputType="date" />
 
             <Spinner
@@ -235,7 +259,8 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_weight="1"
-                android:background="@drawable/round_coner"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/round_coner_text"
                 android:inputType="date" />
 
             <Spinner
@@ -245,7 +270,8 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_weight="1"
-                android:background="@drawable/round_coner"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/round_coner_text"
                 android:inputType="date" />
         </LinearLayout>
 
@@ -262,7 +288,8 @@
                 android:layout_marginTop="25dp"
                 android:layout_marginRight="15dp"
                 android:layout_weight="1"
-                android:background="@drawable/round_coner"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/round_coner_text"
                 android:text="변경" />
 
             <Button
@@ -274,7 +301,8 @@
                 android:layout_marginTop="25dp"
                 android:layout_marginRight="15dp"
                 android:layout_weight="1"
-                android:background="@drawable/round_coner"
+                android:textColor="#ffffff"
+                android:background="@drawable/round_coner_text"
                 android:text="확인" />
 
         </LinearLayout>

@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/round_coner"
+    android:textColor="#ffffff"
+    android:background="@drawable/round_coner_text"
     android:orientation="vertical">
 
     <TextView
@@ -11,6 +12,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:text="이메일 인증하기"
+        android:textColor="#ffffff"
         android:textSize="30sp" />
 
 
@@ -21,8 +23,11 @@
         android:layout_gravity="center"
         android:layout_margin="20dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/round_coner"
+        android:textColor="#ffffff"
+        android:background="@drawable/round_coner_text"
+        android:textColorHint="#808080"
         android:hint="인증 번호를 등록해 주세요"
+        android:gravity="center"
         android:paddingLeft="10dp"
         android:textSize="15sp" />
 
@@ -31,8 +36,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="20dp"
+        android:gravity="center"
+        android:textColor="#ffffff"
         android:text="이메일로 발송 된 인증 번호를 적어주세요."
-        android:textColor="@android:color/black" />
+        android:textSize="16dp" />
 
     <TextView
         android:id="@+id/emailAuth_time_counter"
@@ -40,6 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:gravity="center"
+        android:textColor="#FFFFFF"
         android:text="3:00"
         android:textSize="30sp" />
 
@@ -56,7 +64,8 @@
             android:layout_marginTop="30dp"
             android:layout_marginBottom="30dp"
             android:layout_weight="1"
-            android:background="@drawable/round_coner"
+            android:textColor="#ffffff"
+            android:background="@drawable/round_coner_text"
             android:text="취소"
             android:textSize="22sp"
             android:layout_marginRight="20dp"/>
@@ -69,7 +78,8 @@
             android:layout_marginTop="30dp"
             android:layout_marginBottom="30dp"
             android:layout_weight="1"
-            android:background="@drawable/round_coner"
+            android:textColor="#ffffff"
+            android:background="@drawable/round_coner_text"
             android:text="확인"
             android:textSize="22sp" />
 
