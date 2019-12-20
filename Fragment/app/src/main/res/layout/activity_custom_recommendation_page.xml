@@ -9,9 +9,16 @@
         android:orientation="vertical"
         android:background="#363636">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#363636">
+
+
         <TextView
             android:id="@+id/text_custom_recommendation"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:text="맞춤 장르"
             android:textSize="20dp"
@@ -21,6 +28,21 @@
             android:textColor="#FFFFFF"
             android:fontFamily="@font/nanumsquare_aceb"/>
 
+        <TextView
+            android:id="@+id/genre_main"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:textSize="20dp"
+            android:paddingLeft="10dp"
+            android:layout_margin="5dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="left|center"
+            android:textColor="#ffffff"
+
+            >
+
+        </TextView>
+    </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview_custom_recommendation"
             android:layout_width="match_parent"

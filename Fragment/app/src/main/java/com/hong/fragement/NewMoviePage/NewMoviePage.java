@@ -70,7 +70,7 @@ public class NewMoviePage extends AppCompatActivity {
                         data.setImageUri(queryDocumentSnapshot.get("imageUri").toString());
                         data.setPrice(queryDocumentSnapshot.toObject(MovieObj.class).getPrice());
                         data.setSummary(queryDocumentSnapshot.toObject(MovieObj.class).getSummary());
-
+                        data.setGenre(queryDocumentSnapshot.toObject(MovieObj.class).getGenre());
                         movieObjList.add(data);
                     }
                     mNewMoviePageAdapter = new NewMoviePageAdapter(movieObjList, context, listener);

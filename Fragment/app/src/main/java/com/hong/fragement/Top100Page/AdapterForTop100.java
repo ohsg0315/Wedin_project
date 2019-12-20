@@ -53,7 +53,7 @@ public class AdapterForTop100 extends RecyclerView.Adapter<AdapterForTop100.Adap
 
         holder.title.setText(list.get(position).getTitle());
         holder.summary.setText(list.get(position).getSummary());
-
+        holder.genre.setText(list.get(position).getGenre());
         priceArray = new ArrayList<>();
         for (String key: list.get(position).getPrice().keySet()) {
             priceArray.add((int)list.get(position).getPrice().get(key));
@@ -74,6 +74,7 @@ public class AdapterForTop100 extends RecyclerView.Adapter<AdapterForTop100.Adap
         TextView summary;
         TextView price;
         ImageView posterImage;
+        TextView genre;
 
         public AdapterForTop100ViewHolder(@NonNull View itemView) {
 
@@ -82,6 +83,7 @@ public class AdapterForTop100 extends RecyclerView.Adapter<AdapterForTop100.Adap
             summary=(TextView)itemView.findViewById(R.id.story_each_movie_list);
             price= (TextView)itemView.findViewById(R.id.price_each_movie_list);
             posterImage=(ImageView)itemView.findViewById(R.id.poster_each_movie_list);
+            genre =(TextView) itemView.findViewById(R.id.genre1_each_movie_list);
 
             title.setClickable(true);
             title.setOnClickListener(new View.OnClickListener() {

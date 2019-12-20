@@ -73,7 +73,7 @@ public class Top100Page extends AppCompatActivity {
                     data.setPrice(queryDocumentSnapshot.toObject(MovieObj.class).getPrice());
                     data.setSummary(queryDocumentSnapshot.toObject(MovieObj.class).getSummary());
                     data.setRank(queryDocumentSnapshot.toObject(MovieObj.class).getRank());
-
+data.setGenre(queryDocumentSnapshot.toObject(MovieObj.class).getGenre());
                     movieObjList.add(data);
                     //count++;
                 }
