@@ -153,7 +153,6 @@ public class HomeFragment extends Fragment {
                                 data2.setRank(document.toObject(MovieObj.class).getRank());
                                 datList2.add(data2);
                             }
-                            Toast.makeText(getActivity(),"아아아",Toast.LENGTH_SHORT).show();
                             adapter2 = new Top100Adapter(datList2, getActivity(),listener); // 데이터 생성. Context : getActivity (프래그먼트 이용)
                             recyclerView2.setAdapter(adapter2);
                         }

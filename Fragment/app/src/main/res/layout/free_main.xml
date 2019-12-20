@@ -48,53 +48,7 @@
 
         </View>
 
-        <LinearLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent">
 
-            <TextView
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:id="@+id/priceLow_each_movie_list"
-                android:layout_gravity="center"
-                android:textSize="10dp"
-                android:text="최저가 "
-                android:textColor="#FFFFFF"
-                android:fontFamily="@font/nanumsquare_acb">
-
-            </TextView>
-
-            <!-- 가격은 추후에 DB에서 일단 예시로-->
-            <TextView
-                android:id="@+id/price_each_movie_list"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_weight="25"
-                android:layout_gravity="center"
-                android:gravity="right"
-                android:layout_marginRight="5dp"
-                android:textSize="10dp"
-                android:textColor="#FFFFFF"
-                android:fontFamily="@font/nanumsquare_aceb"
-                >
-
-            </TextView>
-
-            <TextView
-                android:id="@+id/priceWon_each_movie_list"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_weight="15"
-                android:layout_gravity="center"
-                android:textSize="10dp"
-                android:text="원 "
-                android:textColor="#FFFFFF"
-                android:fontFamily="@font/nanumsquare_acb"
-                >
-
-            </TextView>
-
-        </LinearLayout>
 
         <LinearLayout
             android:weightSum="100"

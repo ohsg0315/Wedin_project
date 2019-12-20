@@ -52,6 +52,7 @@ public class NewMoviePageAdapter extends RecyclerView.Adapter<NewMoviePageAdapte
 
         holder.title.setText(list.get(position).getTitle());
         holder.summary.setText(list.get(position).getSummary());
+        holder.genre.setText(list.get(position).getGenre());
 
         priceArray = new ArrayList<>();
         for (String key : list.get(position).getPrice().keySet()) {
@@ -71,7 +72,9 @@ public class NewMoviePageAdapter extends RecyclerView.Adapter<NewMoviePageAdapte
         TextView title;
         TextView summary;
         TextView price;
+        TextView genre;
         ImageView posterImage;
+
 
         public FreeMovieViewHolder(@NonNull View itemView) {
 
@@ -80,6 +83,7 @@ public class NewMoviePageAdapter extends RecyclerView.Adapter<NewMoviePageAdapte
             posterImage = (ImageView) itemView.findViewById(R.id.poster_each_movie_list);
             price = (TextView) itemView.findViewById(R.id.price_each_movie_list);
             summary = (TextView) itemView.findViewById(R.id.story_each_movie_list);
+            genre = (TextView) itemView.findViewById(R.id.genre1_each_movie_list) ;
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

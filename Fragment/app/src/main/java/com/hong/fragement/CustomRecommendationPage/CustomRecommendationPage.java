@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -44,8 +45,9 @@ public class CustomRecommendationPage extends AppCompatActivity {
     private MemberObj member;
     private Context context;
     private ArrayList<String> genre;
-
+    private TextView mainGenre;
     private String TAG = "-----검색결과-----";
+    private int preNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,13 +63,18 @@ public class CustomRecommendationPage extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         Intent intent = getIntent();
 
+
         // 유저의 선호 영화장르 3개.
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
         if (mFirebaseUser != null) {
             ReadUserData();
+
         }
+
+
+
     }
 
     private void ReadUserData() {
@@ -89,7 +96,7 @@ public class CustomRecommendationPage extends AppCompatActivity {
 
     private void readDataForAdapterForCustomRecommendation() {
         data = new MovieObj();
-        int preNum = (int) ((Math.random() * 10) % 3);
+        preNum = (int) ((Math.random() * 10) % 3);
         Log.e("쓰벌", "선호 장르" + preNum + " = " + genre.get(preNum));
 
         CollectionReference collectionReference
@@ -108,6 +115,7 @@ public class CustomRecommendationPage extends AppCompatActivity {
                                 data.setImageUri(queryDocumentSnapshot.get("imageUri").toString());
                                 data.setPrice(queryDocumentSnapshot.toObject(MovieObj.class).getPrice());
                                 data.setSummary(queryDocumentSnapshot.toObject(MovieObj.class).getSummary());
+                                data.setGenre(queryDocumentSnapshot.toObject(MovieObj.class).getGenre());
 
                                 movieObjList.add(data);
 

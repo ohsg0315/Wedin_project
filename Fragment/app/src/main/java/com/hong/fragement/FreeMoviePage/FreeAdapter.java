@@ -23,7 +23,7 @@ public class FreeAdapter extends RecyclerView.Adapter<FreeAdapter.FreeMovieViewH
 
     Context context;
     private List<MovieObj> list;
-    private List<Integer> priceArray;
+
     private FreeMovie.OnItemClick listener;
     int i;
 
@@ -37,7 +37,7 @@ public class FreeAdapter extends RecyclerView.Adapter<FreeAdapter.FreeMovieViewH
     @Override
     public FreeMovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.each_movie_list, parent, false);
+                .inflate(R.layout.free_main, parent, false);
 
         FreeMovieViewHolder freeMovieViewHolder = new FreeMovieViewHolder(view);
 
@@ -52,13 +52,9 @@ public class FreeAdapter extends RecyclerView.Adapter<FreeAdapter.FreeMovieViewH
 
         holder.title.setText(list.get(position).getTitle());
         holder.summary.setText(list.get(position).getSummary());
+        holder.genre.setText(list.get(position).getGenre());
 
-        priceArray = new ArrayList<>();
-        for (String key : list.get(position).getPrice().keySet()) {
-            priceArray.add((int) list.get(position).getPrice().get(key));
-        }
-        Collections.sort(priceArray);
-        holder.price.setText(priceArray.get(0).toString());
+
     }
 
     @Override
@@ -72,14 +68,16 @@ public class FreeAdapter extends RecyclerView.Adapter<FreeAdapter.FreeMovieViewH
         TextView summary;
         TextView price;
         ImageView posterImage;
+        TextView genre;
 
         public FreeMovieViewHolder(@NonNull View itemView) {
 
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.title_each_movie_list);
             posterImage = (ImageView) itemView.findViewById(R.id.poster_each_movie_list);
-            price = (TextView) itemView.findViewById(R.id.price_each_movie_list);
+            //price = (TextView) itemView.findViewById(R.id.price_each_movie_list);
             summary = (TextView) itemView.findViewById(R.id.story_each_movie_list);
+            genre = (TextView) itemView.findViewById(R.id.genre1_each_movie_list);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
