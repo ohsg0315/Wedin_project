@@ -35,6 +35,7 @@ import com.hong.fragement.Top100Page.AdapterForTop100;
 import com.hong.fragement.Top100Page.Top100Page;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 
 public class HomeFragment extends Fragment {
@@ -49,7 +50,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView1;
     private RecyclerView recyclerView2;
 
-    private MovieObj data;
+    private MovieObj data, data2;
     private HomeAdapter adapter;
     private Top100Adapter adapter2;
     private ArrayList<String> titleList;
@@ -125,7 +126,6 @@ public class HomeFragment extends Fragment {
                                 titleList.add(document.toObject(MovieObj.class).getTitle());
                                 datList.add(data);
                             }
-                            Toast.makeText(getActivity(),"아아아",Toast.LENGTH_SHORT).show();
                             adapter = new HomeAdapter(datList, getActivity(),listener); // 데이터 생성. Context : getActivity (프래그먼트 이용)
                             recyclerView1.setAdapter(adapter);
                         }
@@ -143,17 +143,17 @@ public class HomeFragment extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {   // 스냅샷을 떠서 MovieObj 타입으로 변환 후 리스트에 담음
-                                data = new MovieObj();
-                                data.setTitle(document.toObject(MovieObj.class).getTitle());
-                                data.setImageUri(document.toObject(MovieObj.class).getImageUri());
-                                data.setPrice(document.toObject(MovieObj.class).getPrice());
-                                data.setSummary(document.toObject(MovieObj.class).getSummary());
-                                data.setYoutubeUri(document.toObject(MovieObj.class).getYoutubeUri());
-                                data.setGenre(document.toObject(MovieObj.class).getGenre());
-
-                                titleList.add(document.toObject(MovieObj.class).getTitle());
-                                datList2.add(data);
+                                data2 = new MovieObj();
+                                data2.setTitle(document.toObject(MovieObj.class).getTitle());
+                                data2.setImageUri(document.toObject(MovieObj.class).getImageUri());
+                                data2.setPrice(document.toObject(MovieObj.class).getPrice());
+                                data2.setSummary(document.toObject(MovieObj.class).getSummary());
+                                data2.setYoutubeUri(document.toObject(MovieObj.class).getYoutubeUri());
+                                data2.setGenre(document.toObject(MovieObj.class).getGenre());
+                                data2.setRank(document.toObject(MovieObj.class).getRank());
+                                datList2.add(data2);
                             }
+                            Toast.makeText(getActivity(),"아아아",Toast.LENGTH_SHORT).show();
                             adapter2 = new Top100Adapter(datList2, getActivity(),listener); // 데이터 생성. Context : getActivity (프래그먼트 이용)
                             recyclerView2.setAdapter(adapter2);
                         }
