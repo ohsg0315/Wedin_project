@@ -75,7 +75,7 @@ public class Top100Page extends AppCompatActivity {
                     data.setRank(queryDocumentSnapshot.toObject(MovieObj.class).getRank());
 
                     movieObjList.add(data);
-                    count++;
+                    //count++;
                 }
                 mAdapterForTop100 = new AdapterForTop100(movieObjList, context, listener);
                 recyclerView.setAdapter(mAdapterForTop100);

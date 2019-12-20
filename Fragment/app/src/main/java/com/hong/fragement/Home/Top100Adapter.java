@@ -15,8 +15,9 @@ import com.hong.fragement.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
-public class Top100Adapter extends RecyclerView.Adapter<Top100Adapter.AdapterForTop100ViewHolder> {
+public class Top100Adapter extends RecyclerView.Adapter<Top100Adapter.Top100ViewHolder> {
 
     Context context;
     private ArrayList<MovieObj> list;
@@ -30,19 +31,20 @@ public class Top100Adapter extends RecyclerView.Adapter<Top100Adapter.AdapterFor
 
     @NonNull
     @Override
-    public AdapterForTop100ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public Top100ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.movie_list,parent,false);
 
-        AdapterForTop100ViewHolder freeMovieViewHolder = new AdapterForTop100ViewHolder(view);
+        Top100ViewHolder freeMovieViewHolder = new Top100ViewHolder(view);
         Collections.sort(list);
+
 
         return freeMovieViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdapterForTop100ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull Top100ViewHolder holder, int position) {
 
         Glide.with(holder.itemView)
                 .load(list.get(position).getImageUri())
@@ -54,11 +56,12 @@ public class Top100Adapter extends RecyclerView.Adapter<Top100Adapter.AdapterFor
         return list.size();
     }
 
-    public class AdapterForTop100ViewHolder extends RecyclerView.ViewHolder {
+
+    public class Top100ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView poster;
 
-        public AdapterForTop100ViewHolder(@NonNull View itemView) {
+        public Top100ViewHolder(@NonNull View itemView) {
 
             super(itemView);
             poster = itemView.findViewById(R.id.poster);
@@ -71,6 +74,5 @@ public class Top100Adapter extends RecyclerView.Adapter<Top100Adapter.AdapterFor
             });
         }
     }
-
 
 }
