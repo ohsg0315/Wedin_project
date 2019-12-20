@@ -79,8 +79,7 @@ public class FreeAdapter extends RecyclerView.Adapter<FreeAdapter.FreeMovieViewH
             summary = (TextView) itemView.findViewById(R.id.story_each_movie_list);
             genre = (TextView) itemView.findViewById(R.id.genre1_each_movie_list);
 
-            title.setClickable(true);
-            title.setOnClickListener(new View.OnClickListener() {
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     listener.onMovieSelected(list.get(getAdapterPosition()));

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="#363636">
 
     <ImageView
         android:id="@+id/user_image"
@@ -10,7 +11,7 @@
         android:foregroundGravity="center"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
-        android:background="@drawable/round"
+        android:background="@drawable/round_coner_text"
         android:src="@drawable/wedin_logo"
         android:scaleType="fitCenter"/>
 
@@ -32,7 +33,7 @@
             android:gravity="center"
             android:text="ID입니다"
             android:textSize="15dp"
-            android:textColor="#808080" />
+            android:textColor="#ffffff" />
 
         <RatingBar
             android:id="@+id/rating_score"
@@ -52,12 +53,13 @@
             android:id="@+id/rating_review"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#ffffff"
             android:layout_below="@id/rating_score"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/user_image"
             android:maxLines="3"
             android:text="연습입니다"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:paddingBottom="20dp"/>
 
     </LinearLayout>

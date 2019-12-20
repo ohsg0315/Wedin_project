@@ -30,8 +30,9 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="0dp"
                 android:layout_marginEnd="0dp"
-                app:itemTextColor="#c4302b"
-                app:itemIconTint="#c4302b"
+                app:itemTextColor="#ffffff"
+                android:background="#000000"
+                app:itemIconTint="#ffffff"
                 app:menu="@menu/navigation" />
 
         </LinearLayout>
