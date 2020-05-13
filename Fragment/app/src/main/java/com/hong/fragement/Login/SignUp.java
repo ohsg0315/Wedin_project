@@ -175,7 +175,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener, D
             try {
                 authenticationString = makeAuthenticationString();
 
-                GMailSender gMailSender = new GMailSender("ohsg0315@gmail.com", "Aiden0088151!");
+                GMailSender gMailSender = new GMailSender("ohsg0315@gmail.com", "");
                 gMailSender.sendMail("Wedin 인증 메일입니다.", " Wedin 어플을 이용해주셔서 감하삽니다. \n회원가입을 위한 인증 번호는 >>  " + authenticationString + "  << 입니다.\n Wedin 인증을 위해 입력해주세요.\n", emailEdit.getText().toString());
                 Toast.makeText(getApplicationContext(), "이메일 보내기 성공~!~!", Toast.LENGTH_SHORT).show();
             } catch (SendFailedException e) {
